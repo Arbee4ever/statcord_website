@@ -18,11 +18,17 @@
 
 <style>
 	.member {
-		padding: 0.5vw;
+		padding: 1vh;
+        margin: 1vh;
 		display: grid;
 		grid-template-columns: 1fr, 1fr, 1fr;
 		grid-template-rows: 1fr;
 		grid-column-gap: 10px;
+		height: fit-content;
+		background: #1a1a1a99;
+		border-radius: 10px;
+		background: rgba(0, 0, 0, 0.25);
+		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
 	}
 
 	.user {
@@ -47,11 +53,11 @@
 	.avatar {
 		height: 5vh;
 		border-radius: 100%;
-		margin-left: 1vw;
+		margin-left: 1vh;
 	}
 
 	.name {
-		margin-left: 1vw;
+		margin-left: 1vh;
 		text-align: center;
 		height: 5vh;
 		line-height: 5vh;
