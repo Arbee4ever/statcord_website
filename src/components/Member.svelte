@@ -18,8 +18,8 @@
 
 <style>
 	.member {
-		padding: 1vh;
-        margin: 1vh;
+		padding: 2vh;
+		margin: 1vh;
 		display: grid;
 		grid-template-columns: 1fr, 1fr, 1fr;
 		grid-template-rows: 1fr;
@@ -43,7 +43,6 @@
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
 		border-radius: 100%;
-		display: inline-block;
 		font-weight: bold;
 		line-height: 5vh;
 		width: 5vh;
@@ -68,8 +67,16 @@
 	}
 
 	.score {
-		text-align: end;
-		height: 5vh;
+		height: fit-content;
+		background: #1a1a1a99;
+		border-radius: 10px;
+		background: rgba(0, 0, 0, 0.25);
+		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
+		border-radius: 100%;
+		font-weight: bold;
 		line-height: 5vh;
+		width: 5vh;
+		text-align: center;
+        float: right;
 	}
 </style>
