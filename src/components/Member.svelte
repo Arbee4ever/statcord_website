@@ -2,10 +2,12 @@
 	export let pfp: string;
 	export let name: string;
 	export let score: string;
+	export let i: number;
 </script>
 
 <div class="member">
 	<div class="user">
+		<p class="position">{i + 1}</p>
 		<img class="avatar" src={pfp} alt="ARBEE Logo" />
 		<p class="name">{name}</p>
 	</div>
@@ -28,9 +30,24 @@
 		display: flex;
 	}
 
+	.position {
+		height: fit-content;
+		background: #1a1a1a99;
+		border-radius: 10px;
+		background: rgba(0, 0, 0, 0.25);
+		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
+		border-radius: 100%;
+		display: inline-block;
+		font-weight: bold;
+		line-height: 5vh;
+		width: 5vh;
+		text-align: center;
+	}
+
 	.avatar {
 		height: 5vh;
 		border-radius: 100%;
+		margin-left: 1vw;
 	}
 
 	.name {
