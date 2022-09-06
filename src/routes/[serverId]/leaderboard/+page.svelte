@@ -33,7 +33,7 @@
 <style>
 	.card {
 		position: relative;
-		margin-left: 1vw;
+		margin-left: 1vh;
 		height: fit-content;
 		background: #1a1a1a99;
 		border-radius: 10px;
@@ -41,7 +41,7 @@
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
 		width: max-content;
 		height: min-content;
-		padding: 1vw;
-		width: 95vw;
+		padding: 1vh;
+		width: calc(100vw - 4vh);
 	}
 </style>
