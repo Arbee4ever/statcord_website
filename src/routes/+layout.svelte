@@ -1,6 +1,7 @@
 <script>
 	import Footer from '$components/Footer.svelte';
 	import Header from '$components/Header.svelte';
+	import ArbeeImageMark from '/src/assets/img/2022-01_ARBEE_Bild-Marke_rgb_Verlauf_01.png';
 </script>
 
 <svelte:head>
@@ -8,7 +9,7 @@
     <title>Statcord</title>
     <meta name="description" content="Just another leveling Bot with some unique Features.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/src/assets/img/2022-01_ARBEE_Bild-Marke_rgb_Verlauf_01.png">
+    <link rel="icon" href={ArbeeImageMark}>
     <link rel="canonical" href="https://arbeeco.de">
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@0Arbee0" />
