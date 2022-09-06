@@ -3,12 +3,21 @@
 	export let name: string;
 	export let score: string;
 	export let i: number;
+    let pos: number = i+1;
 </script>
 
 <div class="member">
 	<div class="user">
-		<p class="position">{i + 1}</p>
-		<img class="avatar" src={pfp} alt="ARBEE Logo" />
+		{#if pos == 1}
+			<p class="position first">{pos}</p>
+		{:else if pos == 2}
+			<p class="position second">{pos}</p>
+		{:else if pos == 3}
+			<p class="position third">{pos}</p>
+		{:else}
+			<p class="position">{pos}</p>
+		{/if}
+		<img class="avatar" src={pfp} alt="User" />
 		<p class="name">{name}</p>
 	</div>
 	<div class="stats">
@@ -25,10 +34,24 @@
 		grid-template-rows: 1fr;
 		grid-column-gap: 10px;
 		height: fit-content;
-		background: #1a1a1a99;
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
+	}
+
+	.first {
+		background-color: rgb(218 158 59) !important;
+		box-shadow: 0 0 32px 0 rgb(218 158 59) !important;
+	}
+
+	.second {
+		background-color: rgb(152 152 152) !important;
+		box-shadow: 0 0 32px 0 rgb(152 152 152) !important;
+	}
+
+	.third {
+		background-color: rgb(174, 116, 65) !important;
+		box-shadow: 0 0 32px 0 rgb(174, 116, 65) !important;
 	}
 
 	.user {
@@ -38,7 +61,6 @@
 
 	.position {
 		height: fit-content;
-		background: #1a1a1a99;
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
@@ -77,6 +99,6 @@
 		line-height: 5vh;
 		width: 5vh;
 		text-align: center;
-        float: right;
+		float: right;
 	}
 </style>

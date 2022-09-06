@@ -12,17 +12,17 @@
 			body: JSON.stringify(body)
 		});
 		json = await discorddata.json();
-        json.sort(function(a: any, b: any){
-            return b.score - a.score;
-        });
-    });
+		json.sort(function (a: any, b: any) {
+			return b.score - a.score;
+		});
+	});
 </script>
 
 <main>
 	<div class="card">
 		{#if json}
 			{#each json as { name, pfp, score }, i}
-				<Member {pfp} {name} {score} {i}/>
+				<Member {pfp} {name} {score} {i} />
 			{/each}
 		{:else}
 			<p>Please wait, data is loading...</p>
