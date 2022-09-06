@@ -1,7 +1,11 @@
+<script>
+	import StatcordImg from '/src/assets/img/StatcordImg.png';
+</script>
+
 <div class="card" data-tilt data-tilt-scale="0.95" data-tilt-max="5">
 	<h1 id="title">Statcord</h1>
 	<p id="description">Just another leveling Bot with some unique Features.</p>
-	<img src="/src/assets/img/StatcordImg.png" alt="Statcord placeholder" />
+	<img src={StatcordImg} alt="Statcord placeholder" />
 	<div id="buttons">
 		<a id="addToDiscord">Not yet available</a>
 		<a href="https://discord.gg/E2DNKGVfwq" id="joinTestingServer">
