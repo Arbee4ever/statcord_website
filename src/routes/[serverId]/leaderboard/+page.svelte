@@ -25,7 +25,7 @@
 				<Member {pfp} {name} {score} {i} />
 			{/each}
 		{:else}
-			<p>Please wait, data is loading...</p>
+			<p class="loading">Please wait, data is loading...</p>
 		{/if}
 	</div>
 </main>
@@ -35,6 +35,7 @@
 		position: relative;
 		margin-left: 1vh;
 		height: fit-content;
+		min-height: 7vh;
 		background: #1a1a1a99;
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
@@ -43,5 +44,12 @@
 		height: min-content;
 		padding: 1vh;
 		width: calc(100vw - 4vh);
+	}
+
+	.loading {
+		text-align: center;
+		vertical-align: middle;
+		line-height: 7vh;
+		font-size: 2vh;
 	}
 </style>
