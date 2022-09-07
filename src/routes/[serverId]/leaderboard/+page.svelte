@@ -21,9 +21,16 @@
 <main>
 	<div class="card">
 		{#if json}
-			{#each json as { name, pfp, score }, i}
-				<Member {pfp} {name} {score} {i} />
-			{/each}
+			{#if json.length == 0}
+				<div class="loading">
+					<p>Statcord is not on this Server!</p>
+					<a id="addToDiscord">Not yet available</a>
+				</div>
+			{:else}
+				{#each json as { name, pfp, score }, i}
+					<Member {pfp} {name} {score} {i} />
+				{/each}
+			{/if}
 		{:else}
 			<p class="loading">Please wait, data is loading...</p>
 		{/if}
@@ -35,21 +42,23 @@
 		position: relative;
 		margin-left: 1vh;
 		height: fit-content;
-		min-height: 7vh;
 		background: #1a1a1a99;
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
 		width: max-content;
 		height: min-content;
-		padding: 1vh;
+		padding: 2vh;
 		width: calc(100vw - 4vh);
 	}
 
 	.loading {
 		text-align: center;
 		vertical-align: middle;
-		line-height: 7vh;
-		font-size: 2vh;
+		margin: 1vh;
+	}
+
+	#addToDiscord {
+		padding: 1vh;
 	}
 </style>
