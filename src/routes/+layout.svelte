@@ -21,6 +21,9 @@
         content="https://arbeeco.de/authorImg/2022-01_ARBEE_Bild-Marke_rgb_weiss_bg_verlauf_01.png" />
     <meta name="theme-color" content="#2b8eaf" />
     <meta name="keywords" content="Programming, Bot, Discord, Arbee, GitHub">
+    <script src="/script/vanilla-tilt.js"></script>
+    <script src="https://unpkg.com/smoothscroll-polyfill/dist/smoothscroll.min.js"></script>
+    <script src="https://unpkg.com/smoothscroll-anchor-polyfill"></script>
 </svelte:head>
 
 <main>
