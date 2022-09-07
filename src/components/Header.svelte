@@ -54,7 +54,7 @@
 		padding-top: 5vh;
 		margin-left: auto;
 		margin-right: auto;
-		margin-bottom: 3vh;
+		padding-bottom: 3vh;
 		height: 2vh;
 	}
 
