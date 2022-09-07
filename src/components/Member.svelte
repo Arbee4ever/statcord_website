@@ -3,22 +3,24 @@
 	export let name: string;
 	export let score: string;
 	export let i: number;
-    let pos: number = i+1;
+	let pos: number = i + 1;
 </script>
 
 <div class="member">
 	<div class="user">
-		{#if pos == 1}
-			<p class="position first">{pos}</p>
-		{:else if pos == 2}
-			<p class="position second">{pos}</p>
-		{:else if pos == 3}
-			<p class="position third">{pos}</p>
-		{:else}
+		<div class="namepos">
 			<p class="position">{pos}</p>
+			<p class="name">{name}</p>
+		</div>
+		{#if pos == 1}
+			<img class="avatar first" src={pfp} alt="User" />
+		{:else if pos == 2}
+			<img class="avatar second" src={pfp} alt="User" />
+		{:else if pos == 3}
+			<img class="avatar third" src={pfp} alt="User" />
+		{:else}
+			<img class="avatar" src={pfp} alt="User" />
 		{/if}
-		<img class="avatar" src={pfp} alt="User" />
-		<p class="name">{name}</p>
 	</div>
 	<div class="stats">
 		<p class="score">{score}</p>
@@ -40,18 +42,18 @@
 	}
 
 	.first {
-		background-color: rgb(218 158 59) !important;
-		box-shadow: 0 0 32px 0 rgb(218 158 59) !important;
+		outline: 3px solid rgb(218 158 59);
+		box-shadow: 0 0 32px 0 rgb(218 158 59);
 	}
 
 	.second {
-		background-color: rgb(152 152 152) !important;
-		box-shadow: 0 0 32px 0 rgb(152 152 152) !important;
+		outline: 3px solid rgb(152 152 152);
+		box-shadow: 0 0 32px 0 rgb(152 152 152);
 	}
 
 	.third {
-		background-color: rgb(174, 116, 65) !important;
-		box-shadow: 0 0 32px 0 rgb(174, 116, 65) !important;
+		outline: 3px solid rgb(174, 116, 65);
+		box-shadow: 0 0 32px 0 rgb(174, 116, 65);
 	}
 
 	.user {
@@ -59,29 +61,37 @@
 		display: flex;
 	}
 
-	.position {
-		height: fit-content;
+	.namepos {
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
-		border-radius: 100%;
+		width: min-content;
+		height: 3vh;
+		line-height: 3vh;
+		height: 3vh;
+		width: min-content;
+		align-self: center;
+		padding-top: 0.3vh;
+		padding-right: 0.5vw;
+		padding-left: 0.5vw;
+		margin-right: 2vh;
+	}
+
+	.position {
+		position: absolute;
 		font-weight: bold;
-		line-height: 5vh;
-		width: 5vh;
-		text-align: center;
 	}
 
 	.avatar {
-		height: 5vh;
+		position: absolute;
 		border-radius: 100%;
-		margin-left: 1vh;
+		width: 5vh;
+		margin-left: 3vh;
 	}
 
 	.name {
-		margin-left: 1vh;
+		margin-left: 9vh;
 		text-align: center;
-		height: 5vh;
-		line-height: 5vh;
 	}
 
 	.stats {
@@ -90,7 +100,6 @@
 
 	.score {
 		height: fit-content;
-		background: #1a1a1a99;
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);

@@ -43,7 +43,6 @@
 
 <style>
 	#footer {
-        height: 24vh;
 		text-align: center;
 		margin-top: 6vh;
 		background-color: #000000c2;
