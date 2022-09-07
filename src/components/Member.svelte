@@ -66,7 +66,6 @@
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
 		width: min-content;
-		height: 3vh;
 		line-height: 3vh;
 		height: 3vh;
 		width: min-content;
@@ -82,16 +81,15 @@
 		font-weight: bold;
 	}
 
+	.name {
+		margin-left: 9vh;
+	}
+
 	.avatar {
 		position: absolute;
 		border-radius: 100%;
 		width: 5vh;
 		margin-left: 3vh;
-	}
-
-	.name {
-		margin-left: 9vh;
-		text-align: center;
 	}
 
 	.stats {
