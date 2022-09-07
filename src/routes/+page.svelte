@@ -50,8 +50,7 @@
 		grid-column-gap: 1vh;
 	}
 
-	#addToDiscord {
-		margin-top: 1vh;
+	:global(#addToDiscord) {
 		border-top-right-radius: 10px;
 		border-top-left-radius: 10px;
 		height: 4vh;
