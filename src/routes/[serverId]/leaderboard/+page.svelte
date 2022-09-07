@@ -46,10 +46,9 @@
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
-		width: max-content;
 		height: min-content;
 		padding: 2vh;
-		width: calc(100vw - 4vh);
+		width: 98vw - 4vh;
 	}
 
 	.loading {
@@ -59,6 +58,20 @@
 	}
 
 	#addToDiscord {
-        padding: 1vh;
+		margin-top: 1vh;
+		border-top-right-radius: 10px;
+		border-top-left-radius: 10px;
+		height: 4vh;
+		align-content: center;
+		background: rgba(0, 0, 0, 0.25);
+		box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+		border-radius: 10px;
+		text-align: center;
+		grid-area: 1 / 1 / 2 / 2;
+		color: gray;
+		cursor: default;
+		height: 4vh;
+		line-height: 4vh;
+		padding: 1vh;
 	}
 </style>
