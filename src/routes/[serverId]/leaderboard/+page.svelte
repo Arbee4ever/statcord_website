@@ -40,7 +40,8 @@
 <style>
 	.card {
 		position: relative;
-		margin-left: 1vh;
+		margin-left: 3vh;
+		margin-right: 3vh;
 		height: fit-content;
 		background: #1a1a1a99;
 		border-radius: 10px;
@@ -48,7 +49,6 @@
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
 		height: min-content;
 		padding: 2vh;
-		width: calc(98vw - 4vh);
 	}
 
 	.loading {
