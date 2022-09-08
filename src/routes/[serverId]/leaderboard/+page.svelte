@@ -48,7 +48,7 @@
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
 		height: min-content;
 		padding: 2vh;
-		width: 98vw - 4vh;
+		width: calc(98vw - 4vh);
 	}
 
 	.loading {
