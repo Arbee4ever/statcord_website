@@ -4,9 +4,10 @@
 	import Member from '$components/Member.svelte';
 	import { onMount } from 'svelte';
 	let json: any;
+    let serverId = $page.params.serverId;
 
 	onMount(async () => {
-		let body = { serverId: $page.params.serverId };
+		let body = { serverId: serverId };
 		let discorddata = await fetch('https://statcord-data.arbee.workers.dev', {
 			method: 'POST',
 			body: JSON.stringify(body)
