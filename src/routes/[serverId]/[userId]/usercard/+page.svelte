@@ -24,8 +24,7 @@
 		{#if json}
 			{#if json.length == 0}
 				<div class="loading">
-					<p>Statcord is not on this Server!</p>
-					<a id="addToDiscord">Not yet available</a>
+					<p>This User is not on this Server!</p>
 				</div>
 			{:else}
 				{#each json as { name, pfp, score }, i}
@@ -43,6 +42,8 @@
 
 	.card {
 		position: relative;
+		margin-left: 3vh;
+		margin-right: 3vh;
 		height: fit-content;
 		background: #1a1a1a99;
 		border-radius: 10px;
@@ -56,23 +57,5 @@
 		text-align: center;
 		vertical-align: middle;
 		margin: 1vh;
-	}
-
-	#addToDiscord {
-		margin-top: 1vh;
-		border-top-right-radius: 10px;
-		border-top-left-radius: 10px;
-		height: 4vh;
-		align-content: center;
-		background: rgba(0, 0, 0, 0.25);
-		box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-		border-radius: 10px;
-		text-align: center;
-		grid-area: 1 / 1 / 2 / 2;
-		color: gray;
-		cursor: default;
-		height: 4vh;
-		line-height: 4vh;
-		padding: 1vh;
 	}
 </style>
