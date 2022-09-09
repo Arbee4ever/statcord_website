@@ -9,18 +9,9 @@
 <div class="member">
 	<div class="user">
 		<div class="namepos">
-			<p class="position">{pos}</p>
 			<p class="name">{name}</p>
 		</div>
-		{#if pos == 1}
-			<img class="avatar first" src={pfp} alt="User" />
-		{:else if pos == 2}
-			<img class="avatar second" src={pfp} alt="User" />
-		{:else if pos == 3}
-			<img class="avatar third" src={pfp} alt="User" />
-		{:else}
-			<img class="avatar" src={pfp} alt="User" />
-		{/if}
+		<img class="avatar" src={pfp} alt="User" />
 	</div>
 	<div class="stats">
 		<p class="score">{score}</p>
@@ -39,21 +30,6 @@
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
-	}
-
-	.first {
-		outline: 3px solid rgb(218 158 59);
-		box-shadow: 0 0 32px 0 rgb(218 158 59);
-	}
-
-	.second {
-		outline: 3px solid rgb(152 152 152);
-		box-shadow: 0 0 32px 0 rgb(152 152 152);
-	}
-
-	.third {
-		outline: 3px solid rgb(174, 116, 65);
-		box-shadow: 0 0 32px 0 rgb(174, 116, 65);
 	}
 
 	.user {
@@ -82,14 +58,14 @@
 	}
 
 	.name {
-		margin-left: 9vh;
+		margin-left: 6vh;
 	}
 
 	.avatar {
 		position: absolute;
 		border-radius: 100%;
 		width: 5vh;
-		margin-left: 3vh;
+		margin-left: 0vh;
 	}
 
 	.stats {
