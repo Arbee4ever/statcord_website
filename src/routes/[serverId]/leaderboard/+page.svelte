@@ -4,18 +4,24 @@
 	import Member from '$components/Member.svelte';
 	import { onMount } from 'svelte';
 	let json: any;
-    let serverId = $page.params.serverId;
+	let error: string;
+	let serverId = $page.params.serverId;
 
 	onMount(async () => {
 		let body = { serverId: serverId };
-		let discorddata = await fetch('https://statcord-data.arbee.workers.dev', {
+		let data = await fetch('https://statcord-data.arbee.workers.dev', {
 			method: 'POST',
 			body: JSON.stringify(body)
 		});
-		json = await discorddata.json();
-		json.sort(function (a: any, b: any) {
-			return b.score - a.score;
-		});
+		if (data.status == 200) {
+			json = await data.json();
+			json.sort(function (a: any, b: any) {
+				return b.score - a.score;
+			});
+		} else {
+			console.log(data.statusText);
+			error = data.status + ': ' + (await (await data.blob()).text());
+		}
 	});
 </script>
 
@@ -32,6 +38,10 @@
 					<Member {pfp} {name} {score} {i} />
 				{/each}
 			{/if}
+		{:else if error != null}
+			<div class="loading">
+				<p>{error}</p>
+			</div>
 		{:else}
 			<p class="loading">Please wait, data is loading...</p>
 		{/if}
