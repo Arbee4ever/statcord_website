@@ -7,7 +7,6 @@
 
 	onMount(async () => {
 		let body = { serverId: $page.params.serverId, userId: $page.params.userId };
-		console.log(JSON.stringify(body));
 		let discorddata = await fetch('https://statcord-data.arbee.workers.dev', {
 			method: 'POST',
 			body: JSON.stringify(body)
