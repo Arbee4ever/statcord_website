@@ -16,5 +16,5 @@ export function GET({ url }) {
     ctx.fillRect(0, 0, 800, 200);
 
 
-    return new Response(canvas.toDataURL());
+    return new Response(canvas.createPNGStream().read());
 }
