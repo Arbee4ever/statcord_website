@@ -10,9 +10,11 @@
 		let data = await fetch('https://statcord.arbeeco.de/api/guild/' + $page.params.serverId + "?userId=" + $page.params.userId, {
 			method: 'GET'
 		});
-		json = await data.json();
-		if (data.status != 200) {
-			error = data.status + ': ' + json.message;
+		if (data.status == 200) {
+			json = await data.json();
+		} else {
+			console.log(data.statusText);
+			error = data.status + ': ' + (await (await data.blob()).text());
 		}
 	});
 </script>
