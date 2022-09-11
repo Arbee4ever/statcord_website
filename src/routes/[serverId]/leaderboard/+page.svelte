@@ -29,8 +29,8 @@
 					<a id="addToDiscord">Not yet available</a>
 				</div>
 			{:else}
-				{#each json as { name, pfp, score }, i}
-					<Member {pfp} {name} {score} {i} />
+				{#each json as { pos, name, pfp, score }}
+					<Member {pfp} {name} {score} {pos} />
 				{/each}
 			{/if}
 		{:else if error != null}
