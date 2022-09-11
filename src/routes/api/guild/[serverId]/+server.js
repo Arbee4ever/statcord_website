@@ -34,6 +34,8 @@ export async function GET({ params, url }) {
     });
     if (url.searchParams.has("userId")) {
         let userId = url.searchParams.get("userId");
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         if (userId.length > 18 || userId.length < 17) {
             throw error(400, "Invalid User ID: " + userId);
         }
@@ -53,6 +55,9 @@ export async function GET({ params, url }) {
     });
 }
 
+/**
+ * @param {string} id
+ */
 async function getDiscordData(id) {
     return await fetch('https://discord.com/api/users/' + id, {
         method: 'GET',
