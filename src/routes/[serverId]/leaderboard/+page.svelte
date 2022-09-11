@@ -8,16 +8,11 @@
 	let serverId = $page.params.serverId;
 
 	onMount(async () => {
-		let body = { serverId: serverId };
-		let data = await fetch('https://statcord-data.arbee.workers.dev', {
-			method: 'POST',
-			body: JSON.stringify(body)
+		let data = await fetch('https://statcord.arbeeco.de/api/guild/' + serverId, {
+			method: 'GET'
 		});
 		if (data.status == 200) {
 			json = await data.json();
-			json.sort(function (a: any, b: any) {
-				return b.score - a.score;
-			});
 		} else {
 			console.log(data.statusText);
 			error = data.status + ': ' + (await (await data.blob()).text());

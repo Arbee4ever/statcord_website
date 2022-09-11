@@ -7,16 +7,11 @@
 	let error: string;
 
 	onMount(async () => {
-		let body = { serverId: $page.params.serverId, userId: $page.params.userId };
-		let data = await fetch('https://statcord-data.arbee.workers.dev', {
-			method: 'POST',
-			body: JSON.stringify(body)
+		let data = await fetch('https://statcord.arbeeco.de/api/guild/' + $page.params.serverId + "?userId=" + $page.params.userId, {
+			method: 'GET'
 		});
 		if (data.status == 200) {
 			json = await data.json();
-			json.sort(function (a: any, b: any) {
-				return b.score - a.score;
-			});
 		} else {
 			console.log(data.statusText);
 			error = data.status + ': ' + (await (await data.blob()).text());
