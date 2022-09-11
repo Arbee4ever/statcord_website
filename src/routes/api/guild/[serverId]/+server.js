@@ -13,11 +13,15 @@ export async function GET({ params, url }) {
     if (params.serverId.length != 19) {
         throw error(400, "Invalid Guild ID: " + params.serverId);
     }
-    let data = await collection.find();
+    let data = await collection.find()
+    data.sort((a, b) => {
+        return b.score - a.score;
+    });
     for (const element of data) {
         const discordData = await getDiscordData(element.id);
         const discordDataJson = await discordData.json();
         let jsonElement = {
+            "pos": data.indexOf(element) + 1,
             "id": element.id,
             "name": discordDataJson.username + "#" + discordDataJson.discriminator,
             "pfp": "https://cdn.discordapp.com/avatars/" + element.id + "/" + discordDataJson.avatar,
