@@ -2,8 +2,7 @@
 	export let pfp: string;
 	export let name: string;
 	export let score: string;
-	export let i: number;
-	let pos: number = i + 1;
+	export let pos: number;
 </script>
 
 <div class="member">
