@@ -1,3 +1,4 @@
+import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 import * as Realm from "realm-web";
 const app = new Realm.App({ id: "statcord-leaderboard-nqzqn" });
@@ -52,7 +53,7 @@ async function getDiscordData(id) {
     return await fetch('https://discord.com/api/users/' + id, {
         method: 'GET',
         headers: {
-            "Authorization": "Bot OTU5OTE1MDIwMTUyNjI3Mjcx.GSRB_1.UciDxelk-0neDtQZWvVMaEg-a7yTS9A4-Umwfo"
+            "Authorization": "Bot " +  env.DISCORD_AUTH
         }
     });
 }
