@@ -12,7 +12,6 @@
 		});
 		json = await data.json();
 		if (data.status != 200) {
-			console.log(data.statusText);
 			error = data.status + ': ' + json.message;
 		}
 	});
