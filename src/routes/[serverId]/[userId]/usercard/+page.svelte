@@ -27,8 +27,8 @@
 					<p>This User is not on this Server!</p>
 				</div>
 			{:else}
-				{#each json as { name, pfp, score }, i}
-					<MemberCard {pfp} {name} {score} {i} />
+				{#each json as { pos, name, pfp, score }}
+					<MemberCard {pfp} {name} {score} {pos} />
 				{/each}
 			{/if}
 		{:else if error != null}
