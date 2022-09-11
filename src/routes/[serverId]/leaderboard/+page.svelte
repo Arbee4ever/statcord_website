@@ -13,7 +13,7 @@
 		});
 		json = await data.json();
 		if (data.status != 200) {
-			error = data.status + ': ' + json.message;
+			error = data.status + ': ' + (await data.json()).message;
 		}
 	});
 </script>
