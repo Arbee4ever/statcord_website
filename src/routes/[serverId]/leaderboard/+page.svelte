@@ -14,8 +14,7 @@
 		if (data.status == 200) {
 			json = await data.json();
 		} else {
-			console.log(data.statusText);
-			error = data.status + ': ' + (await (await data.blob()).text());
+			error = data.status + ': ' + (await (await data.json()).message);
 		}
 	});
 </script>
