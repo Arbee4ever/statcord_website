@@ -9,6 +9,7 @@ export async function GET({ params, url }) {
     const mongo = user.mongoClient("mongodb-atlas");
     const collection = mongo.db("Guilds").collection(params.serverId);
     const skip: number = url.searchParams.get("i")*100 ?? 0;
+    const userId: number = url.searchParams.get("userId") ?? null;
     skip.toString()
     console.log(skip);
     let jsonResponse = [];
@@ -36,10 +37,7 @@ export async function GET({ params, url }) {
         jsonResponse.push(jsonElement);
     }
     if (url.searchParams.has("userId")) {
-        const userId = url.searchParams.get("userId");
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        if (userId.length > 18 || userId.length < 17) {
+        if (userId.toString().length > 18 || userId.toString().length < 17) {
             throw error(400, "Invalid User ID: " + userId);
         }
         jsonResponse = jsonResponse.filter((i) => {

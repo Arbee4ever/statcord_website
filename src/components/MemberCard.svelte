@@ -1,25 +1,39 @@
 <script lang="ts">
-	export let pfp: string;
-	export let name: string;
-	export let score: string;
+	import PlaceholderImg from '/src/assets/img/icon_clyde_circle_white.svg';
+	import { onMount } from 'svelte';
 	export let pos: number;
+	export let id: string;
+	export let score: string;
+	let discordDataJson: any = {
+		name: 'Loading...',
+		pfp: PlaceholderImg
+	};
+
+	onMount(async () => {
+		const discordData = await fetch('/api/user/' + id, {
+			method: 'GET'
+		});
+		discordDataJson = await discordData.json();
+	});
 </script>
 
 <div class="member">
 	<div class="user">
-		<div class="namepos">
-			<p class="position">{pos}</p>
-			<p class="name">{name}</p>
-		</div>
-		{#if pos == 1}
-			<img class="avatar first" src={pfp} alt="User" />
-		{:else if pos == 2}
-			<img class="avatar second" src={pfp} alt="User" />
-		{:else if pos == 3}
-			<img class="avatar third" src={pfp} alt="User" />
-		{:else}
-			<img class="avatar" src={pfp} alt="User" />
-		{/if}
+		{#key discordDataJson}
+			<div class="namepos">
+				<p class="position">{pos}</p>
+				{#if pos == 1}
+					<img class="avatar first" src={discordDataJson.pfp} alt="User" />
+				{:else if pos == 2}
+					<img class="avatar second" src={discordDataJson.pfp} alt="User" />
+				{:else if pos == 3}
+					<img class="avatar third" src={discordDataJson.pfp} alt="User" />
+				{:else}
+					<img class="avatar" src={discordDataJson.pfp} alt="User" />
+				{/if}
+				<p class="name">{discordDataJson.name}</p>
+			</div>
+		{/key}
 	</div>
 	<div class="stats">
 		<p class="score">{score}</p>
@@ -61,6 +75,7 @@
 	}
 
 	.namepos {
+		display: inline-flex;
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
@@ -69,26 +84,26 @@
 		height: 3vh;
 		width: min-content;
 		align-self: center;
+		align-items: center;
 		padding-top: 0.3vh;
-		padding-right: 0.5vh;
-		padding-left: 0.5vh;
+		padding-right: 0.8vh;
+		padding-left: 0.8vh;
 		margin-right: 2vh;
 	}
 
 	.position {
-		position: absolute;
 		font-weight: bold;
 	}
 
 	.name {
-		margin-left: 9vh;
+		margin-left: 1vh;
 	}
 
 	.avatar {
-		position: absolute;
 		border-radius: 100%;
 		width: 5vh;
-		margin-left: 3vh;
+		height: 5vh;
+		margin-left: 1vh;
 	}
 
 	.stats {
