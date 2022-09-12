@@ -36,7 +36,7 @@ export async function GET({ params, url }) {
         };
         jsonResponse.push(jsonElement);
     }
-    if (url.searchParams.has("userId")) {
+    if (userId) {
         if (userId.toString().length > 18 || userId.toString().length < 17) {
             throw error(400, "Invalid User ID: " + userId);
         }
