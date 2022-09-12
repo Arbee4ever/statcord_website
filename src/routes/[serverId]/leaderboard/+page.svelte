@@ -5,9 +5,12 @@
 	import { onMount } from 'svelte';
 	let json: any;
 	let error: string;
+	let hasMore: boolean = true;
+	let index = 0;
 	let serverId = $page.params.serverId;
 
 	onMount(async () => {
+		window.addEventListener('scroll', onScroll);
 		let data = await fetch('/api/guild/' + serverId + '?i=0', {
 			method: 'GET'
 		});
@@ -17,28 +20,54 @@
 			error = data.status + ': ' + (await (await data.json()).message);
 		}
 	});
+
+	const onScroll = async () => {
+		if (hasMore) {
+			if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+				index++;
+				let newData = await fetch('/api/guild/' + serverId + '?i=' + index, {
+					method: 'GET'
+				});
+				let newJson = await newData.json();
+				if (newJson.end == 'end') {
+					hasMore = false;
+				} else if (newData.status == 200) {
+					for (let i = 0; i < newJson.length; i++) {
+						const element = newJson[i];
+						json.push(element);
+						json = json;
+					}
+				} else {
+					error = newData.status + ': ' + (await newJson.message);
+				}
+			}
+		}
+	};
 </script>
 
 <main>
 	<div class="card">
-		{#if json}
-			{#if json.length == 0}
-				<div class="loading">
-					<p>Statcord is not on this Server!</p>
-					<a id="addToDiscord">Not yet available</a>
-				</div>
+		{#key json}
+			{#if json}
+				{#if json.length == 0}
+					<div class="loading">
+						<p>Statcord is not on this Server!</p>
+						<a id="addToDiscord">Not yet available</a>
+					</div>
+				{:else}
+					{#each json as { pos, id, score }}
+						<Member {pos} {id} {score} />
+					{/each}
+				{/if}
 			{:else}
-				{#each json as { pos, id, score }}
-					<Member {pos} {id} {score} />
-				{/each}
+				<p class="loading">Please wait, data is loading...</p>
 			{/if}
-		{:else if error != null}
-			<div class="loading">
-				<p>{error}</p>
-			</div>
-		{:else}
-			<p class="loading">Please wait, data is loading...</p>
-		{/if}
+			{#if error != null}
+				<div class="loading">
+					<p>{error}</p>
+				</div>
+			{/if}
+		{/key}
 	</div>
 </main>
 

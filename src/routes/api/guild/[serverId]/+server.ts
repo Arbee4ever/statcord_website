@@ -8,27 +8,39 @@ export async function GET({ params, url }) {
     const user = await app.logIn(credentials);
     const mongo = user.mongoClient("mongodb-atlas");
     const collection = mongo.db("Guilds").collection(params.serverId);
-    const skip: number = url.searchParams.get("i")*100 ?? 0;
+    const index: number = Number(url.searchParams.get("i")) * 100 ?? 0;
     const userId: number = url.searchParams.get("userId") ?? null;
     let jsonResponse = [];
     if (params.serverId.length != 19) {
         throw error(400, "Invalid Guild ID: " + params.serverId);
     }
+    if (!(index < await collection.count())) {
+        const end = {
+            "end": "end"
+        }
+        return new Response(
+            JSON.stringify(end), {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS'
+            }
+        });
+    }
     const data = await collection.aggregate([
         {
-            $sort: { score: -1}
+            $sort: { score: -1 }
         },
         {
-            $limit: 100
+            $limit: index + 100
         },
         {
-            $skip: Number(skip)
+            $skip: index
         }
     ]);
     for (let i = 0; i < data.length; i++) {
         const element = data[i];
         const jsonElement = {
-            "pos": i + 1,
+            "pos": (i + 1) + index,
             "id": element.id,
             "score": element.score
         };
