@@ -1,7 +1,7 @@
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 
-/** @type {import('../../../../../.svelte-kit/types/src/routes/api/guild/[serverId]/$types').RequestHandler} */
+/** @type {import('./$types').RequestHandler} */
 export async function GET({ params }) {
     if (params.userId.length != 18) {
         throw error(400, "Invalid User ID: " + params.userId);
