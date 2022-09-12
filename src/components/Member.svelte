@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	export let pos: number;
 	export let id: string;
 	export let score: string;
-	export let pos: number;
 	let discordDataJson: any = {
 		name: 'Loading...',
 		pfp: '/src/assets/img/icon_clyde_circle_white.svg'
