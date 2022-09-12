@@ -14,7 +14,8 @@ export async function GET({ params, url }) {
     if (params.serverId.length != 19) {
         throw error(400, "Invalid Guild ID: " + params.serverId);
     }
-    if (!(index < await collection.count())) {
+    const count = await collection.count();
+    if (index >= count && index-100 <= count) {
         const end = {
             "end": "end"
         }
