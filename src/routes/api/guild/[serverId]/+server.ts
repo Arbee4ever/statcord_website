@@ -10,8 +10,6 @@ export async function GET({ params, url }) {
     const collection = mongo.db("Guilds").collection(params.serverId);
     const skip: number = url.searchParams.get("i")*100 ?? 0;
     const userId: number = url.searchParams.get("userId") ?? null;
-    skip.toString()
-    console.log(skip);
     let jsonResponse = [];
     if (params.serverId.length != 19) {
         throw error(400, "Invalid Guild ID: " + params.serverId);
