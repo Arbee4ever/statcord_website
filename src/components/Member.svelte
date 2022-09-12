@@ -1,11 +1,12 @@
 <script lang="ts">
+	import PlaceholderImg from '/src/assets/img/icon_clyde_circle_white.svg';
 	import { onMount } from 'svelte';
 	export let pos: number;
 	export let id: string;
 	export let score: string;
 	let discordDataJson: any = {
 		name: 'Loading...',
-		pfp: '/src/assets/img/icon_clyde_circle_white.svg'
+		pfp: PlaceholderImg
 	};
 
 	onMount(async () => {
