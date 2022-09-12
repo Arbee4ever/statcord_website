@@ -85,8 +85,8 @@
 		align-self: center;
 		align-items: center;
 		padding-top: 0.3vh;
-		padding-right: 0.5vh;
-		padding-left: 0.5vh;
+		padding-right: 0.8vh;
+		padding-left: 0.8vh;
 		margin-right: 2vh;
 	}
 
