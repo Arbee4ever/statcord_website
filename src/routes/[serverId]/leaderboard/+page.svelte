@@ -8,7 +8,7 @@
 	let serverId = $page.params.serverId;
 
 	onMount(async () => {
-		let data = await fetch('https://statcord.arbeeco.de/api/guild/' + serverId, {
+		let data = await fetch('/api/guild/' + serverId, {
 			method: 'GET'
 		});
 		if (data.status == 200) {
@@ -28,8 +28,8 @@
 					<a id="addToDiscord">Not yet available</a>
 				</div>
 			{:else}
-				{#each json as { pos, name, pfp, score }}
-					<Member {pfp} {name} {score} {pos} />
+				{#each json as { id, pos, score }}
+					<Member {id} {score} {pos} />
 				{/each}
 			{/if}
 		{:else if error != null}

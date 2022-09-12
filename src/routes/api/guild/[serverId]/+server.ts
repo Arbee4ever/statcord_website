@@ -1,39 +1,32 @@
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
-import * as Realm from "realm-web";
-const app = new Realm.App({ id: "statcord-leaderboard-nqzqn" });
-const credentials = Realm.Credentials.anonymous();
+import { MongoClient } from "mongodb";
+const client = new MongoClient(env.MONGODB_CONNECTION_STRING);
 
-/** @type {import('./$types').RequestHandler} */
+/** @type {import('../../../../../.svelte-kit/types/src/routes/api/guild/[serverId]/$types').RequestHandler} */
 export async function GET({ params, url }) {
-    const user = await app.logIn(credentials);
-    const mongo = user.mongoClient("mongodb-atlas");
-    const collection = mongo.db("Guilds").collection(params.serverId);
+    const collection = client.db("Guilds").collection(params.serverId);
+    const skip = url.searchParams.get("index") ?? 0;
     let jsonResponse = [];
     if (params.serverId.length != 19) {
         throw error(400, "Invalid Guild ID: " + params.serverId);
     }
-    let data = await collection.find()
-    data.sort((a, b) => {
-        return b.score - a.score;
-    });
-    for (const element of data) {
+    const data = await collection.find().sort( { score: -1 } ).limit(10).skip(skip).toArray();
+    for (let i = 0; i < data.length; i++) {
+        const element = data[i];
         const discordData = await getDiscordData(element.id);
         const discordDataJson = await discordData.json();
-        let jsonElement = {
-            "pos": data.indexOf(element) + 1,
-            "id": element.id,
+        const jsonElement = {
+            "pos": i + 1,
+            "id": discordDataJson.id,
             "name": discordDataJson.username + "#" + discordDataJson.discriminator,
             "pfp": "https://cdn.discordapp.com/avatars/" + element.id + "/" + discordDataJson.avatar,
             "score": element.score
         };
         jsonResponse.push(jsonElement);
-    };
-    jsonResponse.sort((a, b) => {
-        return b.score - a.score;
-    });
+    }
     if (url.searchParams.has("userId")) {
-        let userId = url.searchParams.get("userId");
+        const userId = url.searchParams.get("userId");
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         if (userId.length > 18 || userId.length < 17) {
@@ -58,7 +51,7 @@ export async function GET({ params, url }) {
 /**
  * @param {string} id
  */
-async function getDiscordData(id) {
+async function getDiscordData(id: string) {
     return await fetch('https://discord.com/api/users/' + id, {
         method: 'GET',
         headers: {

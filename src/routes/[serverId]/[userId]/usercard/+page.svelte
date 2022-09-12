@@ -7,7 +7,7 @@
 	let error: string;
 
 	onMount(async () => {
-		let data = await fetch('https://statcord.arbeeco.de/api/guild/' + $page.params.serverId + "?userId=" + $page.params.userId, {
+		let data = await fetch('/api/guild/' + $page.params.serverId + "?userId=" + $page.params.userId, {
 			method: 'GET'
 		});
 		if (data.status == 200) {
