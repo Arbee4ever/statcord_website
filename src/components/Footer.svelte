@@ -12,7 +12,7 @@
 	<br />
 	<div id="footercontact">
 		<a href="https://ko-fi.com/arbee" target="_blank">
-			<img src={KoFiLogo} alt="Support me on Patreon!" />
+			<img src={KoFiLogo} alt="Support me on Ko-fi!" />
 		</a>
 		<a href="https://discord.gg/fHu8AZBrYW" target="_blank">
 			<img src={DiscordLogo} alt="Contact ARBEE over Discord." />
