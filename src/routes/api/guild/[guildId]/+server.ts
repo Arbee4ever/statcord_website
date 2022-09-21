@@ -7,12 +7,12 @@ const credentials = Realm.Credentials.anonymous();
 export async function GET({ params, url }) {
     const user = await app.logIn(credentials);
     const mongo = user.mongoClient("mongodb-atlas");
-    const collection = mongo.db("Guilds").collection(params.serverId);
+    const collection = mongo.db("Guilds").collection(params.guildId);
     const index: number = Number(url.searchParams.get("i")) * 100 ?? 0;
     const userId: number = url.searchParams.get("userId") ?? null;
     let jsonResponse = [];
-    if (params.serverId.length != 19) {
-        throw error(400, "Invalid Guild ID: " + params.serverId);
+    if (params.guildId.length != 19) {
+        throw error(400, "Invalid Guild ID: " + params.guildId);
     }
     const count = await collection.count();
     if (index >= count && index-100 <= count) {
@@ -29,7 +29,7 @@ export async function GET({ params, url }) {
     }
     const data = await collection.aggregate([
         {
-            $sort: { score: -1 }
+            $sort: { textscore: -1 }
         },
         {
             $limit: index + 100
@@ -43,7 +43,7 @@ export async function GET({ params, url }) {
         const jsonElement = {
             "pos": (i + 1) + index,
             "id": element.id,
-            "score": element.score
+            "score": parseInt(element.textscore) + parseInt(element.voicescore)
         };
         jsonResponse.push(jsonElement);
     }
