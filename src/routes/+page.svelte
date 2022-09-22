@@ -1,6 +1,6 @@
 <script>
-	import StatcordImg from '/src/assets/img/StatcordImg.png';
-    import tilt from '../lib/script/tilt.js';
+	import StatcordImg from '$lib/img/StatcordImg.png';
+    import tilt from '$lib/script/tilt.js';
 	
 	let reverse = false;
 </script>
