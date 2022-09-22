@@ -1,6 +1,6 @@
 <script lang="ts">
-	import arbeeLogo from '/src/assets/img/2022-01_ARBEE_Wort-Marke_rgb_weiss_01.svg';
-	import TopIcon from '/src/assets/img/TopIcon.svg';
+	import arbeeLogo from '$lib/img/2022-01_ARBEE_Wort-Marke_rgb_weiss_01.svg';
+	import TopIcon from '$lib/img/TopIcon.svg';
 	var topBtn: HTMLImageElement;
 
 	function onScroll() {

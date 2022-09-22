@@ -1,7 +1,7 @@
 <script>
 	import Footer from '$components/Footer.svelte';
 	import Header from '$components/Header.svelte';
-	import ArbeeImageMark from '/src/assets/img/2022-01_ARBEE_Bild-Marke_rgb_Verlauf_01.png';
+	import ArbeeImageMark from '$lib/img/2022-01_ARBEE_Bild-Marke_rgb_Verlauf_01.png';
 </script>
 
 <svelte:head>
