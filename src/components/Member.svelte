@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PlaceholderImg from '/src/assets/img/icon_clyde_circle_white.svg';
+	import PlaceholderImg from '$lib/img/icon_clyde_circle_white.svg';
 	import { onMount } from 'svelte';
 	export let pos: number;
 	export let id: string;
