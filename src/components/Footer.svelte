@@ -1,10 +1,10 @@
 <script>
-	import ArbeeWordImageMark from '/src/assets/img/2022-01_ARBEE_Wort-Bild-Marke_rgb_weiss_01.svg';
-	import KoFiLogo from '/src/assets/img/ko-fi-icon.svg';
-	import DiscordLogo from '/src/assets/img/icon_clyde_circle_white.svg';
-	import TwitterLogo from '/src/assets/img/TwitterLogoWhite.svg';
-	import GitHubLogo from '/src/assets/img/GitHub-Mark-Light-120px-plus.png';
-	import MailIcon from '/src/assets/img/MailLogoWhite.svg';
+	import ArbeeWordImageMark from '$lib/img/2022-01_ARBEE_Wort-Bild-Marke_rgb_weiss_01.svg';
+	import KoFiLogo from '$lib/img/ko-fi-icon.svg';
+	import DiscordLogo from '$lib/img/icon_clyde_circle_white.svg';
+	import TwitterLogo from '$lib/img/TwitterLogoWhite.svg';
+	import GitHubLogo from '$lib/img/GitHub-Mark-Light-120px-plus.png';
+	import MailIcon from '$lib/img/MailLogoWhite.svg';
 </script>
 
 <footer id="footer">

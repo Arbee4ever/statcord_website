@@ -4,7 +4,7 @@ const app = new Realm.App({ id: "statcord-leaderboard-nqzqn" });
 const credentials = Realm.Credentials.anonymous();
 
 /** @type {import('./$types').RequestHandler} */
-export async function GET({ params, url }) {
+export async function GET({ params, url }: any) {
     const user = await app.logIn(credentials);
     const mongo = user.mongoClient("mongodb-atlas");
     const collection = mongo.db("Guilds").collection(params.guildId);
@@ -15,7 +15,7 @@ export async function GET({ params, url }) {
         throw error(400, "Invalid Guild ID: " + params.guildId);
     }
     const count = await collection.count();
-    if (index >= count && index-100 <= count) {
+    if (index >= count && index - 100 <= count) {
         const end = {
             "end": "end"
         }
