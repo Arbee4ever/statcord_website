@@ -5,12 +5,17 @@
 
 	let user: any;
 	let guilds: any;
-	let botGuildsResp;
+	let botGuildsResp: any;
+	let count;
 
 	onMount(async () => {
 		if ($page.data.userGuilds != undefined) {
-			user = $page.data.user;
-			guilds = $page.data.userGuilds;
+			page.subscribe((value) => {
+				user = value.data.user;
+			});
+			page.subscribe((value) => {
+				guilds = value.data.userGuilds;
+			});
 			guilds.sort(function (a, b) {
 				return compareStrings(a.name, b.name);
 			});
@@ -19,6 +24,8 @@
 				method: 'GET'
 			});
 			botGuildsResp = await botGuildsReq.json();
+			count = botGuildsResp.length;
+            console.log(count)
 		}
 	});
 
@@ -33,6 +40,9 @@
 <div class="cardHolder">
 	<div class="card dashboards">
 		<h1 id="title">Your Servers</h1>
+		{#key count}
+			{count}
+		{/key}
 		{#key user}
 			{#if user}
 				<div class="dataHolder card">
