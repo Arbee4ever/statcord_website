@@ -4,18 +4,23 @@
 
 <main>
 	<div id="notFound">
-		<h1>{$page.status}</h1>
-		<p><strong>{$page.error.message}</strong></p>
+		<div>
+			<h1>{$page.status}</h1>
+			<p><strong>{$page.error.message}</strong></p>
+		</div>
 	</div>
 </main>
 
 <style>
 	#notFound {
-		width: 100px;
-		transform: translate(0, 50%);
+		min-height: 100vh;
+		font-size: 150%;
+		display: flex;
+		align-items: center;
+	}
+
+	#notFound div {
 		width: 100%;
 		text-align: center;
-		font-size: 150%;
-		color: hsl(0, 0%, 100%);
 	}
 </style>
