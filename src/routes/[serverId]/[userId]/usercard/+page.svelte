@@ -41,12 +41,15 @@
 </main>
 
 <style>
-	@import url(https://fonts.bunny.net/css?family=josefin-sans:400);
+	main {
+		display: flex;
+		align-items: center;
+	}
 
 	.card {
 		position: relative;
-		margin-left: 3vh;
-		margin-right: 3vh;
+		margin-left: auto;
+		margin-right: auto;
 		height: fit-content;
 		background: #1a1a1a99;
 		border-radius: 10px;
