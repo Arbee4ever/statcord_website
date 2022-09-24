@@ -1,4 +1,4 @@
-import { HOST } from "$env/static/private";
+import { env } from '$env/dynamic/private';
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load(request) {
@@ -6,7 +6,7 @@ export async function load(request) {
     const disco_access_token = request.cookies.get("disco_access_token");
 
     if (disco_refresh_token && !disco_access_token) {
-        const discord_request = await fetch(`${HOST}/api/refresh?code=${disco_refresh_token}`);
+        const discord_request = await fetch(`${env.HOST}/api/refresh?code=${disco_refresh_token}`);
         const discord_response = await discord_request.json();
 
         if (discord_response.disco_access_token) {

@@ -1,13 +1,13 @@
-import { DISCORD_CLIENT_SECRET, DISCORD_CLIENT_ID, DISCORD_REDIRECT_URI } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async (query) => {
     const returnCode = query.url.searchParams.get("code");
     const dataObject = {
-        'client_id': DISCORD_CLIENT_ID,
-        'client_secret': DISCORD_CLIENT_SECRET,
+        'client_id': env.DISCORD_CLIENT_ID,
+        'client_secret': env.DISCORD_CLIENT_SECRET,
         'grant_type': 'authorization_code',
-        'redirect_uri': DISCORD_REDIRECT_URI,
+        'redirect_uri': env.DISCORD_REDIRECT_URI,
         'code': returnCode,
         'scope': 'identify guilds'
     }

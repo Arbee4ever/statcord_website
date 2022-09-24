@@ -1,4 +1,4 @@
-import { DISCORD_AUTH } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ params, url }: any) {
@@ -6,7 +6,7 @@ export async function GET({ params, url }: any) {
     const guildsReq = await fetch('https://discordapp.com/api/users/@me/guilds', {
         method: 'GET',
         headers: {
-            Authorization: 'Bot ' + DISCORD_AUTH
+            Authorization: 'Bot ' + env.DISCORD_AUTH
         }
     });
 
