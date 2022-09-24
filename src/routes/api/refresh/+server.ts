@@ -1,4 +1,4 @@
-import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, DISCORD_REDIRECT_URI } from "$env/static/private";
+import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async (query) => {
@@ -11,10 +11,10 @@ export const GET: RequestHandler = async (query) => {
   }
 
   const dataObject = {
-    client_id: DISCORD_CLIENT_ID,
-    client_secret: DISCORD_CLIENT_SECRET,
+    client_id: env.DISCORD_CLIENT_ID,
+    client_secret: env.DISCORD_CLIENT_SECRET,
     grant_type: 'refresh_token',
-    redirect_uri: DISCORD_REDIRECT_URI,
+    redirect_uri: env.DISCORD_REDIRECT_URI,
     refresh_token: disco_refresh_token,
     scope: 'identify email guilds'
   };
