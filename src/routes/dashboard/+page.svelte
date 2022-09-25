@@ -5,8 +5,6 @@
 
 	let user: any;
 	let guilds: any;
-	let botGuildsResp: any;
-	let count;
 
 	onMount(async () => {
 		if ($page.data.userGuilds != undefined) {
@@ -16,20 +14,19 @@
 			page.subscribe((value) => {
 				guilds = value.data.userGuilds;
 			});
-			guilds.sort(function (a, b) {
+			guilds.sort(function (a: any, b: any) {
 				return compareStrings(a.name, b.name);
 			});
-
-			const botGuildsReq = await fetch('/api/guild', {
-				method: 'GET'
+			guilds = guilds.sort(function (a: { name: string; }, b: { name: string; }) {
+				return compareStrings(a.name, b.name);
 			});
-			botGuildsResp = await botGuildsReq.json();
-			count = botGuildsResp.length;
-            console.log(count)
+			guilds = guilds.sort(function (a: { statcord: number; }, b: { statcord: number; }) {
+				return a.statcord - b.statcord;
+			});
 		}
 	});
 
-	function compareStrings(a, b) {
+	function compareStrings(a: string, b: string) {
 		a = a.toLowerCase();
 		b = b.toLowerCase();
 
@@ -40,9 +37,6 @@
 <div class="cardHolder">
 	<div class="card dashboards">
 		<h1 id="title">Your Servers</h1>
-		{#key count}
-			{count}
-		{/key}
 		{#key user}
 			{#if user}
 				<div class="dataHolder card">
@@ -59,9 +53,16 @@
 					</div>
 					<div class="guildList">
 						{#if guilds}
-							{#each guilds as { name, icon, id, permissions }}
-								{#if (permissions & (1 << 5)) != 0}
+							{#each guilds as { statcord, name, icon, id }}
+								{#if statcord == 200}
 									<a href="dashboard/{id}" class="guild">
+										{#if icon != null}
+											<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
+										{/if}
+										<p>{name}</p>
+									</a>
+								{:else}
+									<a href="dashboard/{id}" class="guild noStatcord">
 										{#if icon != null}
 											<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
 										{/if}
@@ -126,10 +127,7 @@
 
 	.guildList {
 		width: 100%;
-		display: flex;
 		overflow-y: overlay;
-		align-items: center;
-		flex-direction: column;
 	}
 
 	.login {
@@ -162,6 +160,10 @@
 
 	.signout {
 		margin-left: 0.5vw;
+	}
+
+	.noStatcord {
+		filter: brightness(50%);
 	}
 
 	.guild {

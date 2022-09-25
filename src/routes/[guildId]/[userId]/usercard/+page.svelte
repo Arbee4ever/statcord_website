@@ -7,9 +7,12 @@
 	let error: string;
 
 	onMount(async () => {
-		let data = await fetch('/api/guild/' + $page.params.serverId + "?userId=" + $page.params.userId, {
-			method: 'GET'
-		});
+		let data = await fetch(
+			'/api/guilds/' + $page.params.guildId + '?userId=' + $page.params.userId,
+			{
+				method: 'GET'
+			}
+		);
 		if (data.status == 200) {
 			json = await data.json();
 		} else {

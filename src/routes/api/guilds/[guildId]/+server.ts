@@ -11,8 +11,8 @@ export async function GET({ params, url }: any) {
     const index: number = Number(url.searchParams.get("i")) * 100 ?? 0;
     const userId: number = url.searchParams.get("userId") ?? null;
     let jsonResponse = [];
-    if (params.guildId.length != 19) {
-        throw error(400, "Invalid Guild ID: " + params.guildId);
+    if (await collection.count() == 0) {
+        throw error(404, "Guild not found: " + params.guildId);
     }
     const count = await collection.count();
     if (index >= count && index - 100 <= count) {
