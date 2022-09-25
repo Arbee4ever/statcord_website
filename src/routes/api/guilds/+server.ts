@@ -1,8 +1,7 @@
 import { env } from '$env/dynamic/private';
 
 /** @type {import('./$types').RequestHandler} */
-export async function GET({ params, url }: any) {
-
+export async function GET() {
     const guildsReq = await fetch('https://discordapp.com/api/users/@me/guilds', {
         method: 'GET',
         headers: {

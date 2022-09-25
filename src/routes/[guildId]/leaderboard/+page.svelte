@@ -7,11 +7,11 @@
 	let error: string;
 	let hasMore: boolean = true;
 	let index = 0;
-	let serverId = $page.params.serverId;
+	let guildId = $page.params.guildId;
 
 	onMount(async () => {
 		window.addEventListener('scroll', onScroll);
-		let data = await fetch('/api/guild/' + serverId + '?i=0', {
+		let data = await fetch('/api/guilds/' + guildId + '?i=0', {
 			method: 'GET'
 		});
 		if (data.status == 200) {
@@ -25,7 +25,7 @@
 		if (hasMore) {
 			if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
 				index++;
-				let newData = await fetch('/api/guild/' + serverId + '?i=' + index, {
+				let newData = await fetch('/api/guilds/' + guildId + '?i=' + index, {
 					method: 'GET'
 				});
 				let newJson = await newData.json();
