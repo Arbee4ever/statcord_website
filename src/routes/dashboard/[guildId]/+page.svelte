@@ -9,12 +9,13 @@
 </main>
 
 <style>
-    main {
-        display: flex;
-        align-items: center;
-    }
+	main {
+		display: flex;
+		align-items: center;
+	}
+
 	.card {
-        margin: auto;
+		margin: auto;
 		position: relative;
 		height: fit-content;
 		background: #1a1a1a99;
@@ -22,6 +23,7 @@
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
 		padding: 1vh;
-		width: max-content;
+		width: 30vw;
+		height: 30vh;
 	}
 </style>

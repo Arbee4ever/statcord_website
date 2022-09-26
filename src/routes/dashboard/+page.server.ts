@@ -6,7 +6,7 @@ export async function load(event) {
     const disco_access_token = event.cookies.get("disco_access_token");
 
     if (disco_refresh_token && !disco_access_token) {
-        const discord_request = await fetch(`${env.HOST}/api/refresh?code=${disco_refresh_token}`);
+        const discord_request = await fetch(env.HOST + '/api/refresh?code=' + disco_refresh_token)
         const discord_response = await discord_request.json();
 
         if (discord_response.disco_access_token) {
@@ -88,7 +88,7 @@ export async function load(event) {
 }
 
 async function checkGuild(id) {
-        const req = await fetch('https://statcord.arbeeco.de/api/guilds/' + id, {
+        const req = await fetch(env.HOST + '/api/guilds/' + id, {
             method: 'GET'
         });
         return req.status;
