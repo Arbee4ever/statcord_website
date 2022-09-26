@@ -10,12 +10,12 @@ export const GET: RequestHandler = async (query) => {
     }
 
     const dataObject = {
-        redirect_uri: env.DISCORD_REDIRECT_URI,
-        scope: 'identify guilds',
         client_id: env.DISCORD_CLIENT_ID,
         client_secret: env.DISCORD_CLIENT_SECRET,
+        redirect_uri: env.DISCORD_REDIRECT_URI,
+        refresh_token: disco_refresh_token,
         grant_type: 'refresh_token',
-        refresh_token: disco_refresh_token
+        scope: 'identify guilds'
     };
 
     const request = await fetch('https://discord.com/api/oauth2/token', {
@@ -33,20 +33,12 @@ export const GET: RequestHandler = async (query) => {
     }
 
     const jsonResp = {
-        disco_access_token: response.access_token
+        disco_access_token: response.access_token,
+        disco_refresh_token: response.refresh_token,
+        access_token_expires_in: new Date(Date.now() + response.expires_in),
+        refresh_token_expires_in: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     }
 
-    const access_token_expires_in = new Date(Date.now() + response.expires_in);
-    const refresh_token_expires_in = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-    console.log(response.access_token)
-    console.log(response.refresh_token)
     return new Response(
-        JSON.stringify(jsonResp), {
-        headers: {
-            'set-cookie': [
-                `disco_access_token=${response.access_token}; Path=/; HttpOnly; SameSite=Strict; Expires=${access_token_expires_in}}`,
-                `disco_refresh_token=${response.refresh_token}; Path=/; HttpOnly; SameSite=Strict; Expires=${refresh_token_expires_in}`,
-            ]
-        }
-    });
+        JSON.stringify(jsonResp));
 }

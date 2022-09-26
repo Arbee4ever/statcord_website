@@ -1,29 +1,24 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import DiscordLogo from '$lib/img/discord_logo.svg';
-	import { onMount } from 'svelte';
 
 	let user: any;
 	let guilds: any;
 
-	onMount(async () => {
-		if ($page.data.userGuilds != undefined) {
-			page.subscribe((value) => {
-				user = value.data.user;
-			});
-			page.subscribe((value) => {
-				guilds = value.data.userGuilds;
-			});
-			guilds.sort(function (a: any, b: any) {
-				return compareStrings(a.name, b.name);
-			});
-			guilds = guilds.sort(function (a: { name: string }, b: { name: string }) {
-				return compareStrings(a.name, b.name);
-			});
-			guilds = guilds.sort(function (a: { statcord: number }, b: { statcord: number }) {
-				return a.statcord - b.statcord;
-			});
-		}
+	page.subscribe((value) => {
+		user = value.data.user;
+	});
+	page.subscribe((value) => {
+		guilds = value.data.userGuilds;
+	});
+	guilds.sort(function (a: any, b: any) {
+		return compareStrings(a.name, b.name);
+	});
+	guilds = guilds.sort(function (a: { name: string }, b: { name: string }) {
+		return compareStrings(a.name, b.name);
+	});
+	guilds = guilds.sort(function (a: { statcord: number }, b: { statcord: number }) {
+		return a.statcord - b.statcord;
 	});
 
 	function compareStrings(a: string, b: string) {
@@ -52,7 +47,7 @@
 						</a>
 					</div>
 					<div class="guildList">
-						{#if guilds}
+						{#await guilds then}
 							{#each guilds as { statcord, name, icon, id }}
 								{#if statcord == 200}
 									<a href="dashboard/{id}" class="guild">
@@ -70,7 +65,7 @@
 									</a>
 								{/if}
 							{/each}
-						{/if}
+						{/await}
 					</div>
 				</div>
 			{:else}

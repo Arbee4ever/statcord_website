@@ -10,6 +10,9 @@ export async function load(event) {
         const discord_response = await discord_request.json();
 
         if (discord_response.disco_access_token) {
+            event.cookies.set(`disco_access_token=${discord_response.access_token}; Path=/; HttpOnly; SameSite=Strict; Expires=${discord_response.access_token_expires_in}}`)
+            event.cookies.set(`disco_refresh_token=${discord_response.refresh_token}; Path=/; HttpOnly; SameSite=Strict; Expires=${discord_response.refresh_token_expires_in}`)
+
             const request = await fetch(`https://discordapp.com/api/users/@me`, {
                 headers: { 'Authorization': `Bearer ${discord_response.disco_access_token}` }
             });
@@ -88,8 +91,8 @@ export async function load(event) {
 }
 
 async function checkGuild(id) {
-        const req = await fetch(env.HOST + '/api/guilds/' + id, {
-            method: 'GET'
-        });
-        return req.status;
+    const req = await fetch(env.HOST + '/api/guilds/' + id, {
+        method: 'GET'
+    });
+    return req.status;
 }
