@@ -17,10 +17,10 @@
 			guilds.sort(function (a: any, b: any) {
 				return compareStrings(a.name, b.name);
 			});
-			guilds = guilds.sort(function (a: { name: string; }, b: { name: string; }) {
+			guilds = guilds.sort(function (a: { name: string }, b: { name: string }) {
 				return compareStrings(a.name, b.name);
 			});
-			guilds = guilds.sort(function (a: { statcord: number; }, b: { statcord: number; }) {
+			guilds = guilds.sort(function (a: { statcord: number }, b: { statcord: number }) {
 				return a.statcord - b.statcord;
 			});
 		}
@@ -152,6 +152,10 @@
 	#user {
 		height: min-content;
 		display: flex;
+	}
+
+	#user h1 {
+		font-size: 2.5vh;
 	}
 
 	#user img {
