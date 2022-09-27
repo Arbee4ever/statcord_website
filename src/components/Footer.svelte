@@ -44,7 +44,6 @@
 <style>
 	#footer {
 		text-align: center;
-		margin-top: 6vh;
 		background-color: #000000c2;
 		padding: 5vh;
 	}

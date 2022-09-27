@@ -32,13 +32,20 @@
 		on:click={scrollUp}
 		bind:this={topBtn}
 	/>
-	<div id="vignette" />
 	<a href="/">
 		<img src={arbeeLogo} id="wordmark" alt="ARBEE's Wordmark" />
 	</a>
 </header>
+<div id="vignette" />
 
 <style>
+	header {
+        position: absolute;
+		width: 100vw;
+		text-align: center;
+		height: 10vh;
+	}
+
 	#vignette {
 		pointer-events: none;
 		position: fixed;
@@ -50,11 +57,7 @@
 	}
 
 	#wordmark {
-        width: 100%;
-		padding-top: 5vh;
-		margin-left: auto;
-		margin-right: auto;
-		padding-bottom: 3vh;
+		margin: 5vh auto 3vh;
 		height: 2vh;
 	}
 

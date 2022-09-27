@@ -7,9 +7,12 @@
 	let error: string;
 
 	onMount(async () => {
-		let data = await fetch('/api/guild/' + $page.params.serverId + "?userId=" + $page.params.userId, {
-			method: 'GET'
-		});
+		let data = await fetch(
+			'/api/guilds/' + $page.params.guildId + '?userId=' + $page.params.userId,
+			{
+				method: 'GET'
+			}
+		);
 		if (data.status == 200) {
 			json = await data.json();
 		} else {
@@ -41,12 +44,15 @@
 </main>
 
 <style>
-	@import url(https://fonts.bunny.net/css?family=josefin-sans:400);
+	main {
+		display: flex;
+		align-items: center;
+	}
 
 	.card {
 		position: relative;
-		margin-left: 3vh;
-		margin-right: 3vh;
+		margin-left: auto;
+		margin-right: auto;
 		height: fit-content;
 		background: #1a1a1a99;
 		border-radius: 10px;

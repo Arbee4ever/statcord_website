@@ -7,11 +7,11 @@
 	let error: string;
 	let hasMore: boolean = true;
 	let index = 0;
-	let serverId = $page.params.serverId;
+	let guildId = $page.params.guildId;
 
 	onMount(async () => {
 		window.addEventListener('scroll', onScroll);
-		let data = await fetch('/api/guild/' + serverId + '?i=0', {
+		let data = await fetch('/api/guilds/' + guildId + '?i=0', {
 			method: 'GET'
 		});
 		if (data.status == 200) {
@@ -25,7 +25,7 @@
 		if (hasMore) {
 			if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
 				index++;
-				let newData = await fetch('/api/guild/' + serverId + '?i=' + index, {
+				let newData = await fetch('/api/guilds/' + guildId + '?i=' + index, {
 					method: 'GET'
 				});
 				let newJson = await newData.json();
@@ -35,7 +35,6 @@
 					for (let i = 0; i < newJson.length; i++) {
 						const element = newJson[i];
 						json.push(element);
-						json = json;
 					}
 				} else {
 					error = newData.status + ': ' + (await newJson.message);
@@ -47,35 +46,38 @@
 
 <main>
 	<div class="card">
-		{#key json}
-			{#if json}
-				{#if json.length == 0}
-					<div class="loading">
-						<p>Statcord is not on this Server!</p>
-						<a id="addToDiscord">Not yet available</a>
-					</div>
-				{:else}
-					{#each json as { pos, id, score }}
-						<Member {pos} {id} {score} />
-					{/each}
-				{/if}
-			{:else}
-				<p class="loading">Please wait, data is loading...</p>
-			{/if}
-			{#if error != null}
+		{#if json}
+			{#if json.length == 0}
 				<div class="loading">
-					<p>{error}</p>
+					<p>Statcord is not on this Server!</p>
+					<a id="addToDiscord">Not yet available</a>
 				</div>
+			{:else}
+				{#each json as { pos, id, score }}
+					<Member {pos} {id} {score} />
+				{/each}
 			{/if}
-		{/key}
+		{:else}
+			<p class="loading">Please wait, data is loading...</p>
+		{/if}
+		{#if error != null}
+			<div class="loading">
+				<p>{error}</p>
+			</div>
+		{/if}
 	</div>
 </main>
 
 <style>
+	main {
+		display: flex;
+		align-items: center;
+	}
+
 	.card {
 		position: relative;
-		margin-left: 3vh;
-		margin-right: 3vh;
+		margin-left: auto;
+		margin-right: auto;
 		height: fit-content;
 		background: #1a1a1a99;
 		border-radius: 10px;
