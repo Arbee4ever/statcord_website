@@ -8,12 +8,12 @@ export async function GET({ params, url }: any) {
     const user = await app.logIn(credentials);
     const mongo = user.mongoClient("mongodb-atlas");
     const collection = mongo.db("Guilds").collection(params.guildId);
+    if (await collection.count() == 0) {
+        throw error(404, "Guild not found: " + params.guildId);
+    }
     const index: number = Number(url.searchParams.get("i")) * 100 ?? 0;
     const userId: number = url.searchParams.get("userId") ?? null;
     let jsonResponse = [];
-    if (params.guildId.length != 19) {
-        throw error(400, "Invalid Guild ID: " + params.guildId);
-    }
     const count = await collection.count();
     if (index >= count && index - 100 <= count) {
         const end = {
@@ -43,7 +43,7 @@ export async function GET({ params, url }: any) {
         const jsonElement = {
             "pos": (i + 1) + index,
             "id": element.id,
-            "score": parseInt(element.textscore) + parseInt(element.voicescore)
+            "score": parseInt(element.textscore) + parseInt(element.voicescore) / 10
         };
         jsonResponse.push(jsonElement);
     }

@@ -69,6 +69,7 @@
 
     :global(main) {
         min-height: 50vh;
+        height: 100vh;
     }
 
 	:global(.hide) {
