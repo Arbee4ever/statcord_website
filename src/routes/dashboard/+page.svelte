@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page, getStores } from '$app/stores';
+	import { page } from '$app/stores';
 	import DiscordLogo from '$lib/img/discord_logo.svg';
 	import { onMount } from 'svelte';
 

@@ -1,5 +1,4 @@
 import { error } from '@sveltejs/kit';
-import { Int32 } from 'mongodb';
 import * as Realm from "realm-web";
 const app = new Realm.App({ id: "statcord-leaderboard-nqzqn" });
 const credentials = Realm.Credentials.anonymous();
