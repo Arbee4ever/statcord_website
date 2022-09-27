@@ -1,110 +1,144 @@
 <script>
-	import StatcordImg from '$lib/img/StatcordImg.png';
-	import tilt from '$lib/script/tilt.js';
-
-	let reverse = false;
+	import DiscordLogo from '$lib/img/discord_logo.svg';
+	import StatcordLogo from '$lib/img/statcord_logo.jpg';
 </script>
 
 <main>
-	<div class="card" use:tilt={{ scale: 0.9, max: 5, reverse }}>
-		<h1 id="title">Statcord</h1>
-		<p id="description">Just another leveling Bot with some unique Features.</p>
-		<img src={StatcordImg} alt="Statcord placeholder" />
-		<div id="buttons">
-			<a id="addToDiscord">Not yet available</a>
-			<a href="https://discord.gg/E2DNKGVfwq" id="joinTestingServer">
-				Join the testing Server to help
-			</a>
+	<div class="cardHolder">
+		<div class="info card">
+			<h1 id="title" class="name">
+				<img src={StatcordLogo} alt="Statcord Logo" />Statcord
+			</h1>
+			<p id="description">Just another leveling Bot with some unique Features.</p>
+			<div class="buttons">
+				<a
+					id="addToDiscord"
+					href="https://discord.com/api/oauth2/authorize?client_id=959915020152627271&permissions=1515318660160&scope=bot"
+				>
+					<img src={DiscordLogo} alt="Discord Logo" />
+					Add to Discord
+				</a>
+				<a id="joinSupportServer" href="https://arbeeco.de/links/discord">
+					<img src={DiscordLogo} alt="Discord Logo" />
+					Join Support Server
+				</a>
+			</div>
+		</div>
+		<div class="leaderboards card">
+			<h1 id="title">Leaderboards</h1>
+			<div class="buttons guildList card">
+				<a id="joinSupportServer" class="login" href="/"> Coming soon... </a>
+			</div>
+		</div>
+		<div class="dashboards card">
+			<h1 id="title">Dashboards</h1>
+			<div class="buttons guildList card">
+				<a id="joinSupportServer" class="login" href="/"> Coming soon... </a>
+			</div>
 		</div>
 	</div>
 </main>
 
 <style>
-    main {
-        display: flex;
-        align-items: center;
-    }
-	.card {
-		position: relative;
+	main {
+		display: grid;
+		align-items: center;
+	}
+
+	.cardHolder {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		gap: 1vh;
 		margin-left: auto;
 		margin-right: auto;
-		height: fit-content;
-		background: #1a1a1a99;
+		align-items: center;
+	}
+
+	.card {
+		position: relative;
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
-		width: 30vw;
 		height: min-content;
 		padding: 1vh;
 	}
 
-	.card img {
-		margin-top: 1vh;
-		object-position: 0% 0%;
-		width: 100%;
-		height: calc(100% - 15vh);
-		object-fit: cover;
-		background: rgba(0, 0, 0, 0.25);
-		box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-		border-radius: 10px;
+	.info {
+		grid-area: 1 / 1 / 2 / 3;
+	}
+
+	#title {
+		display: flex;
+		align-items: center;
+	}
+
+	#title img {
+		border-radius: 100%;
+		height: 32pt;
+	}
+
+	.name {
+		text-decoration: underline;
 	}
 
 	#description {
-		margin-top: 1vh;
+		margin: 1vh 0 1vh;
 	}
 
-	#buttons {
+	.buttons {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: 1fr;
 		grid-column-gap: 1vh;
 	}
 
-	#addToDiscord {
-		margin-top: 1vh;
-		border-top-right-radius: 10px;
-		border-top-left-radius: 10px;
-		height: 4vh;
-		align-content: center;
-		background: rgba(0, 0, 0, 0.25);
-		box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-		border-radius: 10px;
-		text-align: center;
-		grid-area: 1 / 1 / 2 / 2;
-		color: gray;
-		cursor: default;
-		height: 4vh;
-		line-height: 4vh;
+	.buttons img {
+		height: 1vh;
 	}
 
-	#joinTestingServer {
-		margin-top: auto;
-		border-top-right-radius: 10px;
-		border-top-left-radius: 10px;
-		height: 4vh;
-		align-content: center;
-		background: rgba(0, 0, 0, 0.25);
-		box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-		border-radius: 10px;
+	.buttons a {
+		padding: 1vh;
+		border: none;
+		border-radius: 0.5vh;
+		color: white;
 		text-align: center;
-		grid-area: 1 / 2 / 2 / 3;
-		height: 4vh;
-		line-height: 4vh;
+		cursor: pointer;
+		transition: all 0.2s ease-in-out;
+	}
+
+	.buttons a:hover {
+		filter: brightness(90%);
+	}
+
+	#addToDiscord {
+		background-color: #5865f2;
+	}
+
+	#joinSupportServer {
+		background: rgba(0, 0, 0, 0.25);
+	}
+
+	.login {
+		margin: auto;
+	}
+
+	.guildList {
+		display: flex;
+		align-items: center;
+		min-width: 30vw;
 	}
 
 	/*medium screens (tablets)*/
 	@media only screen and (max-width: 1024px) {
-		.card {
-			width: 60vw;
-			margin-left: 20vw;
+		.info {
+			grid-area: 1 / 1 / 1 / 1;
 		}
-	}
 
-	/*small screens (phones)*/
-	@media only screen and (max-width: 480px) {
-		.card {
-			width: auto;
-			margin-left: 1vw;
+		.cardHolder {
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-template-rows: repeat(3, 1fr);
 		}
 	}
 </style>

@@ -40,7 +40,7 @@
 
 <style>
 	header {
-        position: absolute;
+		position: absolute;
 		width: 100vw;
 		text-align: center;
 		height: 10vh;
