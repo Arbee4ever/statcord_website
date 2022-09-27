@@ -1,24 +1,21 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page, getStores } from '$app/stores';
 	import DiscordLogo from '$lib/img/discord_logo.svg';
+	import { onMount } from 'svelte';
 
 	let user: any;
 	let guilds: any;
 
-	page.subscribe((value) => {
-		user = value.data.user;
-	});
-	page.subscribe((value) => {
-		guilds = value.data.userGuilds;
-	});
-	guilds.sort(function (a: any, b: any) {
-		return compareStrings(a.name, b.name);
-	});
-	guilds = guilds.sort(function (a: { name: string }, b: { name: string }) {
-		return compareStrings(a.name, b.name);
-	});
-	guilds = guilds.sort(function (a: { statcord: number }, b: { statcord: number }) {
-		return a.statcord - b.statcord;
+	onMount(async () => {
+		user = $page.data.user;
+		const guildsRaw = $page.data.userGuilds;
+		guilds = await checkGuilds(guildsRaw);
+		guilds.sort(function (a: { name: string }, b: { name: string }) {
+			return compareStrings(a.name, b.name);
+		});
+		guilds.sort(function (a: { statcord: number }, b: { statcord: number }) {
+			return a.statcord - b.statcord;
+		});
 	});
 
 	function compareStrings(a: string, b: string) {
@@ -27,56 +24,73 @@
 
 		return a < b ? -1 : a > b ? 1 : 0;
 	}
+
+	async function checkGuilds(guilds: string | any[]) {
+		const ids = [];
+		for (let i = 0; i < guilds.length; i++) {
+			const guild = guilds[i];
+			const resp = fetch(`/api/guilds/${guild.id}`, {
+				method: 'GET'
+			});
+			ids.push(resp);
+		}
+		const promise = await Promise.all(ids);
+		for (let i = 0; i < promise.length; i++) {
+			const guild = guilds[i];
+			guild.statcord = promise[i].status;
+		}
+		return guilds;
+	}
 </script>
 
 <div class="cardHolder">
 	<div class="card dashboards">
 		<h1 id="title">Your Servers</h1>
-		{#key user}
-			{#if user}
-				<div class="dataHolder card">
-					<p>Logged in as</p>
-					<div id="user">
-						<img
-							alt="{user.username}#{user.discriminator} avatar"
-							src="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.png"
-						/>
-						<h1>{user.username}#{user.discriminator}</h1>
-						<a href="api/signout" class="signout">
-							<img src="https://api.iconify.design/fe/logout.svg?color=white" alt="Sign Out" />
-						</a>
-					</div>
-					<div class="guildList">
-						{#await guilds then}
-							{#each guilds as { statcord, name, icon, id }}
-								{#if statcord == 200}
-									<a href="dashboard/{id}" class="guild">
-										{#if icon != null}
-											<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
-										{/if}
-										<p>{name}</p>
-									</a>
-								{:else}
-									<a href="dashboard/{id}" class="guild noStatcord">
-										{#if icon != null}
-											<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
-										{/if}
-										<p>{name}</p>
-									</a>
-								{/if}
-							{/each}
-						{/await}
-					</div>
+		{#if !user}
+			<form class="dataHolder card" action="api/auth">
+				<button class="login" type="submit">
+					<img src={DiscordLogo} alt="Discord Logo" />
+					<span>Log in with Discord</span>
+				</button>
+			</form>
+		{:else}
+			<div class="dataHolder card">
+				<p>Logged in as</p>
+				<div id="user">
+					<img
+						alt="{user.username}#{user.discriminator} avatar"
+						src="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.png"
+					/>
+					<h1>{user.username}#{user.discriminator}</h1>
+					<a href="api/signout" class="signout">
+						<img src="https://api.iconify.design/fe/logout.svg?color=white" alt="Sign Out" />
+					</a>
 				</div>
-			{:else}
-				<form class="dataHolder card" action="api/auth">
-					<button class="login" type="submit">
-						<img src={DiscordLogo} alt="Discord Logo" />
-						<span>Log in with Discord</span>
-					</button>
-				</form>
-			{/if}
-		{/key}
+				<div class="guildList">
+					{#if !guilds}
+						<p class="guild">Loading your Servers...</p>
+					{:else}
+						{#each guilds as { statcord, name, icon, id }}
+							{#if statcord == 200}
+								<a href="dashboard/{id}" class="guild">
+									{#if icon != null}
+										<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
+									{/if}
+									<p>{name}</p>
+								</a>
+							{:else}
+								<a href="dashboard/{id}" class="guild noStatcord">
+									{#if icon != null}
+										<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
+									{/if}
+									<p>{name}</p>
+								</a>
+							{/if}
+						{/each}
+					{/if}
+				</div>
+			</div>
+		{/if}
 	</div>
 </div>
 

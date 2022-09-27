@@ -3,7 +3,8 @@
 	import { onMount } from 'svelte';
 	export let pos: number;
 	export let id: string;
-	export let score: string;
+	export let score: any;
+	score = Math.round(score);
 	let discordDataJson: any = {
 		name: 'Loading...',
 		pfp: PlaceholderImg
