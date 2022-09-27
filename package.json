@@ -36,7 +36,6 @@
 	"dependencies": {
 		"canvas-constructor": "^7.0.0",
 		"cookie": "^0.5.0",
-		"mongodb": "4.9",
 		"realm-web": "^1.7.1"
 	}
 }
