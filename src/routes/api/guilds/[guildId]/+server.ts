@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import { Int32 } from 'mongodb';
 import * as Realm from "realm-web";
 const app = new Realm.App({ id: "statcord-leaderboard-nqzqn" });
 const credentials = Realm.Credentials.anonymous();
@@ -8,12 +9,12 @@ export async function GET({ params, url }: any) {
     const user = await app.logIn(credentials);
     const mongo = user.mongoClient("mongodb-atlas");
     const collection = mongo.db("Guilds").collection(params.guildId);
-    const index: number = Number(url.searchParams.get("i")) * 100 ?? 0;
-    const userId: number = url.searchParams.get("userId") ?? null;
-    let jsonResponse = [];
     if (await collection.count() == 0) {
         throw error(404, "Guild not found: " + params.guildId);
     }
+    const index: number = Number(url.searchParams.get("i")) * 100 ?? 0;
+    const userId: number = url.searchParams.get("userId") ?? null;
+    let jsonResponse = [];
     const count = await collection.count();
     if (index >= count && index - 100 <= count) {
         const end = {
@@ -43,7 +44,7 @@ export async function GET({ params, url }: any) {
         const jsonElement = {
             "pos": (i + 1) + index,
             "id": element.id,
-            "score": parseInt(element.textscore) + parseInt(element.voicescore)
+            "score": parseInt(element.textscore) + parseInt(element.voicescore) / 10
         };
         jsonResponse.push(jsonElement);
     }

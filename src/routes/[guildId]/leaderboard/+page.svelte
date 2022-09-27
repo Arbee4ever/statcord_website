@@ -35,7 +35,6 @@
 					for (let i = 0; i < newJson.length; i++) {
 						const element = newJson[i];
 						json.push(element);
-						json = json;
 					}
 				} else {
 					error = newData.status + ': ' + (await newJson.message);
@@ -47,27 +46,25 @@
 
 <main>
 	<div class="card">
-		{#key json}
-			{#if json}
-				{#if json.length == 0}
-					<div class="loading">
-						<p>Statcord is not on this Server!</p>
-						<a id="addToDiscord">Not yet available</a>
-					</div>
-				{:else}
-					{#each json as { pos, id, score }}
-						<Member {pos} {id} {score} />
-					{/each}
-				{/if}
-			{:else}
-				<p class="loading">Please wait, data is loading...</p>
-			{/if}
-			{#if error != null}
+		{#if json}
+			{#if json.length == 0}
 				<div class="loading">
-					<p>{error}</p>
+					<p>Statcord is not on this Server!</p>
+					<a id="addToDiscord">Not yet available</a>
 				</div>
+			{:else}
+				{#each json as { pos, id, score }}
+					<Member {pos} {id} {score} />
+				{/each}
 			{/if}
-		{/key}
+		{:else}
+			<p class="loading">Please wait, data is loading...</p>
+		{/if}
+		{#if error != null}
+			<div class="loading">
+				<p>{error}</p>
+			</div>
+		{/if}
 	</div>
 </main>
 
