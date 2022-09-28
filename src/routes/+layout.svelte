@@ -21,7 +21,7 @@
 	<meta name="description" content="Just another leveling Bot with some unique Features." />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="icon" href={ArbeeImageMark} />
-	<link rel="canonical" href="https://arbeeco.de" />
+	<link rel="canonical" href="https://statcord.arbeeco.de" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@0Arbee0" />
 	<meta name="twitter:creator" content="@0Arbee0" />
