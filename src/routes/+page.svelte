@@ -24,16 +24,18 @@
 				</a>
 			</div>
 		</div>
-		<div class="leaderboards card">
-			<h1 id="title">Leaderboards</h1>
-			<div class="buttons guildList card">
-				<a id="joinSupportServer" class="login" href="/"> Coming soon... </a>
+		<div class="utils">
+			<div class="leaderboards card">
+				<h1 id="title">Leaderboards</h1>
+				<div class="buttons guildList card">
+					<a id="joinSupportServer" class="login" href="/"> Coming soon... </a>
+				</div>
 			</div>
-		</div>
-		<div class="dashboards card">
-			<h1 id="title">Dashboards</h1>
-			<div class="buttons guildList card">
-				<a id="joinSupportServer" class="login" href="/"> Coming soon... </a>
+			<div class="dashboards card">
+				<h1 id="title">Dashboards</h1>
+				<div class="buttons guildList card">
+					<a id="joinSupportServer" class="login" href="/"> Coming soon... </a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -46,13 +48,14 @@
 	}
 
 	.cardHolder {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: repeat(2, 1fr);
+		margin: auto;
+	}
+
+	.utils {
+		flex-wrap: wrap;
+		display: flex;
+		margin-top: 1vh;
 		gap: 1vh;
-		margin-left: auto;
-		margin-right: auto;
-		align-items: center;
 	}
 
 	.card {
@@ -65,7 +68,23 @@
 	}
 
 	.info {
-		grid-area: 1 / 1 / 2 / 3;
+		flex-basis: 100%;
+	}
+
+/*small screens (phones)*/
+	@media only screen and (max-width: 480px) {
+		.cardHolder {
+			margin-left: 2vh;
+			margin-right: 2vh;
+		}
+
+		.leaderboards {
+			width: 100%;
+		}
+
+		.dashboards {
+			width: 100%;
+		}
 	}
 
 	#title {
@@ -127,18 +146,5 @@
 		display: flex;
 		align-items: center;
 		min-width: 30vw;
-	}
-
-	/*medium screens (tablets)*/
-	@media only screen and (max-width: 1024px) {
-		.info {
-			grid-area: 1 / 1 / 1 / 1;
-		}
-
-		.cardHolder {
-			display: grid;
-			grid-template-columns: 1fr;
-			grid-template-rows: repeat(3, 1fr);
-		}
 	}
 </style>
