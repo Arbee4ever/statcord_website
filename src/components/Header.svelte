@@ -25,6 +25,7 @@
 			<strong> This site works best with JavaScript enabled! (╯°□°）╯︵ ┻━┻ </strong>
 		</div>
 	</noscript>
+	<div id="vignette" />
 	<img
 		id="topBtn"
 		src={TopIcon}
@@ -36,12 +37,11 @@
 		<img src={arbeeLogo} id="wordmark" alt="ARBEE's Wordmark" />
 	</a>
 </header>
-<div id="vignette" />
 
 <style>
 	header {
 		position: absolute;
-		width: 100vw;
+		width: 100%;
 		text-align: center;
 		height: 10vh;
 	}
@@ -49,7 +49,6 @@
 	#vignette {
 		pointer-events: none;
 		position: fixed;
-		top: 0;
 		width: 100vw;
 		height: 100vh;
 		box-shadow: 0px 0px 250px 0px #000000 inset;

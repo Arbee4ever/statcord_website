@@ -62,13 +62,10 @@
 		border: 0px;
 	}
 
-	:global(body) {
-		--scroll-behavior: smooth;
+	:global(html) {
 		scroll-behavior: smooth;
 		overflow: overlay;
-		overflow-x: hidden;
 		background: linear-gradient(to bottom right, #2b8eaf, #b222a8);
-		background-attachment: fixed;
 		transition: all 1s;
 	}
 
