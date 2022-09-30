@@ -8,7 +8,7 @@
 </script>
 
 {#if !mutualGuilds || !guilds}
-	<p class="guild">Loading your Servers...</p>
+	<p class="guild">Loading yeour Servers...</p>
 {:else}
 	{#each mutualGuilds as { name, icon, id }}
 		<a href="{type}/{id}" class="guild">
