@@ -6,6 +6,7 @@
 	import User from '$components/User.svelte';
 	import DiscordButton from '$components/DiscordButton.svelte';
 
+    console.log($page)
 	let user: any = $page.data.user;
 	let mutualGuilds: any;
 	let guilds: any;

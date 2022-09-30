@@ -15,6 +15,7 @@
 			method: 'GET'
 		});
 		discordDataJson = await discordData.json();
+		discordDataJson.pfp = 'https://cdn.discordapp.com/avatars/' + id + '/' + discordDataJson.pfp;
 	});
 </script>
 
