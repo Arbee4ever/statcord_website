@@ -1,5 +1,3 @@
-import { env } from '$env/dynamic/private';
-
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
     if(url.searchParams.get("user") != null) {
