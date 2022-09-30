@@ -5,7 +5,6 @@
 	import GuildList from '$components/GuildList.svelte';
 	import User from '$components/User.svelte';
 	import DiscordButton from '$components/DiscordButton.svelte';
-	import { json } from '@sveltejs/kit';
 
 	let user: any = $page.data.user;
 	let mutualGuilds: any;
