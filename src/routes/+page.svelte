@@ -5,19 +5,41 @@
 	import GuildList from '$components/GuildList.svelte';
 	import User from '$components/User.svelte';
 	import DiscordButton from '$components/DiscordButton.svelte';
+	import { json } from '@sveltejs/kit';
 
 	let user: any = $page.data.user;
 	let mutualGuilds: any;
 	let guilds: any;
+	let token: any;
 
 	onMount(async () => {
 		if (user) {
 			const guildsReq = await fetch('/api/guilds?user=' + user.id);
 			const guildsJson = await guildsReq.json();
 			mutualGuilds = guildsJson.mutual_guilds;
-			guilds = $page.data.userAdminGuilds;
-            console.log($page.data)
-            
+			token = $page.data.token;
+
+			const guildReq = await fetch(`https://discordapp.com/api/users/@me/guilds`, {
+				headers: { Authorization: `Bearer ${token}` }
+			});
+
+			const guildResp = await guildReq.json();
+
+			let jsonResponse: { id: any; name: any; icon: any }[] = [];
+			for (let i = 0; i < guildResp.length; i++) {
+				const element = guildResp[i];
+				if ((element.permissions & (1 << 5)) != 0) {
+					const jsonElement = {
+						id: element.id,
+						name: element.name,
+						icon: element.icon
+					};
+					jsonResponse.push(jsonElement);
+				}
+			}
+			guilds = jsonResponse.filter((val) => {
+				return !JSON.stringify(mutualGuilds).includes(JSON.stringify(val));
+			});
 		}
 	});
 </script>
@@ -59,7 +81,7 @@
 					{#if !user}
 						<DiscordButton url="/api/auth">Login with Discord</DiscordButton>
 					{:else}
-						<GuildList type="leaderboards" {guilds} {mutualGuilds} />
+						<GuildList type="leaderboards" {mutualGuilds} />
 					{/if}
 				</div>
 			</div>
