@@ -22,47 +22,28 @@ export async function load(event) {
 }
 
 async function getData(token: any) {
-    const userReq = fetch(`https://discordapp.com/api/users/@me`, {
+    const userReq = await fetch(`https://discordapp.com/api/users/@me`, {
         headers: { 'Authorization': `Bearer ${token}` }
-    });
-
-    const guildReq = fetch(`https://discordapp.com/api/users/@me/guilds`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-    });
-
-    const promise = await Promise.all([userReq, guildReq]).then(async (values) => {
-        const userResp = await values[0].json();
-        const guildResp = await values[1].json();
+    }).then(async (response) => {
+        const userResp = await response.json();
         if (userResp.id) {
-            const jsonResponse = [];
-            for (let i = 0; i < guildResp.length; i++) {
-                const element = guildResp[i];
-                if ((element.permissions & (1 << 5)) != 0) {
-                    const jsonElement = {
-                        "id": element.id,
-                        "name": element.name,
-                        "icon": element.icon
-                    };
-                    jsonResponse.push(jsonElement);
-                }
-            }
             return {
                 user: {
                     ...userResp
                 },
-                userAdminGuilds: jsonResponse
+                token: token
             }
         }
 
         return {
             user: false,
-            userAdminGuilds: false
+            token: false
         }
     });
     
     const resp = JSON.parse(JSON.stringify({
-        user: { ...promise.user },
-        userAdminGuilds: promise.userAdminGuilds
+        user: { ...userReq.user },
+        token: userReq.token
     }))
     return resp;
 }

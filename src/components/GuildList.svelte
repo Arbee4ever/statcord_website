@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-
 	export let mutualGuilds: any;
 	export let guilds: any;
 	export let type: any;
+	if (type == 'leaderboards') {
+		guilds = [];
+	}
 </script>
 
 {#if !mutualGuilds || !guilds}
