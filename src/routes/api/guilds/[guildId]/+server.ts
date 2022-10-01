@@ -5,5 +5,5 @@ const credentials = Realm.Credentials.anonymous();
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ params }: any) {
-    return await fetch(`http://167.99.130.164:8080/guilds/`+ params.guildId)
+    return await fetch(`http://https://api.arbeeco.de/guilds/`+ params.guildId)
 }
