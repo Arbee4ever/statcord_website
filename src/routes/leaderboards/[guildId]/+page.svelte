@@ -44,36 +44,29 @@
 	};
 </script>
 
-<main>
-	<div class="card">
-		{#if json}
-			{#if json.length == 0}
-				<div class="loading">
-					<p>Statcord is not on this Server!</p>
-					<a id="addToDiscord">Not yet available</a>
-				</div>
-			{:else}
-				{#each json as { pos, id, score }}
-					<Member {pos} {id} {score} />
-				{/each}
-			{/if}
-		{:else}
-			<p class="loading">Please wait, data is loading...</p>
-		{/if}
-		{#if error != null}
+<div class="card leaderboard">
+	{#if json}
+		{#if json.length == 0}
 			<div class="loading">
-				<p>{error}</p>
+				<p>Statcord is not on this Server!</p>
+				<a id="addToDiscord">Not yet available</a>
 			</div>
+		{:else}
+			{#each json as { pos, id, score }}
+				<Member {pos} {id} {score} />
+			{/each}
 		{/if}
-	</div>
-</main>
+	{:else}
+		<p class="loading">Please wait, data is loading...</p>
+	{/if}
+	{#if error != null}
+		<div class="loading">
+			<p>{error}</p>
+		</div>
+	{/if}
+</div>
 
 <style>
-	main {
-		display: flex;
-		align-items: center;
-	}
-
 	.card {
 		position: relative;
 		margin-left: auto;
@@ -86,6 +79,10 @@
 		height: min-content;
 		padding: 2vh;
 	}
+
+    .leaderboard {
+        margin: 10vh;
+    }
 
 	.loading {
 		text-align: center;
