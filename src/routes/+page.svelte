@@ -74,12 +74,10 @@
 			</div>
 			<div class="leaderboards card">
 				<h1 id="title">Leaderboards</h1>
-				<div class="guildList card">
-					{#if !user}
-						<DiscordButton url="/api/auth">Login with Discord</DiscordButton>
-					{:else}
-						<GuildList type="leaderboards" {mutualGuilds} />
-					{/if}
+				<div class="soon guildList card">
+					<DiscordButton --margin="0" --color="#00000040" img="" alt="">
+						Coming soon...
+					</DiscordButton>
 				</div>
 			</div>
 		</div>
