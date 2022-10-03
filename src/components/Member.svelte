@@ -15,6 +15,7 @@
 			method: 'GET'
 		});
 		discordDataJson = await discordData.json();
+		discordDataJson.pfp = 'https://cdn.discordapp.com/avatars/' + id + '/' + discordDataJson.pfp;
 	});
 </script>
 
@@ -80,10 +81,8 @@
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
-		width: min-content;
 		line-height: 3vh;
 		height: 3vh;
-		width: min-content;
 		align-self: center;
 		align-items: center;
 		padding-top: 0.3vh;

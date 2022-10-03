@@ -1,43 +1,93 @@
-<script>
-	import DiscordLogo from '$lib/img/discord_logo.svg';
+<script lang="ts">
 	import StatcordLogo from '$lib/img/statcord_logo.jpg';
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import GuildList from '$components/GuildList.svelte';
+	import User from '$components/User.svelte';
+	import DiscordButton from '$components/DiscordButton.svelte';
+
+	let user: any = $page.data.user;
+	let mutualGuilds: any;
+	let guilds: any;
+	let token: any;
+
+	onMount(async () => {
+		if (user) {
+			const guildsReq = await fetch('http://api.arbeeco.de:8080/guilds?user=' + user.id);
+			const guildsJson = await guildsReq.json();
+			mutualGuilds = guildsJson.mutual_guilds;
+			token = $page.data.token;
+
+			const guildReq = await fetch(`https://discordapp.com/api/users/@me/guilds`, {
+				headers: { Authorization: `Bearer ${token}` }
+			});
+
+			const guildResp = await guildReq.json();
+
+			let jsonResponse: { id: any; name: any; icon: any }[] = [];
+			for (let i = 0; i < guildResp.length; i++) {
+				const element = guildResp[i];
+				if ((element.permissions & (1 << 5)) != 0) {
+					const jsonElement = {
+						id: element.id,
+						name: element.name,
+						icon: element.icon
+					};
+					jsonResponse.push(jsonElement);
+				}
+			}
+			guilds = jsonResponse.filter((val) => {
+				return !JSON.stringify(mutualGuilds).includes(JSON.stringify(val));
+			});
+		}
+	});
 </script>
 
 <main>
 	<div class="cardHolder">
 		<div class="info card">
 			<h1 id="title" class="name">
-				<img src={StatcordLogo} alt="Statcord Logo" />Statcord
+				<img src={StatcordLogo} alt="Statcord Logo" />
+				Statcord
 			</h1>
 			<p id="description">Just another leveling Bot with some unique Features.</p>
 			<div class="buttons">
-				<a
-					id="addToDiscord"
-					href="https://discord.com/api/oauth2/authorize?client_id=959915020152627271&permissions=1515318660160&scope=bot"
+				<DiscordButton
+					--margin="0"
+					url="https://discord.com/api/oauth2/authorize?client_id=959915020152627271&permissions=1515318660160&scope=bot"
 				>
-					<img src={DiscordLogo} alt="Discord Logo" />
 					Add to Discord
-				</a>
-				<a id="joinSupportServer" href="https://arbeeco.de/links/discord">
-					<img src={DiscordLogo} alt="Discord Logo" />
+				</DiscordButton>
+				<DiscordButton --margin="0" --color="#00000040" url="https://arbeeco.de/links/discord">
 					Join Support Server
-				</a>
+				</DiscordButton>
 			</div>
 		</div>
 		<div class="utils">
-			<div class="leaderboards card">
-				<h1 id="title">Leaderboards</h1>
-				<div class="buttons guildList card">
-					<a id="joinSupportServer" class="login" href="/"> Coming soon... </a>
-				</div>
-			</div>
 			<div class="dashboards card">
 				<h1 id="title">Dashboards</h1>
-				<div class="buttons guildList card">
-					<a id="joinSupportServer" class="login" href="/"> Coming soon... </a>
+				<div class="soon guildList card">
+					<DiscordButton --margin="0" --color="#00000040" img="" alt="">
+						Coming soon...
+					</DiscordButton>
+				</div>
+			</div>
+			<div class="leaderboards card">
+				<h1 id="title">Leaderboards</h1>
+				<div class="guildList card">
+					{#if !user}
+						<DiscordButton url="/api/auth">Login with Discord</DiscordButton>
+					{:else}
+						<GuildList type="leaderboards" {mutualGuilds} />
+					{/if}
 				</div>
 			</div>
 		</div>
+		{#if user}
+			<div class="user card">
+				<User {user} />
+			</div>
+		{/if}
 	</div>
 </main>
 
@@ -51,13 +101,6 @@
 		margin: auto;
 	}
 
-	.utils {
-		flex-wrap: wrap;
-		display: flex;
-		margin-top: 1vh;
-		gap: 1vh;
-	}
-
 	.card {
 		position: relative;
 		border-radius: 10px;
@@ -67,12 +110,27 @@
 		padding: 1vh;
 	}
 
+	.user {
+		margin-top: 1vh;
+	}
+
+	.utils {
+		flex-wrap: wrap;
+		display: flex;
+		margin-top: 1vh;
+		gap: 1vh;
+	}
+
 	.info {
 		flex-basis: 100%;
 	}
 
-/*small screens (phones)*/
+	/*small screens (phones)*/
 	@media only screen and (max-width: 480px) {
+		main {
+			margin-top: 10vh;
+		}
+
 		.cardHolder {
 			margin-left: 2vh;
 			margin-right: 2vh;
@@ -102,7 +160,7 @@
 	}
 
 	#description {
-		margin: 1vh 0 1vh;
+		margin: 1vh 0;
 	}
 
 	.buttons {
@@ -112,39 +170,27 @@
 		grid-column-gap: 1vh;
 	}
 
-	.buttons img {
-		height: 1vh;
+	.guildList {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-width: 30vw;
+		height: 30vh;
+		overflow-y: overlay;
 	}
 
-	.buttons a {
-		padding: 1vh;
-		border: none;
-		border-radius: 0.5vh;
-		color: white;
-		text-align: center;
-		cursor: pointer;
-		transition: all 0.2s ease-in-out;
+	.soon {
+		display: grid;
+		align-items: center;
 	}
 
-	.buttons a:hover {
-		filter: brightness(90%);
-	}
-
-	#addToDiscord {
-		background-color: #5865f2;
-	}
-
-	#joinSupportServer {
-		background: rgba(0, 0, 0, 0.25);
-	}
-
-	.login {
+	.soon :global(.login) {
+		width: 10vw;
 		margin: auto;
 	}
 
-	.guildList {
-		display: flex;
-		align-items: center;
-		min-width: 30vw;
+	.user {
+		float: right;
+		text-align: end;
 	}
 </style>
