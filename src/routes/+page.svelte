@@ -13,7 +13,7 @@
 
 	onMount(async () => {
 		if (user) {
-			const guildsReq = await fetch('/api/guilds?user=' + user.id);
+			const guildsReq = await fetch('http://api.arbeeco.de:8080/guilds?user=' + user.id);
 			const guildsJson = await guildsReq.json();
 			mutualGuilds = guildsJson.mutual_guilds;
 			token = $page.data.token;
@@ -66,12 +66,10 @@
 		<div class="utils">
 			<div class="dashboards card">
 				<h1 id="title">Dashboards</h1>
-				<div class="guildList card">
-					{#if !user}
-						<DiscordButton url="/api/auth">Login with Discord</DiscordButton>
-					{:else}
-						<GuildList type="dashboard" {guilds} {mutualGuilds} />
-					{/if}
+				<div class="soon guildList card">
+					<DiscordButton --margin="0" --color="#00000040" img="" alt="">
+						Coming soon...
+					</DiscordButton>
 				</div>
 			</div>
 			<div class="leaderboards card">
@@ -179,6 +177,16 @@
 		min-width: 30vw;
 		height: 30vh;
 		overflow-y: overlay;
+	}
+
+	.soon {
+		display: grid;
+		align-items: center;
+	}
+
+	.soon :global(.login) {
+		width: 10vw;
+		margin: auto;
 	}
 
 	.user {

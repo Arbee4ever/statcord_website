@@ -3,11 +3,13 @@
 	/**
 	 * @type {String}
 	 */
-	export let url;
+	export let url = "";
+	export let img = DiscordLogo;
+    export let alt = "Discord Logo"
 </script>
 
 <a class="login" href={url}>
-	<img src={DiscordLogo} alt="Discord Logo" />
+	<img src={img} alt={alt} />
 	<slot />
 </a>
 
