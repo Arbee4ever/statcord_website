@@ -1,10 +1,13 @@
-/** @type {import('./$types').PageServerLoad} */
-export async function load({ cookies }) {
-    const disco_refresh_token = cookies.get("disco_refresh_token");
-    const disco_access_token = cookies.get("disco_access_token");
+import { env } from '$env/dynamic/private';
+import type { RequestHandler } from './$types';
+
+export const GET: RequestHandler = async (query) => {
+    const disco_refresh_token = query.cookies.get("disco_refresh_token");
+    const disco_access_token = query.cookies.get("disco_access_token");
+    console.log(disco_access_token)
 
     if (disco_refresh_token && !disco_access_token) {
-        const discord_request = await fetch('/api/refresh?code=' + disco_refresh_token)
+        const discord_request = await fetch(env.HOST + '/api/refresh?code=' + disco_refresh_token)
         const discord_response = await discord_request.json();
 
         if (discord_response.disco_access_token) {
@@ -15,7 +18,13 @@ export async function load({ cookies }) {
     }
 
     if (disco_access_token) {
-        return getData(disco_access_token);
+        const user = await getData(disco_access_token);
+        console.log(user)
+        return new Response(user, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 }
 
@@ -36,10 +45,10 @@ async function getData(token: any) {
             token: false
         }
     });
-    
-    const resp = JSON.parse(JSON.stringify({
+
+    const resp = JSON.stringify({
         user: userReq.user,
         token: userReq.token
-    }))
+    })
     return resp;
 }

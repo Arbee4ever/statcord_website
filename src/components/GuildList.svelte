@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let mutualGuilds: any;
-	export let guilds: any = [];
+	export let guilds: any = undefined;
 	export let type: any;
 	if (type == 'leaderboards') {
 		guilds = [];
