@@ -10,8 +10,8 @@
 	let guildId = $page.params.guildId;
 
 	onMount(async () => {
-		window.addEventListener('scroll', onScroll);
-		let data = await fetch('/api/guilds/' + guildId + '?i=0', {
+		//window.addEventListener('scroll', onScroll);
+		let data = await fetch('http://api.arbeeco.de/guilds/' + guildId + '?i=0', {
 			method: 'GET'
 		});
 		if (data.status == 200) {
@@ -25,7 +25,7 @@
 		if (hasMore) {
 			if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
 				index++;
-				let newData = await fetch('/api/guilds/' + guildId + '?i=' + index, {
+				let newData = await fetch('http://api.arbeeco.de/guilds/' + guildId + '?i=' + index, {
 					method: 'GET'
 				});
 				let newJson = await newData.json();
