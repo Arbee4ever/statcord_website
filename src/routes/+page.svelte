@@ -13,7 +13,7 @@
 
 	onMount(async () => {
 		if (user) {
-			const guildsReq = await fetch('http://api.arbeeco.de/guilds?user=' + user.id);
+			const guildsReq = await fetch('https://api.arbeeco.de/guilds?user=' + user.id);
 			const guildsJson = await guildsReq.json();
 			mutualGuilds = guildsJson.mutual_guilds;
 			token = $page.data.token;
@@ -177,6 +177,16 @@
 		min-width: 30vw;
 		height: 30vh;
 		overflow-y: overlay;
+	}
+
+	.soon {
+		display: grid;
+		align-items: center;
+	}
+
+	.soon :global(.login) {
+		width: 10vw;
+		margin: auto;
 	}
 
 	.user {
