@@ -1,9 +1,10 @@
+import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async (query) => {
-    const returnCode = query.url.searchParams.get("code");
+export const GET: RequestHandler = async ({ cookies, url}) => {
+    const returnCode = url.searchParams.get("code");
 
     if (returnCode == null) {
         return error(400, "Invalid return Code");
@@ -24,23 +25,25 @@ export const GET: RequestHandler = async (query) => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
 
-    const response = await request.json();
-
-    if (response.error) {
-        return new Response("", {
-            headers: { Location: '/' },
-            status: 302
-        })
+    if (request.status != 200) {
+        throw error(request.status, request.statusText)
     }
 
-    const access_token_expires_in = new Date(Date.now() + response.expires_in);
+    const response = await request.json();
+
     const refresh_token_expires_in = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-    return new Response("", {
-        headers: new Headers([
-            ['Set-Cookie', `disco_access_token=${response.access_token}; Path=/; HttpOnly; SameSite=Strict; Expires=${access_token_expires_in}}`],
-            ['Set-Cookie', `disco_refresh_token=${response.refresh_token}; Path=/; HttpOnly; SameSite=Strict; Expires=${refresh_token_expires_in}`],
-            ['Location', '/']
-        ]),
-        status: 301
+
+    cookies.set('disco_access_token', response.access_token, {
+        secure: !dev,
+        httpOnly: true,
+        path: '/',
+        maxAge: 600
     });
+    cookies.set('disco_refresh_token', response.refresh_token, {
+        secure: !dev,
+        httpOnly: true,
+        path: '/',
+        expires: refresh_token_expires_in
+    });
+    throw redirect(302, '/')
 }
