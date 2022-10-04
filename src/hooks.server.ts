@@ -29,7 +29,7 @@ export async function handle({ event, resolve }) {
             event.cookies.set('disco_refresh_token', discord_response.disco_refresh_token, {
                 secure: !dev,
                 httpOnly: true,
-                path: event.url.origin,
+                path: '/',
                 expires: refresh_token_expires_in
             });
         }
