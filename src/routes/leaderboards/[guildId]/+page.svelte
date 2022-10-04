@@ -48,7 +48,7 @@
 	{#if json}
 		{#if json.length == 0}
 			<div class="loading">
-				<p>Statcord is nota on this Server!</p>
+				<p>Statcord is not on this Server!</p>
 				<a id="addToDiscord">Not yet available</a>
 			</div>
 		{:else}
