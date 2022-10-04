@@ -185,7 +185,7 @@
 	}
 
 	.soon :global(.login) {
-		width: 10vw;
+		width: 10vh;
 		margin: auto;
 	}
 
