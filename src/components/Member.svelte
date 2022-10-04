@@ -11,7 +11,7 @@
 	};
 
 	onMount(async () => {
-		const discordData = await fetch('http://api.arbeeco.de:8080/user/' + id, {
+		const discordData = await fetch('http://api.arbeeco.de/user/' + id, {
 			method: 'GET'
 		});
 		discordDataJson = await discordData.json();
