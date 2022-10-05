@@ -44,6 +44,9 @@
 
 <style>
 	.member {
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
 		padding: 2vh;
 		margin-bottom: 1vh;
 		display: grid;
@@ -89,6 +92,9 @@
 		height: 3vh;
 		align-self: center;
 		align-items: center;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
 		padding-top: 0.3vh;
 		padding-right: 0.8vh;
 		padding-left: 0.8vh;
