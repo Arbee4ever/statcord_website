@@ -3,6 +3,7 @@
 
 	import Member from '$components/Member.svelte';
 	import { onMount } from 'svelte';
+	import { dataset_dev } from 'svelte/internal';
 	let json: any;
 	let error: string;
 	let hasMore: boolean = true;
@@ -10,7 +11,6 @@
 	let guildId = $page.params.guildId;
 
 	onMount(async () => {
-		//window.addEventListener('scroll', onScroll);
 		let data = await fetch('http://api.arbeeco.de/guilds/' + guildId + '?i=0', {
 			method: 'GET'
 		});
@@ -19,6 +19,7 @@
 		} else {
 			error = data.status + ': ' + (await (await data.json()).message);
 		}
+		//window.addEventListener('scroll', onScroll);
 	});
 
 	const onScroll = async () => {
@@ -44,29 +45,51 @@
 	};
 </script>
 
-<div class="card leaderboard">
-	{#if json}
-		{#if json.length == 0}
-			<div class="loading">
-				<p>Statcord is not on this Server!</p>
-				<a id="addToDiscord">Not yet available</a>
-			</div>
+<div class="holder">
+	<div class="card leaderboard">
+		{#if json}
+			{#if json.length == 0}
+				<div class="loading">
+					<p>Statcord is not on this Server!</p>
+					<a id="addToDiscord">Not yet available</a>
+				</div>
+			{:else}
+				{#each json as { pos, id, score }}
+					<Member {pos} {id} {score} />
+				{/each}
+			{/if}
 		{:else}
-			{#each json as { pos, id, score }}
-				<Member {pos} {id} {score} />
-			{/each}
+			<p class="loading">Please wait, data is loading...</p>
 		{/if}
-	{:else}
-		<p class="loading">Please wait, data is loading...</p>
-	{/if}
-	{#if error != null}
-		<div class="loading">
-			<p>{error}</p>
-		</div>
-	{/if}
+		{#if error != null}
+			<div class="loading">
+				<p>{error}</p>
+			</div>
+		{/if}
+	</div>
+	<div class="card guildinfo">
+		{#if json}
+			<p>{json.name}</p>
+		{/if}
+	</div>
 </div>
 
 <style>
+	.holder {
+		display: flex;
+		width: 80vw;
+		margin: 10vw;
+		gap: 1vw;
+	}
+
+	.leaderboard {
+		width: 100%;
+	}
+
+	.guildinfo {
+		width: 40%;
+	}
+
 	.card {
 		position: relative;
 		margin-left: auto;
@@ -79,10 +102,6 @@
 		height: min-content;
 		padding: 2vh;
 	}
-
-    .leaderboard {
-        margin: 10vh;
-    }
 
 	.loading {
 		text-align: center;
