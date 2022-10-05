@@ -105,7 +105,7 @@
 	.holder {
 		display: flex;
 		flex-direction: row-reverse;
-		margin: 5vh;
+		margin: 2vw;
         margin-top: 10vh;
 		gap: 1vw;
 	}
