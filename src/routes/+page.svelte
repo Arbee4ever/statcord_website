@@ -184,16 +184,6 @@
 		overflow-y: overlay;
 	}
 
-	.soon {
-		display: grid;
-		align-items: center;
-	}
-
-	.soon :global(.login) {
-		width: 10vh;
-		margin: auto;
-	}
-
 	.user {
 		float: right;
 		text-align: end;
