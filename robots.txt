@@ -1,7 +1,7 @@
 # ===================================
 # Generator: http://pixelfolk.net/tools/robots
 # Erstellt am: 10.03.2022, 13:25
-# Webseite: http://http://arbeeco.de
+# Webseite: http://arbeeco.de
 # ===================================
 
 Sitemap: http://arbeeco.de/sitemap.xml
