@@ -45,7 +45,7 @@
 <style>
 	.member {
 		padding: 2vh;
-		margin: 1vh;
+		margin-bottom: 1vh;
 		display: grid;
 		grid-template-columns: 1fr, 1fr, 1fr;
 		grid-template-rows: 1fr;
@@ -54,6 +54,10 @@
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
+	}
+
+	.member:last-of-type {
+		margin: 0;
 	}
 
 	.first {

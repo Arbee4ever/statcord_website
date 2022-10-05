@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import DiscordButton from '$components/DiscordButton.svelte';
 
 	import Member from '$components/Member.svelte';
 	import { onMount } from 'svelte';
-	import { dataset_dev } from 'svelte/internal';
-	let json: any;
+	let members: any;
+	let guild: any;
 	let error: string;
 	let hasMore: boolean = true;
 	let index = 0;
@@ -15,7 +16,9 @@
 			method: 'GET'
 		});
 		if (data.status == 200) {
-			json = await data.json();
+			const json = await data.json();
+			members = json.members;
+			guild = json.guild;
 		} else {
 			error = data.status + ': ' + (await (await data.json()).message);
 		}
@@ -35,7 +38,7 @@
 				} else if (newData.status == 200) {
 					for (let i = 0; i < newJson.length; i++) {
 						const element = newJson[i];
-						json.push(element);
+						members.push(element);
 					}
 				} else {
 					error = newData.status + ': ' + (await newJson.message);
@@ -46,15 +49,52 @@
 </script>
 
 <div class="holder">
+	{#if guild}
+		<div class="card guildInfo">
+			{#if guild.banner == null}
+				<img
+					class="guildBanner"
+					src="https://cdn.discordapp.com/discovery-splashes/734077874708938864/a9f90808d8091f6b6c8b855f21e4fa01.jpg?size=2048"
+					alt="Guild Banner"
+				/>
+			{/if}
+			{#if guild.banner}
+				<img
+					class="guildBanner"
+					src="https://cdn.discordapp.com/banners/{guild.id}/{guild.banner}"
+					alt="Guild Banner"
+				/>
+			{/if}
+			<div class="card infoHeader">
+				{#if guild.icon}
+					<img
+						class="guildIcon"
+						src="https://cdn.discordapp.com/icons/{guild.id}/{guild.icon}"
+						alt="Guild Icon"
+					/>
+				{/if}
+				<p class="guildName">{guild.name}</p>
+			</div>
+			{#if guild.description}
+				<p class="card guildDescription">{guild.description}</p>
+			{/if}
+			<div class="card infoOther">
+				<p>{guild.membercount} Members</p>
+				<p>{guild.textcount} Textchannels</p>
+				<p>{guild.voicecount} Voicechannels</p>
+				<p>{guild.rolecount} Roles</p>
+			</div>
+		</div>
+	{/if}
 	<div class="card leaderboard">
-		{#if json}
-			{#if json.length == 0}
+		{#if members}
+			{#if members.length == 0}
 				<div class="loading">
 					<p>Statcord is not on this Server!</p>
 					<a id="addToDiscord">Not yet available</a>
 				</div>
 			{:else}
-				{#each json as { pos, id, score }}
+				{#each members as { pos, id, score }}
 					<Member {pos} {id} {score} />
 				{/each}
 			{/if}
@@ -67,16 +107,12 @@
 			</div>
 		{/if}
 	</div>
-	<div class="card guildinfo">
-		{#if json}
-			<p>{json.name}</p>
-		{/if}
-	</div>
 </div>
 
 <style>
 	.holder {
 		display: flex;
+        flex-direction: row-reverse;
 		width: 80vw;
 		margin: 10vw;
 		gap: 1vw;
@@ -86,8 +122,62 @@
 		width: 100%;
 	}
 
-	.guildinfo {
+	.guildInfo {
 		width: 40%;
+		display: flex;
+		flex-direction: column;
+		gap: 1vh;
+	}
+
+	.guildInfo > * {
+		width: calc(100% - 4vh);
+	}
+
+	.guildBanner {
+		width: 100%;
+		border-radius: 10px;
+	}
+
+	.infoHeader {
+		display: flex;
+		line-height: 5vw;
+		text-align: center;
+	}
+
+	.guildIcon {
+		height: 5vw;
+		border-radius: 100%;
+		margin-right: 1vh;
+	}
+
+	.infoOther {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		gap: 1vh;
+	}
+
+	@media only screen and (max-width: 1356px) {
+		.holder {
+			display: block;
+		}
+
+		.guildInfo {
+			width: 100%;
+			margin-bottom: 1vh;
+		}
+
+		.guildBanner {
+			display: none;
+		}
+
+		.guildDescription {
+			display: none;
+		}
+
+		.infoOther {
+			display: none;
+		}
 	}
 
 	.card {
@@ -99,7 +189,6 @@
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
-		height: min-content;
 		padding: 2vh;
 	}
 
