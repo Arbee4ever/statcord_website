@@ -24,7 +24,7 @@ export async function handle({ event, resolve }) {
                 secure: !dev,
                 httpOnly: true,
                 path: '/',
-                maxAge: 600
+                maxAge: discord_response.access_token_expires_in
             });
             event.cookies.set('disco_refresh_token', discord_response.disco_refresh_token, {
                 secure: !dev,
