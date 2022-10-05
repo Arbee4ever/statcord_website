@@ -1,21 +1,25 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import DiscordButton from '$components/DiscordButton.svelte';
 
 	import Member from '$components/Member.svelte';
 	import { onMount } from 'svelte';
+	let data: any;
 	let members: any;
 	let guild: any;
 	let error: string;
 	let guildId = $page.params.guildId;
 
 	onMount(async () => {
-		let data = await fetch('https://api.arbeeco.de/guilds/' + guildId, {
+		data = await fetch('https://api.arbeeco.de/guilds/' + guildId, {
 			method: 'GET'
 		});
 		if (data.status == 200) {
 			const json = await data.json();
 			members = json.members;
 			guild = json.guild;
+		} else if (data.status == 404) {
+			error = '404';
 		} else {
 			error = data.status + ': ' + (await (await data.json()).message);
 		}
@@ -47,31 +51,34 @@
 			{/if}
 			<div class="card infoOther">
 				<p>{guild.membercount} Members</p>
+				<p>{guild.rolecount} Roles</p>
 				<p>{guild.textcount} Textchannels</p>
 				<p>{guild.voicecount} Voicechannels</p>
-				<p>{guild.rolecount} Roles</p>
 			</div>
 		</div>
 	{/if}
 	<div class="card leaderboard">
 		{#if members}
-			{#if members.length == 0}
-				<div class="loading">
-					<p>Statcord is not on this Server!</p>
-					<a id="addToDiscord">Not yet available</a>
-				</div>
-			{:else}
-				{#each members as { pos, id, score }}
-					<Member {pos} {id} {score} />
-				{/each}
-			{/if}
-		{:else}
-			<p class="loading">Please wait, data is loading...</p>
-		{/if}
-		{#if error != null}
+			{#each members as { pos, id, score }}
+				<Member {pos} {id} {score} />
+			{/each}
+		{:else if error == '404'}
+			<div class="loading">
+				<p>Statcord is not on this Server!</p>
+				<br />
+				<DiscordButton
+					--margin="0"
+					url="https://discord.com/api/oauth2/authorize?client_id=959915020152627271&permissions=1515318660160&scope=bot&guild_id={guildId}"
+				>
+					Add to Discord
+				</DiscordButton>
+			</div>
+		{:else if error != null}
 			<div class="loading">
 				<p>{error}</p>
 			</div>
+		{:else}
+			<p class="loading">Please wait, data is loading...</p>
 		{/if}
 	</div>
 </div>
@@ -166,23 +173,5 @@
 		text-align: center;
 		vertical-align: middle;
 		margin: 1vh;
-	}
-
-	#addToDiscord {
-		margin-top: 1vh;
-		border-top-right-radius: 10px;
-		border-top-left-radius: 10px;
-		height: 4vh;
-		align-content: center;
-		background: rgba(0, 0, 0, 0.25);
-		box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-		border-radius: 10px;
-		text-align: center;
-		grid-area: 1 / 1 / 2 / 2;
-		color: gray;
-		cursor: default;
-		height: 4vh;
-		line-height: 4vh;
-		padding: 1vh;
 	}
 </style>
