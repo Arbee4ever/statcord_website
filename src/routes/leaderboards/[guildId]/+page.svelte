@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import DiscordButton from '$components/DiscordButton.svelte';
 
 	import Member from '$components/Member.svelte';
 	import { onMount } from 'svelte';
@@ -51,13 +50,6 @@
 <div class="holder">
 	{#if guild}
 		<div class="card guildInfo">
-			{#if guild.banner == null}
-				<img
-					class="guildBanner"
-					src="https://cdn.discordapp.com/discovery-splashes/734077874708938864/a9f90808d8091f6b6c8b855f21e4fa01.jpg?size=2048"
-					alt="Guild Banner"
-				/>
-			{/if}
 			{#if guild.banner}
 				<img
 					class="guildBanner"
@@ -112,7 +104,7 @@
 <style>
 	.holder {
 		display: flex;
-        flex-direction: row-reverse;
+		flex-direction: row-reverse;
 		width: 80vw;
 		margin: 10vw;
 		gap: 1vw;
@@ -160,6 +152,7 @@
 	@media only screen and (max-width: 1356px) {
 		.holder {
 			display: block;
+            margin: 0;
 		}
 
 		.guildInfo {
