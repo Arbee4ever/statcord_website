@@ -6,12 +6,10 @@
 	let members: any;
 	let guild: any;
 	let error: string;
-	let hasMore: boolean = true;
-	let index = 0;
 	let guildId = $page.params.guildId;
 
 	onMount(async () => {
-		let data = await fetch('https://api.arbeeco.de/guilds/' + guildId + '?i=0', {
+		let data = await fetch('https://api.arbeeco.de/guilds/' + guildId, {
 			method: 'GET'
 		});
 		if (data.status == 200) {
@@ -21,30 +19,7 @@
 		} else {
 			error = data.status + ': ' + (await (await data.json()).message);
 		}
-		//window.addEventListener('scroll', onScroll);
 	});
-
-	const onScroll = async () => {
-		if (hasMore) {
-			if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-				index++;
-				let newData = await fetch('https://api.arbeeco.de/guilds/' + guildId + '?i=' + index, {
-					method: 'GET'
-				});
-				let newJson = await newData.json();
-				if (newJson.end == 'end') {
-					hasMore = false;
-				} else if (newData.status == 200) {
-					for (let i = 0; i < newJson.length; i++) {
-						const element = newJson[i];
-						members.push(element);
-					}
-				} else {
-					error = newData.status + ': ' + (await newJson.message);
-				}
-			}
-		}
-	};
 </script>
 
 <div class="holder">
