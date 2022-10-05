@@ -83,6 +83,7 @@
 		margin: 2vw;
         margin-top: 10vh;
 		gap: 1vw;
+        min-height: 90vh;
 	}
 
 	.leaderboard {
