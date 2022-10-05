@@ -16,6 +16,7 @@
 		});
 		if (data.status == 200) {
 			json = await data.json();
+			json = json.members;
 		} else {
 			error = data.status + ': ' + (await (await data.json()).message);
 		}
@@ -80,9 +81,9 @@
 		padding: 2vh;
 	}
 
-    .leaderboard {
-        margin: 10vh;
-    }
+	.leaderboard {
+		margin: 10vh;
+	}
 
 	.loading {
 		text-align: center;
