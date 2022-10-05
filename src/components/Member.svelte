@@ -57,26 +57,11 @@
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
-        overflow-x: auto;
+		overflow-x: auto;
 	}
 
 	.member:last-of-type {
 		margin: 0;
-	}
-
-	.first {
-		outline: 3px solid rgb(218 158 59);
-		box-shadow: 0 0 32px 0 rgb(218 158 59);
-	}
-
-	.second {
-		outline: 3px solid rgb(152 152 152);
-		box-shadow: 0 0 32px 0 rgb(152 152 152);
-	}
-
-	.third {
-		outline: 3px solid rgb(174, 116, 65);
-		box-shadow: 0 0 32px 0 rgb(174, 116, 65);
 	}
 
 	.user {
@@ -114,6 +99,22 @@
 		width: 5vh;
 		height: 5vh;
 		margin-left: 1vh;
+		border: 3px solid #00000000;
+	}
+
+	.first {
+		border: 3px solid rgb(218 158 59);
+		box-shadow: 0 0 32px 0 rgb(218 158 59);
+	}
+
+	.second {
+		border: 3px solid rgb(152 152 152);
+		box-shadow: 0 0 32px 0 rgb(152 152 152);
+	}
+
+	.third {
+		border: 3px solid rgb(174, 116, 65);
+		box-shadow: 0 0 32px 0 rgb(174, 116, 65);
 	}
 
 	.stats {
