@@ -81,9 +81,9 @@
 		display: flex;
 		flex-direction: row-reverse;
 		margin: 2vw;
-        margin-top: 10vh;
+		margin-top: 10vh;
 		gap: 1vw;
-        min-height: 90vh;
+		min-height: 90vh;
 	}
 
 	.leaderboard {
@@ -108,12 +108,12 @@
 
 	.infoHeader {
 		display: flex;
-		line-height: 5vw;
+		line-height: 5vh;
 		text-align: center;
 	}
 
 	.guildIcon {
-		height: 5vw;
+		height: 5vh;
 		border-radius: 100%;
 		margin-right: 1vh;
 	}
