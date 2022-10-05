@@ -152,7 +152,7 @@
 	@media only screen and (max-width: 1356px) {
 		.holder {
 			display: block;
-            margin: 10vh 1vh;
+            margin: 10vh 2vh;
 		}
 
 		.guildInfo {
