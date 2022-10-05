@@ -105,12 +105,13 @@
 	.holder {
 		display: flex;
 		flex-direction: row-reverse;
-		margin: 10vh;
+		margin: 5vh;
+        margin-top: 10vh;
 		gap: 1vw;
 	}
 
 	.leaderboard {
-        width: 100%;
+		width: 100%;
 	}
 
 	.guildInfo {
