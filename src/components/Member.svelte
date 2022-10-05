@@ -44,16 +44,24 @@
 
 <style>
 	.member {
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
 		padding: 2vh;
-		margin: 1vh;
+		margin-bottom: 1vh;
 		display: grid;
 		grid-template-columns: 1fr, 1fr, 1fr;
 		grid-template-rows: 1fr;
-		grid-column-gap: 10px;
+		grid-column-gap: 1vw;
 		height: fit-content;
 		border-radius: 10px;
 		background: rgba(0, 0, 0, 0.25);
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
+        overflow-x: auto;
+	}
+
+	.member:last-of-type {
+		margin: 0;
 	}
 
 	.first {
@@ -85,10 +93,12 @@
 		height: 3vh;
 		align-self: center;
 		align-items: center;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
 		padding-top: 0.3vh;
 		padding-right: 0.8vh;
 		padding-left: 0.8vh;
-		margin-right: 2vh;
 	}
 
 	.position {
