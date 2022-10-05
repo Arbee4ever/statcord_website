@@ -37,7 +37,7 @@ export const GET: RequestHandler = async ({ cookies, url}) => {
         secure: !dev,
         httpOnly: true,
         path: '/',
-        maxAge: 600
+        maxAge: response.expires_in
     });
     cookies.set('disco_refresh_token', response.refresh_token, {
         secure: !dev,
