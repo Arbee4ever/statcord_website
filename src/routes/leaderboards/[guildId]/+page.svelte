@@ -9,7 +9,7 @@
 	let guildId = $page.params.guildId;
 
 	onMount(async () => {
-		let data = await fetch('https://api.arbeeco.de/guilds/' + guildId, {
+		let data = await fetch('https://api.statcord.arbeeco.de/guilds/' + guildId, {
 			method: 'GET'
 		});
 		if (data.status == 200) {
