@@ -53,7 +53,7 @@
 		width: 100vw;
 		height: 100vh;
 		box-shadow: 0px 0px 250px 0px #000000 inset;
-		z-index: 3;
+		z-index: 1;
 	}
 
 	#wordmark {

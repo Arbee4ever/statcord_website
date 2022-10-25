@@ -32,10 +32,11 @@ export const GET: RequestHandler = async (query) => {
         })
     }
 
+    const access_token_expires_in = new Date(Date.now() + response.expires_in);
     const jsonResp = {
         disco_access_token: response.access_token,
         disco_refresh_token: response.refresh_token,
-        access_token_expires_in: response.expires_in,
+        access_token_expires_in: access_token_expires_in,
         refresh_token_expires_in: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     }
 

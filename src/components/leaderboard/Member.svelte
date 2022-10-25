@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PlaceholderImg from '$lib/img/icon_clyde_circle_white.svg';
+	import Countup from 'svelte-countup';
 	import { onMount } from 'svelte';
 	export let pos: number;
 	export let id: string;
@@ -11,7 +12,7 @@
 	};
 
 	onMount(async () => {
-		const discordData = await fetch('https://api.arbeeco.de/user/' + id, {
+		const discordData = await fetch('https://api.statcord.arbeeco.de/user/' + id, {
 			method: 'GET'
 		});
 		discordDataJson = await discordData.json();
@@ -39,6 +40,7 @@
 	</div>
 	<div class="stats">
 		<p class="score">{score}</p>
+		<p />
 	</div>
 </div>
 
@@ -92,6 +94,7 @@
 
 	.name {
 		margin-left: 1vh;
+		white-space: nowrap;
 	}
 
 	.avatar {
