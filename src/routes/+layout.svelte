@@ -94,7 +94,7 @@
 		box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
-		padding: 2vh;
+		padding: 20px;
 	}
 
 	:global(.loading) {
