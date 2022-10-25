@@ -7,12 +7,18 @@ export function clickOutside(node) {
 		)
 	  }
 	}
+
+	const handleNodeClick = event => {
+		event.preventDefault();
+	}
   
 	  document.addEventListener('click', handleClick, true);
+	  node.addEventListener("click", handleNodeClick, true);
 	
 	return {
 	  destroy() {
 		document.removeEventListener('click', handleClick, true);
+		node.removeEventListener("click", handleNodeClick, true);
 	  }
 	  }
   }

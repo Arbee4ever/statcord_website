@@ -54,7 +54,7 @@
 	<div class="content">
 		<div class="thumbnail">
 			<DetailsDropdown height="10vw" placeholderIcon={PlaceholderImg}>
-				<Input label="Thumbnail:" type="url" width="13vw" />
+				<Input label="Thumbnail:" type="url" width="200px" />
 			</DetailsDropdown>
 		</div>
 		<div class="author inline">
@@ -149,7 +149,7 @@
 			display: flex;
 			align-items: center;
 			background-color: var(--color);
-			width: 10px;
+			width: fit-content;
 			padding: 0;
 			border-radius: 0 3px 3px 0;
 			transition: opacity 0.2s ease-in-out;
@@ -158,7 +158,7 @@
 		.open p {
 			background-color: transparent;
 			padding: 0;
-			width: 100%;
+			font-size: 15px;
 			border-radius: 0 3px 3px 0;
 			transition: transform 0.2s ease-in-out;
 		}

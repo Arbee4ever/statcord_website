@@ -3,7 +3,6 @@
 	import DetailsDropdown from '$components/input/discordmessage/DetailsDropdown.svelte';
 
 	export let user: any;
-	let showDetails = false;
 </script>
 
 <div id="user">
