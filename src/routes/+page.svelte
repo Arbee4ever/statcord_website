@@ -1,27 +1,29 @@
 <script lang="ts">
 	import StatcordLogo from '$lib/img/statcord_logo.jpg';
+	import Countup from 'svelte-countup';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import GuildList from '$components/GuildList.svelte';
-	import User from '$components/User.svelte';
-	import DiscordButton from '$components/DiscordButton.svelte';
+	import GuildList from '$components/index/GuildList.svelte';
+	import User from '$components/index/User.svelte';
+	import DiscordButton from '$components/input/DiscordButton.svelte';
 
 	let user: any = $page.data.user;
 	let mutualGuilds: any;
+	let allGuildsCount: any;
 	let guilds: any;
 	let token: any;
 
 	onMount(async () => {
 		if (user) {
-			const guildsReq = await fetch('https://api.arbeeco.de/guilds?user=' + user.id);
+			const guildsReq = await fetch('https://api.statcord.arbeeco.de/guilds?user=' + user.id);
 			const guildsJson = await guildsReq.json();
 			mutualGuilds = guildsJson.mutual_guilds;
+			allGuildsCount = guildsJson.other_guilds.length + mutualGuilds.length;
 			token = $page.data.token;
 
 			const guildReq = await fetch(`https://discordapp.com/api/users/@me/guilds`, {
 				headers: { Authorization: `Bearer ${token}` }
 			});
-
 			const guildResp = await guildReq.json();
 
 			let jsonResponse: { id: any; name: any; icon: any }[] = [];
@@ -31,7 +33,8 @@
 					const jsonElement = {
 						id: element.id,
 						name: element.name,
-						icon: element.icon
+						icon: element.icon,
+						moderator: true
 					};
 					jsonResponse.push(jsonElement);
 				}
@@ -39,11 +42,20 @@
 			guilds = jsonResponse.filter((val) => {
 				return !JSON.stringify(mutualGuilds).includes(JSON.stringify(val));
 			});
+
+			mutualGuilds = mutualGuilds.filter((val: any) => {
+				return !JSON.stringify(val).includes(
+					JSON.stringify({
+						moderator: true
+					})
+				);
+			});
 		}
 	});
 </script>
 
 <main>
+	<User {user} />
 	<div class="cardHolder">
 		<div class="info card">
 			<h1 id="title" class="name">
@@ -51,6 +63,15 @@
 				Statcord
 			</h1>
 			<p id="description">Just another leveling Bot with some unique Features.</p>
+			<p id="description">
+				Thank you to all
+				{#if allGuildsCount}
+					<Countup value={allGuildsCount} duration={500} />
+				{:else}
+					x
+				{/if}
+				Guilds for using this Bot.
+			</p>
 			<div class="buttons">
 				<DiscordButton
 					--margin="0"
@@ -70,7 +91,7 @@
 					{#if !user}
 						<DiscordButton url="/api/auth">Login with Discord</DiscordButton>
 					{:else}
-						<GuildList type="dashboard" {guilds} {mutualGuilds} />
+						<GuildList type="dashboards" {guilds} {mutualGuilds} />
 					{/if}
 				</div>
 			</div>
@@ -85,11 +106,6 @@
 				</div>
 			</div>
 		</div>
-		{#if user}
-			<div class="user card">
-				<User {user} />
-			</div>
-		{/if}
 	</div>
 </main>
 
@@ -101,22 +117,6 @@
 
 	.cardHolder {
 		margin: auto;
-	}
-
-	.card {
-		position: relative;
-		border-radius: 10px;
-		background: rgba(0, 0, 0, 0.25);
-		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
-		height: min-content;
-		box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		padding: 1vh;
-	}
-
-	.user {
-		margin-top: 1vh;
 	}
 
 	.utils {
@@ -181,11 +181,6 @@
 		align-items: center;
 		min-width: 30vw;
 		height: 30vh;
-		overflow-y: overlay;
-	}
-
-	.user {
-		float: right;
-		text-align: end;
+		overflow-y: scroll;
 	}
 </style>
