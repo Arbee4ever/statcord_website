@@ -7,9 +7,10 @@
 	import Embed from './Embed.svelte';
 	import AutoGrowTextarea from '../AutoGrowTextarea.svelte';
 	import { scale } from 'svelte/transition';
+	import { clickOutside } from '$lib/script/clickOutside';
 
 	export let value: string;
-	let json;
+	let json: any;
 	let open = false;
 	const dispatch = createEventDispatcher();
 
@@ -19,8 +20,17 @@
 		open = !open;
 	}
 
-	function onChange() {
-		dispatch('change');
+	function onChange(event) {
+		dispatch('input', {
+			value: event.detail.value,
+			newValue: event.detail.newValue
+		});
+		var a = event.detail.value.split('.'),
+			i;
+
+		for (i = 0; i < a.length; i++) {
+			console.log(json['embeds']);
+		}
 	}
 </script>
 
@@ -28,8 +38,7 @@
 	<Button on:click={handleClick}>Open Editor</Button>
 </div>
 {#if open}
-	<div class="background" on:click={handleClick} />
-	<div class="holder card" transition:scale>
+	<div class="holder card" transition:scale use:clickOutside on:click_outside={handleClick}>
 		<div class="close">
 			<Button on:click={handleClick}>✖</Button>
 		</div>
@@ -47,9 +56,14 @@
 				</span>
 			</div>
 			{#if json}
-				<AutoGrowTextarea placeholder="Message content" on:change={onChange} value={json.content} />
-				{#each json.embeds as embed}
-					<Embed {embed} />
+				<AutoGrowTextarea
+					placeholder="Message content"
+					on:input={onChange}
+					value={json.content}
+					id="content"
+				/>
+				{#each json.embeds as embed, i}
+					<Embed {embed} id={i} on:input={onChange} />
 				{/each}
 			{/if}
 		</div>

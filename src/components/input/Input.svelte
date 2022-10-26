@@ -4,18 +4,25 @@
 
 	export let value: any = '';
 	export let type: any = 'text';
-	export let id: any = '';
+	export let id: any;
 	export let placeholder = '';
 	export let label = '';
 	export let width = '';
 	export let checked = false;
 	const dispatch = createEventDispatcher();
-	let input: any;
+	let input: HTMLInputElement;
 
-	function onChange() {
-		dispatch('change', {
+	function onInput() {
+		dispatch('input', {
 			value: id,
 			newValue: input.value
+		});
+	}
+
+	function onInputComponent(event) {
+		dispatch('input', {
+			value: id + "." + event.detail.value,
+			newValue: event.detail.newValue
 		});
 	}
 </script>
@@ -26,17 +33,17 @@
 			<p>{label}</p>
 		{/if}
 		{#if type == 'color'}
-			<input {type} class="card color" on:change={onChange} bind:this={input} {value} />
+			<input {type} {value} class="card color" on:input={onInput} bind:this={input} />
 		{:else if type == 'message'}
-			<Messagebuilder {value} on:change={onChange} bind:this={input} />
+			<Messagebuilder on:input={onInputComponent} bind:value />
 		{:else}
 			<input
 				{placeholder}
 				class="card input"
 				{type}
-				on:change={onChange}
-				bind:this={input}
 				{value}
+				on:input={onInput}
+				bind:this={input}
 				{checked}
 			/>
 		{/if}
@@ -72,10 +79,16 @@
 	}
 
 	.color {
-		padding: 5px;
-		background-color: white;
+		padding: 0;
+		background-color: var(--color);
+		border: rgba(0, 0, 0, 0.25) solid;
+		border-radius: 0;
 		height: 100%;
 		width: 100%;
+	}
+
+	.color:active {
+		border: rgba(0, 0, 0, 0.5) solid;
 	}
 
 	input::-webkit-outer-spin-button,

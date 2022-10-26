@@ -6,8 +6,10 @@
 	import IconCalendar from '$lib/img/calendar_icon.svg';
 	import IconLink from '$lib/img/link_icon.svg';
 	import { clickOutside } from '$lib/script/clickOutside';
+	import { createEventDispatcher } from 'svelte';
 
 	export let embed: any;
+	export let id: any;
 
 	const author = embed.author ? embed.author : {};
 	const fields = embed.fields ? embed.fields : [];
@@ -20,6 +22,7 @@
 	let colorSelector: HTMLDivElement;
 	let arrowButton: HTMLParagraphElement;
 	let openDiv: HTMLDivElement;
+	const dispatch = createEventDispatcher();
 
 	function toggleColorSelector() {
 		colorSelectorOpen = !colorSelectorOpen;
@@ -38,13 +41,20 @@
 			toggleColorSelector();
 		}
 	}
+
+	function onChange(event) {
+		dispatch('input', {
+			value: 'embeds[' + id + '].' + event.detail.value,
+			newValue: event.detail.newValue
+		});
+	}
 </script>
 
 <div class="embed" style="--color:{color}">
 	<div class="bar" use:clickOutside on:click_outside={handleClickOutside}>
 		<div class="color closed" bind:this={colorSelector}>
 			<div class="colorSelector">
-				<Input label="Color:" type="color" bind:value={color} />
+				<Input label="Color:" type="color" bind:value={color} id="color" />
 			</div>
 		</div>
 		<div class="open" on:click={toggleColorSelector} bind:this={openDiv}>
@@ -53,55 +63,59 @@
 	</div>
 	<div class="content">
 		<div class="thumbnail">
-			<DetailsDropdown height="10vw" placeholderIcon={PlaceholderImg}>
-				<Input label="Thumbnail:" type="url" width="200px" />
+			<DetailsDropdown height="10vw" placeholderIcon={PlaceholderImg} >
+				<Input label="Thumbnail:" type="url" width="200px" id="thumbnail.url" on:input={onChange} />
 			</DetailsDropdown>
 		</div>
 		<div class="author inline">
 			<DetailsDropdown placeholderIcon={PlaceholderImg}>
-				<Input label="Author Icon Url:" type="url" />
+				<Input label="Author Icon Url:" type="url" id="author.icon_url" on:input={onChange} />
 			</DetailsDropdown>
 			<DetailsDropdown placeholderIcon={IconLink}>
-				<Input label="Author Url:" type="url" />
+				<Input label="Author Url:" type="url" id="author.url" on:input={onChange} />
 			</DetailsDropdown>
-			<AutoGrowTextarea placeholder="Author Name" value={author.name} />
+			<AutoGrowTextarea placeholder="Author Name" value={author.name} id="author.name" on:input={onChange} />
 		</div>
 		<div class="title inline">
 			<DetailsDropdown placeholderIcon={IconLink}>
-				<Input label="Url:" type="url" />
+				<Input label="Url:" type="url" id="url" on:input={onChange} />
 			</DetailsDropdown>
-			<AutoGrowTextarea placeholder="Title" value={embed.title} />
+			<AutoGrowTextarea placeholder="Title" value={embed.title} id="title" on:input={onChange} />
 		</div>
 		<div class="description">
-			<AutoGrowTextarea placeholder="Description" value={embed.description} />
+			<AutoGrowTextarea
+				placeholder="Description"
+				id="description"
+				value={embed.description}
+				on:input={onChange}
+			/>
 		</div>
 		<div class="fields">
 			{#each fields as { name, value, inline }, i}
 				<div class="inline">
-					<Input type="checkbox" checked={inline} />
-					<AutoGrowTextarea placeholder="Field {i + 1} name" value={name} />
+					<Input type="checkbox" checked={inline} id="fields[{i}].inline" on:input={onChange} />
+					<AutoGrowTextarea placeholder="Field {i + 1} name" id="fields[{i}].name" value={name} on:input={onChange} />
 				</div>
-				<AutoGrowTextarea placeholder="Field {i + 1} value" {value} />
+				<AutoGrowTextarea placeholder="Field {i + 1} value" id="fields[{i}].value" {value} on:input={onChange} />
 			{/each}
 		</div>
 		<DetailsDropdown height="20vw" placeholderIcon={PlaceholderImg}>
-			<Input label="Imagelink:" type="url" />
+			<Input label="Imagelink:" type="url" id="image.url" on:input={onChange} />
 		</DetailsDropdown>
 		<div class="inline footer">
 			<DetailsDropdown placeholderIcon={PlaceholderImg}>
-				<Input label="Footer Icon Url:" type="url" />
+				<Input label="Footer Icon Url:" type="url" id="footer.icon_url" on:input={onChange} />
 			</DetailsDropdown>
 			<DetailsDropdown placeholderIcon={IconCalendar}>
-				<Input type="datetime-local" label="Timestamp" />
+				<Input type="datetime-local" label="Timestamp" id="timestamp" on:input={onChange} />
 			</DetailsDropdown>
-			<AutoGrowTextarea placeholder="Footer Text" value={footer.text} />
+			<AutoGrowTextarea placeholder="Footer Text" value={footer.text} id="footer.text" on:input={onChange} />
 		</div>
 	</div>
 </div>
 
 <style lang="scss">
 	.embed {
-		z-index: 1;
 		color: var(--color);
 		display: flex;
 		background-color: #2f3136;
@@ -132,14 +146,7 @@
 				transition: all 0.2s ease-in-out;
 				background-color: currentColor;
 				border-radius: 0 3px 3px 0;
-
-				input[type='color'] {
-					width: 100%;
-				}
-
-				.close {
-					margin-bottom: auto;
-				}
+				height: 100%;
 			}
 		}
 
