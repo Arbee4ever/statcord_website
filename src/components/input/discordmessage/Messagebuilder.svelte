@@ -29,7 +29,7 @@
 			i;
 
 		for (i = 0; i < a.length; i++) {
-			console.log(json['embeds']);
+			// console.log(json['embeds']);
 		}
 	}
 </script>

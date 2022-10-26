@@ -23,7 +23,6 @@
 	}
 
 	function handleClickOutside() {
-		console.log(this)
 		if (expanded) {
 			toggleExpand();
 		}
@@ -50,7 +49,7 @@
 	.dropdown {
 		width: min-content;
 	}
-	
+
 	.icon {
 		cursor: pointer;
 		padding: 2px;
