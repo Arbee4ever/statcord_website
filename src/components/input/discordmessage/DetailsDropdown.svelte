@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import { clickOutside } from '$lib/script/clickOutside.js';
+	import { clickOutside } from '$lib/script/clickOutside.ts';
 
 	export let placeholderIcon;
 	export let icon = placeholderIcon;
@@ -14,17 +14,16 @@
 		setTimeout(function () {
 			if (expanded) {
 				if (details.firstChild) {
-					console.log(details.firstChild.getBoundingClientRect().right)
 					if (details.firstChild.getBoundingClientRect().right >= window.innerWidth) {
 						overflow = (window.innerWidth - details.firstChild.getBoundingClientRect().right) - 20 + 'px';
 					}
-					console.log(overflow)
 				}
 			}
 		}, 1);
 	}
 
 	function handleClickOutside() {
+		console.log(this)
 		if (expanded) {
 			toggleExpand();
 		}
@@ -32,12 +31,12 @@
 </script>
 
 <div
-	class="imageSelector"
+	class="dropdown"
 	style="--height:{height}; --overflow: {overflow}"
 	use:clickOutside
 	on:click_outside={handleClickOutside}
 >
-	<img src={icon} class="imageIcon" alt="Dropdown Icon" on:click={toggleExpand} />
+	<img src={icon} class="icon" alt="Dropdown Icon" on:click={toggleExpand} />
 	<div bind:this={details}>
 		{#if expanded}
 			<div class="details card" transition:slide>
@@ -48,10 +47,11 @@
 </div>
 
 <style lang="scss">
-	.imageSelector {
+	.dropdown {
 		width: min-content;
 	}
-	.imageIcon {
+	
+	.icon {
 		cursor: pointer;
 		padding: 2px;
 		height: var(--height);

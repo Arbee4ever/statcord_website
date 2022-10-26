@@ -15,6 +15,9 @@
 	let category: any;
 	let vpw: any;
 	let saveVisibile: boolean = false;
+	let json: any = {};
+	let id;
+	let value;
 
 	onMount(function () {
 		category = [];
@@ -32,8 +35,14 @@
 		for (var i in x) category.push(x[i]);
 	}
 
-	function onChange() {
+	function onChange(event) {
+		id = category[1] + "." + event.detail.value;
+		value = event.detail.newValue;
 		saveVisibile = true;
+
+		json[id] = {
+			value: value
+		}
 	}
 </script>
 
@@ -60,7 +69,7 @@
 			<div class="card categoryHolder">
 				{#each category as { name, value, type, id }}
 					{#if name != undefined}
-						<Input {value} {type} {id} on:change={onChange} label={name} />
+						<Input {value} {id} {type} on:input={onChange} label={name} />
 					{/if}
 				{/each}
 			</div>
@@ -69,6 +78,8 @@
 </div>
 {#if saveVisibile}
 	<div class="save card" transition:slide>
+		<Button>{value}</Button>
+		<Button>{id}</Button>
 		<Button color="#00ff00">Save</Button>
 	</div>
 {/if}
@@ -108,6 +119,7 @@
 	}
 
 	.save {
+		display: flex;
 		z-index: 2;
 		position: fixed;
 		width: 80vw;

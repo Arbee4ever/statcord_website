@@ -1,16 +1,28 @@
 <script lang="ts">
-	export let value = '';
-	export let placeholder = '';
+	import { createEventDispatcher } from "svelte";
+	import { autoresize } from 'svelte-textarea-autoresize'
 
-	$: rows = (value.match('[\n\r]+') || []).length + 1 || 1;
+
+	export let value = '';
+	export let id: string
+	export let placeholder = '';
+	let textarea: HTMLTextAreaElement;
+	const dispatch = createEventDispatcher();
+
+	function onInput() {
+		dispatch('input', {
+			value: id,
+			newValue: textarea.value
+		});
+	}
 </script>
 
-<textarea {rows} bind:value {placeholder} />
+<textarea use:autoresize bind:value bind:this={textarea} {placeholder} on:input={onInput} />
 
 <style>
 	textarea {
-		white-space: nowrap;
 		resize: none;
 		overflow-x: scroll;
+		overflow: hidden;
 	}
 </style>
