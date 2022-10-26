@@ -10,44 +10,35 @@
 	export let width = '';
 	export let checked = false;
 	const dispatch = createEventDispatcher();
-	let input: HTMLInputElement;
 
-	function onInput() {
+	const onInput = (e) => {
+		value = type.match(/^(number|range)$/) ? +e.target.value : e.target.value;
+		value = type.match(/^(checkbox)$/) ? e.target.checked : value;
 		dispatch('input', {
 			value: id,
-			newValue: input.value
+			newValue: value
 		});
-	}
+	};
 
 	function onInputComponent(event) {
 		dispatch('input', {
-			value: id + "." + event.detail.value,
+			value: id + '.' + event.detail.value,
 			newValue: event.detail.newValue
 		});
 	}
 </script>
 
 <div class="holder" style="--width: {width}">
-	<label>
-		{#if label}
-			<p>{label}</p>
-		{/if}
-		{#if type == 'color'}
-			<input {type} {value} class="card color" on:input={onInput} bind:this={input} />
-		{:else if type == 'message'}
-			<Messagebuilder on:input={onInputComponent} bind:value />
-		{:else}
-			<input
-				{placeholder}
-				class="card input"
-				{type}
-				{value}
-				on:input={onInput}
-				bind:this={input}
-				{checked}
-			/>
-		{/if}
-	</label>
+	{#if label}
+		<p>{label}</p>
+	{/if}
+	{#if type == 'color'}
+		<input {type} {value} class="card color" on:input={onInput} />
+	{:else if type == 'message'}
+		<Messagebuilder on:input={onInputComponent} bind:value />
+	{:else}
+		<input {placeholder} class="card input" {type} {value} on:input={onInput} {checked}/>
+	{/if}
 </div>
 
 <style>
@@ -57,7 +48,7 @@
 
 	.holder {
 		align-items: center;
-		height: min-content;
+		height: fit-content;
 	}
 
 	.input {

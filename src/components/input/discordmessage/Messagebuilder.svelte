@@ -34,7 +34,7 @@
 	}
 </script>
 
-<div style="--scroll: {scroll}">
+<div>
 	<Button on:click={handleClick}>Open Editor</Button>
 </div>
 {#if open}
@@ -71,15 +71,6 @@
 {/if}
 
 <style lang="scss">
-	.background {
-		height: 100vh;
-		width: 100vw;
-		left: 0;
-		top: 0;
-		position: fixed;
-		z-index: 2;
-	}
-
 	.holder {
 		z-index: 2;
 		background-color: #36393f;

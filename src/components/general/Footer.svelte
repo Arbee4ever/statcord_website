@@ -31,7 +31,7 @@
 	</div>
 	<p>
 		Hosted on <a href="https://pages.cloudflare.com" target="_blank">Cloudflare</a>, domain from
-		<a href="https://dashserv.io/a/arbee" target="_blank">dashserv</a>
+		<a href="https://dashserv.io/a/statcord" target="_blank">dashserv</a>
 	</p>
 	<p>
 		Brand design by <a href="https://www.instagram.com/ralfbaenecke/" target="_blank"
