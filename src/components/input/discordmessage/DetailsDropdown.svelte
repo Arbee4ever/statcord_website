@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import { clickOutside } from '$lib/script/clickOutside.ts';
+	import { clickOutside } from '$lib/script/clickOutside.js';
 
 	export let placeholderIcon = '';
-	export let icon;
+	export let icon: any;
 	export let height = '15px';
 	export let border_radius = '4px';
 	let expanded = false;

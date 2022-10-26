@@ -5,7 +5,7 @@
 	import PlaceholderImg from '$lib/img/image_placeholder.svg';
 	import IconCalendar from '$lib/img/calendar_icon.svg';
 	import IconLink from '$lib/img/link_icon.svg';
-	import { clickOutside } from '$lib/script/clickOutside';
+	import { clickOutside } from '$lib/script/clickOutside.js';
 	import { createEventDispatcher } from 'svelte';
 
 	export let embed: any;
@@ -47,7 +47,7 @@
 		}
 	}
 
-	function onChange(event) {
+	function onChange(event: { detail: { value: string; newValue: any; }; }) {
 		dispatch('input', {
 			value: 'embeds[' + id + '].' + event.detail.value,
 			newValue: event.detail.newValue

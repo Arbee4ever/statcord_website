@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { autoresize } from 'svelte-textarea-autoresize'
+	import { autoresize } from 'svelte-textarea-autoresize';
 
 
 	export let value = '';
