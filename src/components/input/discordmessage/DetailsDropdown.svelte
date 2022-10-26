@@ -2,9 +2,10 @@
 	import { slide } from 'svelte/transition';
 	import { clickOutside } from '$lib/script/clickOutside.ts';
 
-	export let placeholderIcon;
-	export let icon = placeholderIcon;
+	export let placeholderIcon = '';
+	export let icon;
 	export let height = '15px';
+	export let border_radius = '4px';
 	let expanded = false;
 	let details: HTMLDivElement;
 	let overflow = '0px';
@@ -15,7 +16,8 @@
 			if (expanded) {
 				if (details.firstChild) {
 					if (details.firstChild.getBoundingClientRect().right >= window.innerWidth) {
-						overflow = (window.innerWidth - details.firstChild.getBoundingClientRect().right) - 20 + 'px';
+						overflow =
+							window.innerWidth - details.firstChild.getBoundingClientRect().right - 20 + 'px';
 					}
 				}
 			}
@@ -31,11 +33,15 @@
 
 <div
 	class="dropdown"
-	style="--height:{height}; --overflow: {overflow}"
+	style="--height:{height}; --overflow: {overflow}; --border-radius: {border_radius}"
 	use:clickOutside
 	on:click_outside={handleClickOutside}
 >
-	<img src={icon} class="icon" alt="Dropdown Icon" on:click={toggleExpand} />
+	{#if icon}
+		<img src={icon} class="icon" alt="Dropdown Icon" on:click={toggleExpand} />
+	{:else}
+		<img src={placeholderIcon} class="icon" alt="Dropdown Icon" on:click={toggleExpand} />
+	{/if}
 	<div bind:this={details}>
 		{#if expanded}
 			<div class="details card" transition:slide>
@@ -54,6 +60,9 @@
 		cursor: pointer;
 		padding: 2px;
 		height: var(--height);
+		border-radius: var(--border-radius);
+		max-height: 300px;
+		max-width: 400px;
 	}
 
 	.details {

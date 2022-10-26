@@ -16,7 +16,12 @@
 	fields.push({});
 	const footer = embed.footer ? embed.footer : {};
 
-	let color = embed.color;
+	let imageUrl: any = embed.image;
+	let thumbnailUrl = embed.thumbnail ? embed.thumbnail.url : "";
+	let authorIconUrl = author.icon_url;
+	let footerIconUrl = footer.icon_url;
+
+	let color = embed.color ? embed.color : '#6F58AC';
 
 	let colorSelectorOpen = false;
 	let colorSelector: HTMLDivElement;
@@ -54,7 +59,7 @@
 	<div class="bar" use:clickOutside on:click_outside={handleClickOutside}>
 		<div class="color closed" bind:this={colorSelector}>
 			<div class="colorSelector">
-				<Input label="Color:" type="color" bind:value={color} id="color" />
+				<Input label="Color:" type="color" bind:value={color} id="color" on:input={onChange} />
 			</div>
 		</div>
 		<div class="open" on:click={toggleColorSelector} bind:this={openDiv}>
@@ -63,21 +68,26 @@
 	</div>
 	<div class="content">
 		<div class="thumbnail">
-			<DetailsDropdown height="10vw" placeholderIcon={PlaceholderImg} >
-				<Input label="Thumbnail:" type="url" width="200px" id="thumbnail.url" on:input={onChange} />
+			<DetailsDropdown height="10vw" placeholderIcon={PlaceholderImg} icon={thumbnailUrl}>
+				<Input label="Thumbnail:" type="url" width="200px" id="thumbnail.url" on:input={onChange} bind:value={thumbnailUrl}/>
 			</DetailsDropdown>
 		</div>
 		<div class="author inline">
-			<DetailsDropdown placeholderIcon={PlaceholderImg}>
-				<Input label="Author Icon Url:" type="url" id="author.icon_url" on:input={onChange} />
+			<DetailsDropdown placeholderIcon={PlaceholderImg} icon={authorIconUrl} border_radius="100%">
+				<Input label="Author Icon Url:" type="url" id="author.icon_url" on:input={onChange} bind:value={authorIconUrl} />
 			</DetailsDropdown>
-			<DetailsDropdown placeholderIcon={IconLink}>
+			<DetailsDropdown icon={IconLink}>
 				<Input label="Author Url:" type="url" id="author.url" on:input={onChange} />
 			</DetailsDropdown>
-			<AutoGrowTextarea placeholder="Author Name" value={author.name} id="author.name" on:input={onChange} />
+			<AutoGrowTextarea
+				placeholder="Author Name"
+				value={author.name}
+				id="author.name"
+				on:input={onChange}
+			/>
 		</div>
 		<div class="title inline">
-			<DetailsDropdown placeholderIcon={IconLink}>
+			<DetailsDropdown icon={IconLink}>
 				<Input label="Url:" type="url" id="url" on:input={onChange} />
 			</DetailsDropdown>
 			<AutoGrowTextarea placeholder="Title" value={embed.title} id="title" on:input={onChange} />
@@ -94,22 +104,49 @@
 			{#each fields as { name, value, inline }, i}
 				<div class="inline">
 					<Input type="checkbox" checked={inline} id="fields[{i}].inline" on:input={onChange} />
-					<AutoGrowTextarea placeholder="Field {i + 1} name" id="fields[{i}].name" value={name} on:input={onChange} />
+					<AutoGrowTextarea
+						placeholder="Field {i + 1} name"
+						id="fields[{i}].name"
+						value={name}
+						on:input={onChange}
+					/>
 				</div>
-				<AutoGrowTextarea placeholder="Field {i + 1} value" id="fields[{i}].value" {value} on:input={onChange} />
+				<AutoGrowTextarea
+					placeholder="Field {i + 1} value"
+					id="fields[{i}].value"
+					{value}
+					on:input={onChange}
+				/>
 			{/each}
 		</div>
-		<DetailsDropdown height="20vw" placeholderIcon={PlaceholderImg}>
-			<Input label="Imagelink:" type="url" id="image.url" on:input={onChange} />
+		<DetailsDropdown height="20vw" placeholderIcon={PlaceholderImg} bind:icon={imageUrl}>
+			<Input
+				label="Imagelink:"
+				type="url"
+				id="image.url"
+				on:input={onChange}
+				bind:value={imageUrl}
+			/>
 		</DetailsDropdown>
 		<div class="inline footer">
-			<DetailsDropdown placeholderIcon={PlaceholderImg}>
-				<Input label="Footer Icon Url:" type="url" id="footer.icon_url" on:input={onChange} />
+			<DetailsDropdown placeholderIcon={PlaceholderImg} icon={footerIconUrl}>
+				<Input
+					label="Footer Icon Url:"
+					type="url"
+					id="footer.icon_url"
+					on:input={onChange}
+					bind:value={footerIconUrl}
+				/>
 			</DetailsDropdown>
-			<DetailsDropdown placeholderIcon={IconCalendar}>
+			<DetailsDropdown icon={IconCalendar}>
 				<Input type="datetime-local" label="Timestamp" id="timestamp" on:input={onChange} />
 			</DetailsDropdown>
-			<AutoGrowTextarea placeholder="Footer Text" value={footer.text} id="footer.text" on:input={onChange} />
+			<AutoGrowTextarea
+				placeholder="Footer Text"
+				value={footer.text}
+				id="footer.text"
+				on:input={onChange}
+			/>
 		</div>
 	</div>
 </div>
@@ -119,7 +156,6 @@
 		color: var(--color);
 		display: flex;
 		background-color: #2f3136;
-		height: fit-content;
 		border-radius: 10px;
 
 		.thumbnail {
@@ -160,6 +196,7 @@
 			padding: 0;
 			border-radius: 0 3px 3px 0;
 			transition: opacity 0.2s ease-in-out;
+			transition: all 0.2s ease-in-out;
 		}
 
 		.open p {

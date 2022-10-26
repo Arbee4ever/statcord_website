@@ -12,7 +12,7 @@
 			<a href="/api/signout" class="signout">Sign out </a>
 		</DetailsDropdown>
 	{:else}
-		<DetailsDropdown placeholderIcon={PlaceholderImg}>
+		<DetailsDropdown placeholderIcon={PlaceholderImg} height="5vh">
 			<a href="/api/auth" class="signout">Log in </a>
 		</DetailsDropdown>
 	{/if}
