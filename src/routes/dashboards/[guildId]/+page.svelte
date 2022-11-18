@@ -8,6 +8,7 @@
 	import Input from '$components/input/Input.svelte';
 	import GuildInfo from '$components/index/GuildInfo.svelte';
 	import Dropdown from '$components/input/Dropdown.svelte';
+	import { env } from '$env/dynamic/public';
 
 	let user: any = $page.data.user;
 	let config: any = $page.data.config;
@@ -18,6 +19,8 @@
 	let json: any = {};
 	let id;
 	let value;
+
+	let guild: any;
 
 	onMount(function () {
 		category = [];
@@ -36,15 +39,32 @@
 	}
 
 	function onChange(event) {
-		id = category[1] + "." + event.detail.value;
+		id = category[1] + '.' + event.detail.value;
 		value = event.detail.newValue;
 		saveVisibile = true;
 
 		json[id] = {
 			value: value
-		}
+		};
 	}
+
+	onMount(async () => {
+		let data = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds/' + guildId, {
+			method: 'GET'
+		});
+		if (data.status == 200) {
+			const json = await data.json();
+			guild = json.guild;
+		}
+	});
 </script>
+
+<svelte:head>
+	{#if guild}
+		<meta property="og:title" content="Statcord | {guild.name}'s Dashboard" />
+		<title>Statcord | {guild.name}'s Leaderboard</title>
+	{/if}
+</svelte:head>
 
 <svelte:window bind:outerWidth={vpw} />
 
