@@ -6,7 +6,7 @@
 
 	let pfp: any;
 
-	if (user.avatar != null) {
+	if (user != null) {
 		pfp = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 	} else {
 		pfp = PlaceholderImg;
