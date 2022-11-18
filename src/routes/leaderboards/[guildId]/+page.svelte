@@ -5,7 +5,7 @@
 
 	import Member from '$components/leaderboard/Member.svelte';
 	import { onMount } from 'svelte';
-	import { env } from '$env/dynamic/private';
+	import { env } from '$env/dynamic/public';
 	let guild: any;
 	let user: any = $page.data.user;
 	let guildId = $page.params.guildId;
@@ -13,7 +13,6 @@
 
 	onMount(async () => {
 		let data = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds/' + guildId, {
-			headers: { Authorization: `${env.DISCORD_AUTH}` },
 			method: 'GET'
 		});
 		if (data.status == 200) {
