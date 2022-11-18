@@ -3,6 +3,7 @@
 
 	export let url: any = '';
 	export let color = '#000000';
+	export let width = "min-content";
 	const backgroundColor = color + '40';
 	const shadowColor = color + '5E';
 	const dispatch = createEventDispatcher();
@@ -15,7 +16,7 @@
 {#if url != ''}
 	<a
 		href={url}
-		style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}"
+		style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}; --width: {width}"
 		class={$$props.class}
 		on:click={handleClick}
 	>
@@ -23,9 +24,9 @@
 			<slot />
 		</div>
 	</a>
-	{:else}
+{:else}
 	<div
-		style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}"
+		style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}; --width: {width}"
 		class={$$props.class}
 		on:click={handleClick}
 	>
@@ -43,7 +44,8 @@
 		box-shadow: 0 0 32px 0 var(--shadowColor);
 		border-radius: 5px;
 		padding: 5px;
-		width: min-content;
+		width: var(--width);
+		text-align: center;
 	}
 
 	.button:hover {

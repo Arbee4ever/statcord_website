@@ -79,7 +79,7 @@
 			<p>{guild.voicecount} Voicechannels</p>
 		</div>
 		{#if moderator}
-			<Button url="/{other[0]}/{guild.id}">Go to {other[1]}</Button>
+			<Button url="/{other[0]}/{guild.id}" width="100%">Go to {other[1]}</Button>
 		{/if}
 	{:else if error == '404'}
 		<div class="loading">
