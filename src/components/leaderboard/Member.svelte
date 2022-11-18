@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PlaceholderImg from '$lib/img/icon_clyde_circle_white.svg';
 	import { onMount } from 'svelte';
-	import { env } from '$env/dynamic/private';
+	import { env } from '$env/dynamic/public';
 	export let pos: number;
 	export let id: string;
 	export let score: any;
@@ -12,9 +12,7 @@
 	};
 
 	onMount(async () => {
-		const discordData = await fetch(env.STATCORD_API_URL + '/user/' + id,
-		{
-			headers: { Authorization: `${env.DISCORD_AUTH}` },
+		const discordData = await fetch(env.PUBLIC_STATCORD_API_URL + '/user/' + id, {
 			method: 'GET'
 		});
 		discordDataJson = await discordData.json();
