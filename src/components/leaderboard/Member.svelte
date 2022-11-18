@@ -10,13 +10,18 @@
 		name: 'Loading...',
 		pfp: PlaceholderImg
 	};
+	let pfp: any;
 
 	onMount(async () => {
 		const discordData = await fetch(env.PUBLIC_STATCORD_API_URL + '/user/' + id, {
 			method: 'GET'
 		});
 		discordDataJson = await discordData.json();
-		discordDataJson.pfp = 'https://cdn.discordapp.com/avatars/' + id + '/' + discordDataJson.pfp;
+		if (discordDataJson.pfp != null) {
+			pfp = 'https://cdn.discordapp.com/avatars/' + id + '/' + discordDataJson.pfp;
+		} else {
+			pfp = PlaceholderImg;
+		}
 	});
 </script>
 
@@ -26,13 +31,13 @@
 			<div class="namepos">
 				<p class="position">{pos}</p>
 				{#if pos == 1}
-					<img class="avatar first" src={discordDataJson.pfp} alt="User" />
+					<img class="avatar first" src={pfp} alt="User" />
 				{:else if pos == 2}
-					<img class="avatar second" src={discordDataJson.pfp} alt="User" />
+					<img class="avatar second" src={pfp} alt="User" />
 				{:else if pos == 3}
-					<img class="avatar third" src={discordDataJson.pfp} alt="User" />
+					<img class="avatar third" src={pfp} alt="User" />
 				{:else}
-					<img class="avatar" src={discordDataJson.pfp} alt="User" />
+					<img class="avatar" src={pfp} alt="User" />
 				{/if}
 				<p class="name">{discordDataJson.name}</p>
 			</div>
