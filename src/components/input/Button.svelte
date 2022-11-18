@@ -1,9 +1,6 @@
-<script>
+<script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	/**
-	 * @type {String}
-	 */
 	export let url = '';
 	export let color = '#000000';
 	const backgroundColor = color + '40';
@@ -19,7 +16,7 @@
 	href={url}
 	style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}"
 	class={$$props.class}
-	on:click={handleClick}
+	on:click|preventDefault={handleClick}
 >
 	<div class="button card">
 		<slot />
