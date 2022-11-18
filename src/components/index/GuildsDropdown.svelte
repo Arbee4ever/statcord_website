@@ -5,8 +5,8 @@
 	export let guild: any;
 	export let other_guilds: any;
 	let showItems = false;
-    let location = $page.url.pathname;
-    location = location.replace($page.params.guildId, "");
+	let location = $page.url.pathname;
+	location = location.replace($page.params.guildId, '');
 
 	function handleClick() {
 		showItems = !showItems;

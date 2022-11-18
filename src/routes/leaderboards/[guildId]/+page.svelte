@@ -25,8 +25,10 @@
 				const json = await data.json();
 				newBatch = json.members;
 				guild = json.guild;
-				console.log(index);
 				index++;
+				if(newBatch.length < 50) {
+					hasMore = false;
+				}
 			}
 		}
 	}
