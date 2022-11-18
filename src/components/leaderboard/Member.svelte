@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PlaceholderImg from '$lib/img/icon_clyde_circle_white.svg';
-	import Countup from 'svelte-countup';
 	import { onMount } from 'svelte';
+	import { env } from '$env/dynamic/private';
 	export let pos: number;
 	export let id: string;
 	export let score: any;
@@ -12,7 +12,9 @@
 	};
 
 	onMount(async () => {
-		const discordData = await fetch('https://api.statcord.arbeeco.de/user/' + id, {
+		const discordData = await fetch(env.STATCORD_API_URL + '/user/' + id,
+		{
+			headers: { Authorization: `${env.DISCORD_AUTH}` },
 			method: 'GET'
 		});
 		discordDataJson = await discordData.json();

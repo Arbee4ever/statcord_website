@@ -1,11 +1,11 @@
 <script lang="ts">
 	import StatcordLogo from '$lib/img/statcord_logo.jpg';
-	import Countup from 'svelte-countup';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import GuildList from '$components/index/GuildList.svelte';
 	import User from '$components/index/User.svelte';
 	import DiscordButton from '$components/input/DiscordButton.svelte';
+	import { env } from '$env/dynamic/public';
 
 	let user: any = $page.data.user;
 	let mutualGuilds: any;
@@ -15,7 +15,7 @@
 
 	onMount(async () => {
 		if (user) {
-			const guildsReq = await fetch('https://api.statcord.arbeeco.de/guilds?user=' + user.id);
+			const guildsReq = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + user.id);
 			const guildsJson = await guildsReq.json();
 			mutualGuilds = guildsJson.mutual_guilds;
 			allGuildsCount = guildsJson.other_guilds.length + mutualGuilds.length;
@@ -66,7 +66,7 @@
 			<p id="description">
 				Thank you to all
 				{#if allGuildsCount}
-					<Countup value={allGuildsCount} duration={500} />
+					{allGuildsCount}
 				{:else}
 					x
 				{/if}

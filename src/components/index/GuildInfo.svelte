@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import DiscordButton from '$components/input/DiscordButton.svelte';
 	import GuildsDropdown from '$components/index/GuildsDropdown.svelte';
+	import { env } from '$env/dynamic/public';
 	let guild: any;
 	let data;
 	export let user: any;
@@ -11,7 +12,7 @@
 	let guildId = $page.params.guildId;
 
 	onMount(async () => {
-		data = await fetch('https://api.statcord.arbeeco.de/guilds/' + guildId, {
+		data = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds/' + guildId, {
 			method: 'GET'
 		});
 		if (data.status == 200) {
@@ -23,7 +24,7 @@
 			error = (await data.json()).error;
 		}
 		if (user != null) {
-			data = await fetch('https://api.statcord.arbeeco.de/guilds?user=' + user.id, {
+			data = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + user.id, {
 				method: 'GET'
 			});
 			if (data.status == 200) {
@@ -52,7 +53,7 @@
 				alt="Guild Banner"
 			/>
 		{/if}
-		<GuildsDropdown {guild} {other_guilds}/>
+		<GuildsDropdown {guild} {other_guilds} />
 		{#if guild.description}
 			<p class="card guildDescription">{guild.description}</p>
 		{/if}

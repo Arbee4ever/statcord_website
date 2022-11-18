@@ -1,18 +1,19 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import GuildInfo from '$components/index/GuildInfo.svelte';
-	import DiscordButton from '$components/input/DiscordButton.svelte';
 	import User from '$components/index/User.svelte';
 
 	import Member from '$components/leaderboard/Member.svelte';
 	import { onMount } from 'svelte';
+	import { env } from '$env/dynamic/private';
 	let guild: any;
 	let user: any = $page.data.user;
 	let guildId = $page.params.guildId;
 	let members: any;
 
 	onMount(async () => {
-		let data = await fetch('https://api.statcord.arbeeco.de/guilds/' + guildId, {
+		let data = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds/' + guildId, {
+			headers: { Authorization: `${env.DISCORD_AUTH}` },
 			method: 'GET'
 		});
 		if (data.status == 200) {
