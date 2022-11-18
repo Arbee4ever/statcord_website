@@ -3,16 +3,24 @@
 	import DetailsDropdown from '$components/input/discordmessage/DetailsDropdown.svelte';
 
 	export let user: any;
+
+	let pfp: any;
+
+	if (user.avatar != null) {
+		pfp = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+	} else {
+		pfp = PlaceholderImg;
+	}
 </script>
 
 <div id="user">
 	{#if user}
-		<DetailsDropdown placeholderIcon="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.png" height="5vh">
+		<DetailsDropdown icon={pfp} height="5vh">
 			<h1>{user.username}#{user.discriminator}</h1>
 			<a href="/api/signout" class="signout">Sign out </a>
 		</DetailsDropdown>
 	{:else}
-		<DetailsDropdown placeholderIcon={PlaceholderImg} height="5vh">
+		<DetailsDropdown icon={pfp} height="5vh">
 			<a href="/api/auth" class="signout">Log in </a>
 		</DetailsDropdown>
 	{/if}
