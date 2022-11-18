@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	export let url = '';
+	export let url: any = '';
 	export let color = '#000000';
 	const backgroundColor = color + '40';
 	const shadowColor = color + '5E';
@@ -12,19 +12,32 @@
 	}
 </script>
 
-<a
-	href={url}
-	style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}"
-	class={$$props.class}
-	on:click|preventDefault={handleClick}
->
-	<div class="button card">
-		<slot />
+{#if url != ''}
+	<a
+		href={url}
+		style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}"
+		class={$$props.class}
+		on:click={handleClick}
+	>
+		<div class="button card">
+			<slot />
+		</div>
+	</a>
+	{:else}
+	<div
+		style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}"
+		class={$$props.class}
+		on:click={handleClick}
+	>
+		<div class="button card">
+			<p><slot /></p>
+		</div>
 	</div>
-</a>
+{/if}
 
 <style>
 	.button {
+		cursor: pointer;
 		white-space: nowrap;
 		background-color: var(--backgroundColor);
 		box-shadow: 0 0 32px 0 var(--shadowColor);

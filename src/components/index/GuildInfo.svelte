@@ -2,17 +2,20 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import DiscordButton from '$components/input/DiscordButton.svelte';
+	import Button from '$components/input/Button.svelte';
 	import GuildsDropdown from '$components/index/GuildsDropdown.svelte';
 	import { env } from '$env/dynamic/public';
+	import { compute_slots } from 'svelte/internal';
+	export let user: any;
 	let guild: any;
 	let data;
-	export let user: any;
+	let moderator: boolean;
 	let error: string;
 	let other_guilds: any;
 	let guildId = $page.params.guildId;
 
 	onMount(async () => {
-		data = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds/' + guildId, {
+		data = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guildId}`, {
 			method: 'GET'
 		});
 		if (data.status == 200) {
@@ -24,7 +27,7 @@
 			error = (await data.json()).error;
 		}
 		if (user != null) {
-			data = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + user.id, {
+			data = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds?user=${user.id}`, {
 				method: 'GET'
 			});
 			if (data.status == 200) {
@@ -41,7 +44,19 @@
 		} else {
 			other_guilds = [];
 		}
+
+		const req = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guild.id}?user=${user.id}`);
+		const reqJson = await req.json();
+		moderator = reqJson.moderator;
+		console.log(reqJson)
 	});
+
+	let other: string[];
+	if (!$page.url.pathname.includes('dashboards')) {
+		other = ['dashboards', 'Dashboard'];
+	} else {
+		other = ['leaderboards', 'Leaderboard'];
+	}
 </script>
 
 <div class="card guildInfo">
@@ -63,6 +78,9 @@
 			<p>{guild.textcount} Textchannels</p>
 			<p>{guild.voicecount} Voicechannels</p>
 		</div>
+		{#if moderator}
+			<Button url="/{other[0]}/{guild.id}">Go to {other[1]}</Button>
+		{/if}
 	{:else if error == '404'}
 		<div class="loading">
 			<p>Statcord is not on this Server!</p>
