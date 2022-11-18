@@ -6,21 +6,36 @@
 	import Member from '$components/leaderboard/Member.svelte';
 	import { onMount } from 'svelte';
 	import { env } from '$env/dynamic/public';
+	import Button from '$components/input/Button.svelte';
 	let guild: any;
 	let user: any = $page.data.user;
 	let guildId = $page.params.guildId;
-	let members: any;
+	let members: any = [];
+
+	let index: any = 0;
+	let newBatch: never[] = [];
+	let hasMore: boolean = true;
+
+	async function fetchData() {
+		if (hasMore) {
+			let data = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guildId}?page=${index}`, {
+				method: 'GET'
+			});
+			if (data.status == 200) {
+				const json = await data.json();
+				newBatch = json.members;
+				guild = json.guild;
+				console.log(index);
+				index++;
+			}
+		}
+	}
 
 	onMount(async () => {
-		let data = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds/' + guildId, {
-			method: 'GET'
-		});
-		if (data.status == 200) {
-			const json = await data.json();
-			members = json.members;
-			guild = json.guild;
-		}
+		await fetchData();
 	});
+
+	$: members = [...members, ...newBatch];
 </script>
 
 <svelte:head>
@@ -36,10 +51,13 @@
 		<GuildInfo {user} />
 	{/if}
 	<div class="card leaderboard">
-		{#if members}
+		{#if members.length != 0}
 			{#each members as { pos, id, score }}
 				<Member {pos} {id} {score} />
 			{/each}
+			{#if hasMore}
+				<Button on:click={fetchData}>Load more</Button>
+			{/if}
 		{:else}
 			<p class="loading">Please wait, data is loading...</p>
 		{/if}
@@ -57,6 +75,9 @@
 	}
 
 	.leaderboard {
+		display: flex;
+		flex-direction: column;
+		gap: 1vh;
 		width: 100%;
 	}
 

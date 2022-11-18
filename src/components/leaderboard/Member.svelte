@@ -55,7 +55,6 @@
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		padding: 2vh;
-		margin-bottom: 1vh;
 		display: grid;
 		grid-template-columns: 1fr, 1fr, 1fr;
 		grid-template-rows: 1fr;
