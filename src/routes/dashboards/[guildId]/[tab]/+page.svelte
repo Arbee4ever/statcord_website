@@ -24,6 +24,7 @@
 	let guild: any;
 
 	function updateCategory(t) {
+		window.removeEventListener("beforeunload", beforeUnload);
 		saveVisibile = false;
 		resp = {};
 		tab = t;
@@ -37,6 +38,15 @@
 
 		resp = { ...resp };
 		resp[id] = value;
+
+		window.addEventListener("beforeunload", beforeUnload);
+	}
+
+	function beforeUnload(e) {
+    var confirmationMessage = 'You have unsaved Changes!';
+
+    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
 	}
 
 	onMount(async () => {
