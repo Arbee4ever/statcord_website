@@ -2,47 +2,25 @@
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 
-	export let elements: any;
-	let slot;
 	let showItems = false;
-	const dispatch = createEventDispatcher();
 
 	function handleClick() {
 		showItems = !showItems;
 	}
-
-	function updateCategory(category: any) {
-		handleClick();
-		dispatch('click', {
-			category: category
-		});
-	}
 </script>
 
-<div class="card" id="dropdown">
-	{#if elements}
-		<div class="element" on:click={handleClick}>
-			<p bind:this={slot}><slot /></p>
-		</div>
-		<div class="elementList">
-			{#if showItems}
-				{#if elements}
-					{#each elements as el}
-						<p
-							class="elementName elements card"
-							transition:slide
-							on:click={() => updateCategory(el)}
-						>
-							{el.name}
-						</p>
-					{/each}
-				{/if}
-			{/if}
+<div class="card" id="dropdown" on:click={handleClick}>
+	<div class="elementList" transition:slide>
+		<slot name="selected" />
+	</div>
+	{#if showItems}
+		<div class="elementList" transition:slide>
+			<slot />
 		</div>
 	{/if}
 </div>
 
-<style>
+<style lang="scss">
 	.elementName {
 		overflow: hidden;
 		white-space: nowrap;
@@ -50,17 +28,13 @@
 	}
 
 	.elementList {
-		z-index: 1;
-	}
-
-	.element,
-	.elements {
-		display: flex;
-	}
-
-	.elements {
 		margin-top: 1vh;
-		box-shadow: none;
+		display: grid;
+		gap: 1vh;
+
+		:global(a) {
+			box-shadow: none;
+		}
 	}
 
 	#dropdown {

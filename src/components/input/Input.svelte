@@ -9,14 +9,15 @@
 	export let label = '';
 	export let width = '';
 	export let checked = false;
+	export let editable = true;
 	const dispatch = createEventDispatcher();
 
 	const onInput = (e) => {
 		value = type.match(/^(number|range)$/) ? +e.target.value : e.target.value;
 		value = type.match(/^(checkbox)$/) ? e.target.checked : value;
 		dispatch('input', {
-			value: id,
-			newValue: value
+			id: id,
+			value: value
 		});
 	};
 
@@ -33,58 +34,70 @@
 		<p>{label}</p>
 	{/if}
 	{#if type == 'color'}
-		<input {type} {value} class="card color" on:input={onInput} />
+		<input contenteditable={editable} {type} {value} class="card color" on:input={onInput} />
 	{:else if type == 'message'}
 		<Messagebuilder on:input={onInputComponent} bind:value />
+	{:else if type == 'checkbox'}
+		<input readonly={!editable} class="card checkbox" on:input={onInput} {type} {checked} />
 	{:else}
-		<input {placeholder} class="card input" {type} {value} on:input={onInput} {checked}/>
+		<input
+			readonly={!editable}
+			{placeholder}
+			class="card input"
+			{type}
+			{value}
+			on:input={onInput}
+		/>
 	{/if}
 </div>
 
-<style>
-	p {
-		margin-right: 1vw;
-	}
-
+<style lang="scss">
 	.holder {
 		align-items: center;
 		height: fit-content;
-	}
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1vh;
 
-	.input {
-		resize: none;
-		padding: 1vw;
-		color: white;
-		border: none;
-		width: var(--width, 100%);
-	}
+		.input {
+			resize: none;
+			padding: 15px;
+			color: white;
+			border: none;
+			width: var(--width, 100%);
+		}
 
-	.input:focus {
-		outline: rgba(0, 0, 0, 0.25) solid;
-	}
+		.input:focus {
+			outline: rgba(0, 0, 0, 0.25) solid;
+		}
 
-	input[type='number'] {
-		appearance: textfield;
-		-moz-appearance: textfield;
-		-webkit-appearance: textfield;
-	}
+		input[type='number'] {
+			appearance: textfield;
+			-moz-appearance: textfield;
+			-webkit-appearance: textfield;
+		}
 
-	.color {
-		padding: 0;
-		background-color: var(--color);
-		border: rgba(0, 0, 0, 0.25) solid;
-		border-radius: 0;
-		height: 100%;
-		width: 100%;
-	}
+		.color {
+			padding: 0;
+			background-color: var(--color);
+			border: rgba(0, 0, 0, 0.25) solid;
+			border-radius: 0;
+			height: 100%;
+			width: 100%;
+		}
 
-	.color:active {
-		border: rgba(0, 0, 0, 0.5) solid;
-	}
+		.color:active {
+			border: rgba(0, 0, 0, 0.5) solid;
+		}
 
-	input::-webkit-outer-spin-button,
-	input::-webkit-inner-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
+		.checkbox {
+			margin-right: 0;
+		}
+
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
 	}
 </style>
