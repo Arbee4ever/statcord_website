@@ -54,8 +54,8 @@
 	{/if}
 	<div class="card leaderboard">
 		{#if members.length != 0}
-			{#each members as { pos, id, score }}
-				<Member {pos} {id} {score} />
+			{#each members as { pos, id, textscore, voicescore }}
+				<Member {pos} {id} score={textscore+voicescore} />
 			{/each}
 			{#if hasMore}
 				<Button on:click={fetchData}>Load more</Button>
