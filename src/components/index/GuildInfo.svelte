@@ -5,7 +5,6 @@
 	import Button from '$components/input/Button.svelte';
 	import GuildsDropdown from '$components/index/GuildsDropdown.svelte';
 	import { env } from '$env/dynamic/public';
-	import { compute_slots } from 'svelte/internal';
 	export let user: any;
 	let guild: any;
 	let data;
@@ -48,7 +47,6 @@
 		const req = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guild.id}?user=${user.id}`);
 		const reqJson = await req.json();
 		moderator = reqJson.moderator;
-		console.log(reqJson)
 	});
 
 	let other: string[];
