@@ -2,11 +2,9 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
-
 	import Button from '$components/input/Button.svelte';
 	import User from '$components/index/User.svelte';
 	import GuildInfo from '$components/index/GuildInfo.svelte';
-	import Dropdown from '$components/input/Dropdown.svelte';
 	import { env } from '$env/dynamic/public';
 	import Conversionvalues from '$components/dashboard/Conversionvalues.svelte';
 	import Auth from '$components/dashboard/Auth.svelte';

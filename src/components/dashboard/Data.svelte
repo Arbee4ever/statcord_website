@@ -10,8 +10,6 @@
 			value: event.detail.value
 		});
 	};
-
-	console.log(category)
 </script>
 
 <Input
