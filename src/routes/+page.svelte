@@ -17,7 +17,7 @@
 		if (user) {
 			const guildsReq = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + user.id);
 			const guildsJson = await guildsReq.json();
-			mutualGuilds = guildsJson.mutual_guilds;
+			mutualGuilds = guildsJson.mutual_guilds ? guildsJson.mutual_guilds : [];
 			allGuildsCount = guildsJson.other_guilds.length + mutualGuilds.length;
 			token = $page.data.token;
 
