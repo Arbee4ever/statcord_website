@@ -26,7 +26,7 @@
 				newBatch = json.members;
 				guild = json.guild;
 				index++;
-				if(newBatch.length < 50) {
+				if (newBatch.length < 50) {
 					hasMore = false;
 				}
 			}
@@ -47,15 +47,17 @@
 	{/if}
 </svelte:head>
 
+<User {user} />
 <div class="holder">
-	<User {user} />
 	{#if guildId}
-		<GuildInfo {user} />
+		<div class="info">
+			<GuildInfo {user} />
+		</div>
 	{/if}
 	<div class="card leaderboard">
 		{#if members.length != 0}
 			{#each members as { pos, id, textscore, voicescore }}
-				<Member {pos} {id} score={textscore+voicescore} />
+				<Member {pos} {id} score={textscore + voicescore} />
 			{/each}
 			{#if hasMore}
 				<Button on:click={fetchData}>Load more</Button>
@@ -66,26 +68,32 @@
 	</div>
 </div>
 
-<style>
+<style lang="scss">
 	.holder {
-		display: flex;
-		flex-direction: row-reverse;
+		display: grid;
+		grid-template-columns: 2.5fr 1fr;
+		grid-template-areas: 'board info';
+		gap: 2vw;
 		margin: 2vw;
 		margin-top: 10vh;
-		gap: 1vw;
 		min-height: 90vh;
-	}
 
-	.leaderboard {
-		display: flex;
-		flex-direction: column;
-		gap: 1vh;
-		width: 100%;
+		.leaderboard {
+			display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			width: 100%;
+			grid-area: board;
+		}
+		.info {
+			grid-area: info;
+		}
 	}
 
 	@media only screen and (max-width: 1356px) {
 		.holder {
-			flex-direction: column;
+			grid-template-columns: 1fr;
+			grid-template-areas: 'info' 'board';
 		}
 	}
 </style>
