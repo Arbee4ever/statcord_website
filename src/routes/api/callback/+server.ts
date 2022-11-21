@@ -4,7 +4,7 @@ import { error, redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ cookies, url}) => {
-    const returnCode = url.searchParams.get("code");
+    const returnCode = url.searchParams.get("code")?.toString();
 
     if (returnCode == null) {
         return error(400, "Invalid return Code");
@@ -15,8 +15,7 @@ export const GET: RequestHandler = async ({ cookies, url}) => {
         client_secret: env.DISCORD_CLIENT_SECRET,
         redirect_uri: env.DISCORD_REDIRECT_URI,
         grant_type: 'authorization_code',
-        scope: 'identify guilds',
-        code: returnCode
+        code: returnCode.toString()
     };
 
     const request = await fetch('https://discord.com/api/oauth2/token', {
