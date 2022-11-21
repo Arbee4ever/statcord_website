@@ -11,6 +11,8 @@
 
 {#if !mutualGuilds || !guilds}
 	<p class="guild">Loading your Servers...</p>
+{:else if mutualGuilds.length == 0 && guilds.length == 0}
+	<p class="guild">You don't share a Server with Statcord!</p>
 {:else}
 	{#each mutualGuilds as { name, icon, id }}
 		<a href="{type}/{id}" class="guild" transition:slide>
