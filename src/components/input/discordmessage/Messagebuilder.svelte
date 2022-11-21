@@ -35,12 +35,12 @@
 </script>
 
 <div>
-	<Button on:click={handleClick}>Open Editor</Button>
+	<Button on:mousedown={handleClick}>Open Editor</Button>
 </div>
 {#if open}
-	<div class="holder card" transition:scale use:clickOutside on:click_outside={handleClick}>
+	<div class="holder card" transition:scale use:clickOutside on:mousedown_outside={handleClick}>
 		<div class="close">
-			<Button on:click={handleClick}>✖</Button>
+			<Button on:mousedown={handleClick}>✖</Button>
 		</div>
 		<div class="botUser">
 			<img src={StatcordLogo} alt="Statcord Logo" />

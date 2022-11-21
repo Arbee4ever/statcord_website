@@ -38,7 +38,6 @@
 		"canvas-constructor": "^7.0.0",
 		"cookie": "^0.5.0",
 		"discord-markdown": "^2.5.1",
-		"realm-web": "^1.7.1",
 		"svelte-countup": "^0.2.6",
 		"svelte-textarea-autoresize": "^1.0.0"
 	}

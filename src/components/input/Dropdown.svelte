@@ -9,7 +9,7 @@
 	}
 </script>
 
-<div class="card" id="dropdown" on:click={handleClick}>
+<div class="card" id="dropdown" on:mousedown={handleClick}>
 	<div class="elementList" transition:slide>
 		<slot name="selected" />
 	</div>

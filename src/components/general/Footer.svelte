@@ -11,16 +11,16 @@
 	<img src={ArbeeWordImageMark} alt="ARBEE's Word-Imagemark." />
 	<br />
 	<div id="footercontact">
-		<a href="https://ko-fi.com/arbee" target="_blank">
+		<a href="https://ko-fi.com/arbee" target="_blank" rel="noreferrer">
 			<img src={KoFiLogo} alt="Support me on Ko-fi!" />
 		</a>
-		<a href="https://discord.gg/fHu8AZBrYW" target="_blank">
+		<a href="https://discord.gg/fHu8AZBrYW" target="_blank" rel="noreferrer">
 			<img src={DiscordLogo} alt="Contact ARBEE over Discord." />
 		</a>
-		<a href="https://twitter.com/0Arbee0" target="_blank">
+		<a href="https://twitter.com/0Arbee0" target="_blank" rel="noreferrer">
 			<img src={TwitterLogo} alt="Contact ARBEE over Twitter" />
 		</a>
-		<a href="https://github.com/Arbee4ever" target="_blank">
+		<a href="https://github.com/Arbee4ever" target="_blank" rel="noreferrer">
 			<img src={GitHubLogo} alt="Contact ARBEE over GitHub." />
 		</a>
 		<a
@@ -30,20 +30,23 @@
 		</a>
 	</div>
 	<p>
-		Hosted on <a href="https://pages.cloudflare.com" target="_blank">Cloudflare</a>, domain from
-		<a href="https://dashserv.io/a/statcord" target="_blank">dashserv</a>
+		Hosted on
+		<a href="https://pages.cloudflare.com" target="_blank" rel="noreferrer"> Cloudflare </a>
+		, domain from
+		<a href="https://dashserv.io/a/statcord" target="_blank" rel="noreferrer">dashserv</a>
 	</p>
 	<p>
-		Brand design by <a href="https://www.instagram.com/ralfbaenecke/" target="_blank"
-			>ralf baenecke</a
-		>.
+		Brand design by
+		<a href="https://www.instagram.com/ralfbaenecke/" target="_blank" rel="noreferrer">
+			ralf baenecke
+		</a>.
 	</p>
 	<p>© 2022 ARBEE</p>
 </footer>
 
 <style>
 	#footer {
-        margin-top: 1vh;
+		margin-top: 1vh;
 		text-align: center;
 		background-color: #000000c2;
 		padding: 5vh;

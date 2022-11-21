@@ -24,7 +24,7 @@
 	let guild: any;
 
 	function updateCategory(t) {
-		window.removeEventListener("beforeunload", beforeUnload);
+		window.removeEventListener('beforeunload', beforeUnload);
 		saveVisibile = false;
 		resp = {};
 		tab = t;
@@ -39,14 +39,14 @@
 		resp = { ...resp };
 		resp[id] = value;
 
-		window.addEventListener("beforeunload", beforeUnload);
+		window.addEventListener('beforeunload', beforeUnload);
 	}
 
 	function beforeUnload(e) {
-    var confirmationMessage = 'You have unsaved Changes!';
+		var confirmationMessage = 'You have unsaved Changes!';
 
-    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+		(e || window.event).returnValue = confirmationMessage; //Gecko + IE
+		return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
 	}
 
 	onMount(async () => {
@@ -98,18 +98,22 @@
 	{#if category}
 		<div class="card configHolder">
 			{#if vpw < 1356}
-				<Button on:click={toggleTabs}>Go to another Category</Button>
+				<Button on:mousedown={toggleTabs}>Go to another Category</Button>
 			{/if}
 			{#if vpw > 1356 || showTabs}
 				<div class="selectorHolder" transition:slide>
-					<a href="values" on:click={() => updateCategory('values')} class="card categorySelector">
+					<a
+						href="values"
+						on:mousedown={() => updateCategory('values')}
+						class="card categorySelector"
+					>
 						Values
 					</a>
-					<a href="data" on:click={() => updateCategory('data')} class="card categorySelector">
+					<a href="data" on:mousedown={() => updateCategory('data')} class="card categorySelector">
 						Data
 					</a>
 					<!-- TODO: Add back when better Permissions System is done!
-					<a href="auth" on:click={() => updateCategory('auth')} class="card categorySelector">
+					<a href="auth" on:mousedown={() => updateCategory('auth')} class="card categorySelector">
 						Auth
 					</a> -->
 				</div>
@@ -133,8 +137,8 @@
 		{#if vpw > 1356}
 			<p>Unsaved Changes!</p>
 		{/if}
-		<Button color="#ff0000" on:click={() => updateCategory(tab)}>Reset</Button>
-		<Button color="#00ff00" on:click={save}>Save Changes</Button>
+		<Button color="#ff0000" on:mousedown={() => updateCategory(tab)}>Reset</Button>
+		<Button color="#00ff00" on:mousedown={save}>Save Changes</Button>
 	</div>
 {/if}
 
