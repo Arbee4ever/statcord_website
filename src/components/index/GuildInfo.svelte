@@ -101,10 +101,12 @@
 
 <style>
 	.guildInfo {
-		width: 40%;
 		display: flex;
 		flex-direction: column;
 		gap: 1vh;
+		position: sticky;
+    align-self: start;
+		top: 2vh;
 	}
 
 	.guildInfo > * {

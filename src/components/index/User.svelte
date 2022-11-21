@@ -28,7 +28,7 @@
 
 <style>
 	#user {
-		position: absolute;
+		position: fixed;
 		z-index: 2;
 		left: 3vh;
 		top: 3vh;
