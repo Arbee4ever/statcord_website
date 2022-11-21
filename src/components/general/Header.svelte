@@ -30,7 +30,7 @@
 		id="topBtn"
 		src={TopIcon}
 		alt="Click to go back to top."
-		on:click={scrollUp}
+		on:mousedown={scrollUp}
 		bind:this={topBtn}
 	/>
 	<a href="/">

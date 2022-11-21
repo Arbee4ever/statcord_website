@@ -35,12 +35,12 @@
 	class="dropdown"
 	style="--height:{height}; --overflow: {overflow}; --border-radius: {border_radius}"
 	use:clickOutside
-	on:click_outside={handleClickOutside}
+	on:mousedown_outside={handleClickOutside}
 >
 	{#if icon}
-		<img src={icon} class="icon" alt="Dropdown Icon" on:click={toggleExpand} />
+		<img src={icon} class="icon" alt="Dropdown Icon" on:mousedown={toggleExpand} />
 	{:else}
-		<img src={placeholderIcon} class="icon" alt="Dropdown Icon" on:click={toggleExpand} />
+		<img src={placeholderIcon} class="icon" alt="Dropdown Icon" on:mousedown={toggleExpand} />
 	{/if}
 	<div bind:this={details}>
 		{#if expanded}

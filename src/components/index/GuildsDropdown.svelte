@@ -15,7 +15,7 @@
 
 <div class="card" id="dropdown">
 	{#if guild}
-		<div class="element" on:click={handleClick}>
+		<div class="element" on:mousedown={handleClick}>
 			{#if guild.icon}
 				<img
 					class="icon"

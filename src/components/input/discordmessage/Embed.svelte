@@ -17,7 +17,7 @@
 	const footer = embed.footer ? embed.footer : {};
 
 	let imageUrl: any = embed.image;
-	let thumbnailUrl = embed.thumbnail ? embed.thumbnail.url : "";
+	let thumbnailUrl = embed.thumbnail ? embed.thumbnail.url : '';
 	let authorIconUrl = author.icon_url;
 	let footerIconUrl = footer.icon_url;
 
@@ -47,7 +47,7 @@
 		}
 	}
 
-	function onChange(event: { detail: { value: string; newValue: any; }; }) {
+	function onChange(event: { detail: { value: string; newValue: any } }) {
 		dispatch('input', {
 			value: 'embeds[' + id + '].' + event.detail.value,
 			newValue: event.detail.newValue
@@ -56,25 +56,38 @@
 </script>
 
 <div class="embed" style="--color:{color}">
-	<div class="bar" use:clickOutside on:click_outside={handleClickOutside}>
+	<div class="bar" use:clickOutside on:mousedown_outside={handleClickOutside}>
 		<div class="color closed" bind:this={colorSelector}>
 			<div class="colorSelector">
 				<Input label="Color:" type="color" bind:value={color} id="color" on:input={onChange} />
 			</div>
 		</div>
-		<div class="open" on:click={toggleColorSelector} bind:this={openDiv}>
+		<div class="open" on:mousedown={toggleColorSelector} bind:this={openDiv}>
 			<p class="card" bind:this={arrowButton}>▶</p>
 		</div>
 	</div>
 	<div class="content">
 		<div class="thumbnail">
 			<DetailsDropdown height="10vw" placeholderIcon={PlaceholderImg} icon={thumbnailUrl}>
-				<Input label="Thumbnail:" type="url" width="200px" id="thumbnail.url" on:input={onChange} bind:value={thumbnailUrl}/>
+				<Input
+					label="Thumbnail:"
+					type="url"
+					width="200px"
+					id="thumbnail.url"
+					on:input={onChange}
+					bind:value={thumbnailUrl}
+				/>
 			</DetailsDropdown>
 		</div>
 		<div class="author inline">
 			<DetailsDropdown placeholderIcon={PlaceholderImg} icon={authorIconUrl} border_radius="100%">
-				<Input label="Author Icon Url:" type="url" id="author.icon_url" on:input={onChange} bind:value={authorIconUrl} />
+				<Input
+					label="Author Icon Url:"
+					type="url"
+					id="author.icon_url"
+					on:input={onChange}
+					bind:value={authorIconUrl}
+				/>
 			</DetailsDropdown>
 			<DetailsDropdown icon={IconLink}>
 				<Input label="Author Url:" type="url" id="author.url" on:input={onChange} />

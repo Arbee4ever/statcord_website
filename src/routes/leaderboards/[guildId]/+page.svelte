@@ -60,7 +60,7 @@
 				<Member {pos} {id} score={textscore + voicescore} />
 			{/each}
 			{#if hasMore}
-				<Button on:click={fetchData}>Load more</Button>
+				<Button on:mousedown={fetchData}>Load more</Button>
 			{/if}
 		{:else}
 			<p class="loading">Please wait, data is loading...</p>

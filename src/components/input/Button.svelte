@@ -18,7 +18,7 @@
 		href={url}
 		style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}; --width: {width}"
 		class={$$props.class}
-		on:click={handleClick}
+		on:mousedown={handleClick}
 	>
 		<div class="button card">
 			<slot />
@@ -28,7 +28,7 @@
 	<div
 		style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}; --width: {width}"
 		class={$$props.class}
-		on:click={handleClick}
+		on:mousedown={handleClick}
 	>
 		<div class="button card">
 			<p><slot /></p>
