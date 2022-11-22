@@ -84,7 +84,7 @@
 <svelte:head>
 	{#if guild}
 		<meta property="og:title" content="Statcord | {guild.name}'s Dashboard" />
-		<title>Statcord | {guild.name}'s Leaderboard</title>
+		<title>Statcord | {guild.name}'s Dashboard</title>
 	{/if}
 </svelte:head>
 
@@ -98,7 +98,7 @@
 	{#if category}
 		<div class="card configHolder">
 			{#if vpw < 1356}
-				<Button on:mousedown={toggleTabs}>Go to another Category</Button>
+				<Button on:click={toggleTabs}>Go to another Category</Button>
 			{/if}
 			{#if vpw > 1356 || showTabs}
 				<div class="selectorHolder" transition:slide>
@@ -137,8 +137,8 @@
 		{#if vpw > 1356}
 			<p>Unsaved Changes!</p>
 		{/if}
-		<Button color="#ff0000" on:mousedown={() => updateCategory(tab)}>Reset</Button>
-		<Button color="#00ff00" on:mousedown={save}>Save Changes</Button>
+		<Button color="#ff0000" on:click={() => updateCategory(tab)}>Reset</Button>
+		<Button color="#00ff00" on:click={save}>Save Changes</Button>
 	</div>
 {/if}
 
