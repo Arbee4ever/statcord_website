@@ -14,11 +14,12 @@
 	let token: any;
 
 	onMount(async () => {
+		const userId = user ? user.id : "";
+		const guildsReq = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + userId);
+		const guildsJson = await guildsReq.json();
+		mutualGuilds = guildsJson.mutual_guilds ? guildsJson.mutual_guilds : [];
+		allGuildsCount = guildsJson.other_guilds.length + mutualGuilds.length;
 		if (user) {
-			const guildsReq = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + user.id);
-			const guildsJson = await guildsReq.json();
-			mutualGuilds = guildsJson.mutual_guilds ? guildsJson.mutual_guilds : [];
-			allGuildsCount = guildsJson.other_guilds.length + mutualGuilds.length;
 			token = $page.data.token;
 
 			const guildReq = await fetch(`https://discordapp.com/api/users/@me/guilds`, {

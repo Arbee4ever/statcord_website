@@ -1,14 +1,15 @@
+import { dev } from '$app/environment';
+import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async () => {
-	return new Response('', {
-		headers: {
-			'set-cookie': [
-				`disco_refresh_token=deleted; Path=/; Max-Age=-1`,
-				`disco_access_token=deleted; Path=/; Max-Age=-1`
-			],
-			Location: '/'
-		},
-		status: 302
+export const GET: RequestHandler = async ( {cookies} ) => {
+	cookies.delete("disco_access_token", {
+		path: '/',
+		secure: !dev
+	})
+	cookies.delete("disco_refresh_token", {
+		path: '/',
+		secure: !dev
 	});
+	throw redirect(302, '/')
 };
