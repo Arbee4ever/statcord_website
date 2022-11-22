@@ -71,7 +71,7 @@
 <style lang="scss">
 	.holder {
 		display: grid;
-		grid-template-columns: 2.5fr 1fr;
+		grid-template-columns: 3fr 1fr;
 		grid-template-areas: 'board info';
 		gap: 2vw;
 		margin: 2vw;
@@ -86,14 +86,15 @@
 			grid-area: board;
 		}
 		.info {
+			width: 100%;
 			grid-area: info;
 		}
 	}
 
 	@media only screen and (max-width: 1356px) {
 		.holder {
-			grid-template-columns: 1fr;
-			grid-template-areas: 'info' 'board';
+			display: flex;
+			flex-direction: column;
 		}
 	}
 </style>

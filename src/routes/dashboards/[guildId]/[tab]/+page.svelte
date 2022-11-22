@@ -90,10 +90,12 @@
 
 <svelte:window bind:outerWidth={vpw} />
 
+<User {user} />
 <div class="holder">
-	<User {user} />
 	{#if guildId}
-		<GuildInfo {user} />
+		<div class="info">
+			<GuildInfo {user} />
+		</div>
 	{/if}
 	{#if category}
 		<div class="card configHolder">
@@ -144,36 +146,43 @@
 
 <style lang="scss">
 	.holder {
-		display: flex;
-		flex-direction: row-reverse;
+		display: grid;
+		grid-template-columns: 3fr 1fr;
+		grid-template-areas: 'board info';
+		gap: 2vw;
 		margin: 2vw;
 		margin-top: 10vh;
-		gap: 1vw;
 		min-height: 90vh;
-	}
 
-	.configHolder {
-		width: 100%;
-		display: flex;
-		gap: 1vh;
-	}
+		.info {
+			width: 100%;
+			grid-area: info;
+		}
+		.configHolder {
+			width: 100%;
+			display: flex;
+			gap: 1vh;
+			width: 100%;
+			grid-area: board;
+		}
 
-	.selectorHolder {
-		display: flex;
-		flex-direction: column;
-		gap: 1vh;
-	}
+		.selectorHolder {
+			display: flex;
+			flex-direction: column;
+			gap: 1vh;
+		}
 
-	.categorySelector {
-		cursor: pointer;
-		width: 100%;
-		min-width: 15vw;
-	}
+		.categorySelector {
+			cursor: pointer;
+			width: 100%;
+			min-width: 15vw;
+		}
 
-	.categoryHolder {
-		width: 100%;
-		display: grid;
-		gap: 1vh;
+		.categoryHolder {
+			width: 100%;
+			display: grid;
+			gap: 1vh;
+		}
 	}
 
 	.save {
@@ -190,9 +199,9 @@
 
 	@media only screen and (max-width: 1356px) {
 		.holder {
+			display: flex;
 			flex-direction: column;
 		}
-
 		.configHolder {
 			flex-direction: column;
 		}
