@@ -30,9 +30,8 @@ export const GET: RequestHandler = async ({ cookies, url}) => {
 
     const response = await request.json();
 
-    const access_token_expires_in = new Date(Date.now() + response.expires_in); // 10 minutes
-    const refresh_token_expires_in = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
-
+	const access_token_expires_in = new Date(Date.now() + response.expires_in);
+    const refresh_token_expires_in = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
     cookies.set('disco_access_token', response.access_token, {
         secure: !dev,
         httpOnly: true,

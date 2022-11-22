@@ -23,22 +23,29 @@
 			pfp = PlaceholderImg;
 		}
 	});
+
+	let color: string = "#00000000";
+	switch (pos) {
+		case 1:
+			color = 'rgb(218 158 59)';
+			break;
+		case 2:
+			color = 'rgb(152 152 152)';
+			break;
+		case 3:
+			color = 'rgb(174, 116, 65)';
+			break;
+		default:
+			break;
+	}
 </script>
 
-<div class="member">
+<div class="member card">
 	<div class="user">
 		{#key discordDataJson}
-			<div class="namepos">
+			<div class="namepos card">
 				<p class="position">{pos}</p>
-				{#if pos == 1}
-					<img class="avatar first" src={pfp} alt="User" />
-				{:else if pos == 2}
-					<img class="avatar second" src={pfp} alt="User" />
-				{:else if pos == 3}
-					<img class="avatar third" src={pfp} alt="User" />
-				{:else}
-					<img class="avatar" src={pfp} alt="User" />
-				{/if}
+				<img class="avatar" style="--color:{color}" src={pfp} alt="User" />
 				<p class="name">{discordDataJson.name}</p>
 			</div>
 		{/key}
@@ -56,13 +63,7 @@
 		-moz-box-sizing: border-box;
 		padding: 2vh;
 		display: grid;
-		grid-template-columns: 1fr, 1fr, 1fr;
-		grid-template-rows: 1fr;
-		grid-column-gap: 1vw;
-		height: fit-content;
-		border-radius: 10px;
-		background: rgba(0, 0, 0, 0.25);
-		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
+		width: 100%;
 		overflow-x: auto;
 	}
 
@@ -76,20 +77,13 @@
 	}
 
 	.namepos {
-		display: inline-flex;
-		border-radius: 10px;
-		background: rgba(0, 0, 0, 0.25);
-		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
-		line-height: 3vh;
+		display: flex;
+		gap: 1vh;
 		height: 3vh;
 		align-self: center;
 		align-items: center;
-		box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		padding-top: 0.3vh;
-		padding-right: 0.8vh;
-		padding-left: 0.8vh;
+		margin: 0;
+		padding: 1vh;
 	}
 
 	.position {
@@ -97,7 +91,6 @@
 	}
 
 	.name {
-		margin-left: 1vh;
 		white-space: nowrap;
 	}
 
@@ -105,23 +98,8 @@
 		border-radius: 100%;
 		width: 5vh;
 		height: 5vh;
-		margin-left: 1vh;
-		border: 3px solid #00000000;
-	}
-
-	.first {
-		border: 3px solid rgb(218 158 59);
-		box-shadow: 0 0 32px 0 rgb(218 158 59);
-	}
-
-	.second {
-		border: 3px solid rgb(152 152 152);
-		box-shadow: 0 0 32px 0 rgb(152 152 152);
-	}
-
-	.third {
-		border: 3px solid rgb(174, 116, 65);
-		box-shadow: 0 0 32px 0 rgb(174, 116, 65);
+		border: 3px solid var(--color);
+		box-shadow: 0 0 32px 0 var(--color);
 	}
 
 	.stats {

@@ -99,13 +99,13 @@
 	{/if}
 </div>
 
-<style>
+<style lang="scss">
 	.guildInfo {
 		display: flex;
 		flex-direction: column;
 		gap: 1vh;
 		position: sticky;
-    align-self: start;
+		align-self: start;
 		top: 2vh;
 	}
 
@@ -123,6 +123,10 @@
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: repeat(2, 1fr);
 		gap: 1vh;
+
+		p {
+			white-space: nowrap;
+		}
 	}
 
 	@media only screen and (max-width: 1356px) {
