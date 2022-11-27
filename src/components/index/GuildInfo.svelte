@@ -45,8 +45,10 @@
 		}
 
 		const req = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guild.id}?user=${user.id}`);
-		const reqJson = await req.json();
-		moderator = reqJson.moderator;
+		if (req.status == 200) {
+			const reqJson = await req.json();
+			moderator = reqJson.moderator;
+		}
 	});
 
 	let other: string[];
