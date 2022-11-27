@@ -26,7 +26,7 @@
 				newBatch = json.members;
 				guild = json.guild;
 				index++;
-				if (newBatch.length < 50) {
+				if (newBatch.length < 100) {
 					hasMore = false;
 				}
 			}
