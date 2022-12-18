@@ -9,6 +9,7 @@
 	import Conversionvalues from '$components/dashboard/Conversionvalues.svelte';
 	import Auth from '$components/dashboard/Auth.svelte';
 	import Data from '$components/dashboard/Data.svelte';
+	import Roles from '$components/dashboard/Roles.svelte';
 
 	let user: any = $page.data.user;
 	let config: any = $page.data.config;
@@ -114,6 +115,13 @@
 					<a href="data" on:mousedown={() => updateCategory('data')} class="card categorySelector">
 						Data
 					</a>
+					<a
+						href="roles"
+						on:mousedown={() => updateCategory('roles')}
+						class="card categorySelector"
+					>
+						Roles
+					</a>
 					<!-- TODO: Add back when better Permissions System is done!
 					<a href="auth" on:mousedown={() => updateCategory('auth')} class="card categorySelector">
 						Auth
@@ -126,6 +134,8 @@
 						<Conversionvalues {category} on:change={onChange} />
 					{:else if tab == 'data'}
 						<Data {category} on:change={onChange} />
+					{:else if tab == 'roles'}
+						<Roles {category} on:change={onChange} />
 					{:else if tab == 'auth'}
 						<Auth {category} on:change={onChange} />
 					{/if}

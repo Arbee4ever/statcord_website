@@ -39,8 +39,17 @@ export async function load({ cookies, params }) {
 	}
 	const configResp = configReq.json();
 
+	const rolesReq = await fetch('https://discord.com/api/guilds/' + params.guildId + '/roles', {
+		headers: { Authorization: `${env.DISCORD_AUTH}` }
+	});
+	if (rolesReq.status != 200) {
+		throw redirect(302, '/');
+	}
+	const rolesResp = rolesReq.json();
+
 	return {
 		user: user,
-		config: configResp
+		config: configResp,
+		roles: rolesResp
 	};
 }

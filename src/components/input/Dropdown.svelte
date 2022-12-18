@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 
 	let showItems = false;
@@ -28,7 +27,6 @@
 	}
 
 	.elementList {
-		margin-top: 1vh;
 		display: grid;
 		gap: 1vh;
 

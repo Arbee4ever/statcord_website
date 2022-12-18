@@ -14,15 +14,17 @@
 {:else if mutualGuilds.length == 0 && guilds.length == 0}
 	<p class="guild">You don't share a Server with Statcord!</p>
 {:else}
-	{#each mutualGuilds as { name, icon, id }}
-		<a href="{type}/{id}" class="guild" transition:slide>
-			<span class="guildIcon">
-				{#if icon != null}
-					<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
-				{/if}
-			</span>
-			<p>{name}</p>
-		</a>
+	{#each mutualGuilds as { name, icon, id, moderator }}
+		{#if moderator}
+			<a href="{type}/{id}" class="guild" transition:slide>
+				<span class="guildIcon">
+					{#if icon != null}
+						<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
+					{/if}
+				</span>
+				<p>{name}</p>
+			</a>
+		{/if}
 	{/each}
 	{#each guilds as { name, icon, id }}
 		<a

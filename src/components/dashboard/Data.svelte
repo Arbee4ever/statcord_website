@@ -16,7 +16,6 @@
 	checked={category.deleteonleave}
 	id="deleteonleave"
 	type="checkbox"
-	editable={false}
 	on:input={onChange}
 	label="Delete Userdata on Leave"
 />
