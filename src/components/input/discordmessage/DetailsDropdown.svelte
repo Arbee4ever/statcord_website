@@ -54,21 +54,25 @@
 <style lang="scss">
 	.dropdown {
 		width: min-content;
-	}
+		align-items: center;
 
-	.icon {
-		cursor: pointer;
-		padding: 2px;
-		height: var(--height);
-		border-radius: var(--border-radius);
-		max-height: 300px;
-		max-width: 400px;
-	}
+		.icon {
+			cursor: pointer;
+			padding: 2px;
+			height: var(--height);
+			border-radius: var(--border-radius);
+			max-width: 400px;
+			vertical-align: middle;
+		}
 
-	.details {
-		z-index: 1;
-		background-color: currentColor;
-		position: absolute;
-		transform: translateX(var(--overflow));
+		.details {
+			z-index: 1;
+			background-color: currentColor;
+			position: absolute;
+			transform: translateX(var(--overflow));
+			display: flex;
+			max-width: 30vw;
+			flex-wrap: wrap;
+		}
 	}
 </style>

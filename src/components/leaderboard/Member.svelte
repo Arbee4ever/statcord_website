@@ -1,30 +1,13 @@
 <script lang="ts">
 	import PlaceholderImg from '$lib/img/icon_clyde_circle_white.svg';
-	import { onMount } from 'svelte';
-	import { env } from '$env/dynamic/public';
 	export let pos: number;
 	export let id: string;
 	export let score: any;
 	score = Math.round(score);
-	let discordDataJson: any = {
-		name: 'Loading...',
-		pfp: PlaceholderImg
-	};
-	let pfp: any;
+	export let avatar: any = PlaceholderImg;
+	export let name: string;
 
-	onMount(async () => {
-		const discordData = await fetch(env.PUBLIC_STATCORD_API_URL + '/user/' + id, {
-			method: 'GET'
-		});
-		discordDataJson = await discordData.json();
-		if (discordDataJson.pfp != null) {
-			pfp = 'https://cdn.discordapp.com/avatars/' + id + '/' + discordDataJson.pfp;
-		} else {
-			pfp = PlaceholderImg;
-		}
-	});
-
-	let color: string = "#00000000";
+	let color: string = '#00000000';
 	switch (pos) {
 		case 1:
 			color = 'rgb(218 158 59)';
@@ -42,13 +25,11 @@
 
 <div class="member card">
 	<div class="user">
-		{#key discordDataJson}
-			<div class="namepos card">
-				<p class="position">{pos}</p>
-				<img class="avatar" style="--color:{color}" src={pfp} alt="User" />
-				<p class="name">{discordDataJson.name}</p>
-			</div>
-		{/key}
+		<div class="namepos card">
+			<p class="position">{pos}</p>
+			<img class="avatar" style="--color:{color}" src={avatar} alt="User" />
+			<p class="name">{name}</p>
+		</div>
 	</div>
 	<div class="stats">
 		<p class="score">{score}</p>

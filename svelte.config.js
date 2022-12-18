@@ -10,12 +10,9 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
-		prerender: {
-			enabled: false,
-		},
-        alias: {
+		alias: {
 			$components: path.resolve('./src/components'),
-        }
+		}
 	}
 };
 
