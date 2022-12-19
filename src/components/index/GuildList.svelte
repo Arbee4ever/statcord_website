@@ -15,7 +15,7 @@
 	<p class="guild">You don't share a Server with Statcord!</p>
 {:else}
 	{#each mutualGuilds as { name, icon, id, moderator }}
-		{#if moderator}
+		{#if moderator || type == "leaderboards"}
 			<a href="{type}/{id}" class="guild" transition:slide>
 				<span class="guildIcon">
 					{#if icon != null}
