@@ -30,7 +30,7 @@
 		</a>
 	</div>
 	<p>
-		Check <a href="https://status.arbeeco.de/">here</a> if Statcord is down.
+		Check <a href="https://status.arbeeco.de/" target="_blank" rel="noreferrer">here</a> if Statcord is down.
 	</p>
 	<p>
 		Hosted on <a href="https://pages.cloudflare.com" target="_blank" rel="noreferrer">Cloudflare</a>, domain from <a href="https://dashserv.io/a/statcord" target="_blank" rel="noreferrer">dashserv</a>.
