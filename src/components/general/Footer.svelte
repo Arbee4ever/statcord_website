@@ -33,7 +33,7 @@
 		Check <a href="https://status.arbeeco.de/">here</a> if Statcord is down.
 	</p>
 	<p>
-		Hosted on <a href="https://pages.cloudflare.com" target="_blank" rel="noreferrer">Cloudflare</a>, domain from <a href="https://dashserv.io/a/statcord" target="_blank" rel="noreferrer">dashserv</a>
+		Hosted on <a href="https://pages.cloudflare.com" target="_blank" rel="noreferrer">Cloudflare</a>, domain from <a href="https://dashserv.io/a/statcord" target="_blank" rel="noreferrer">dashserv</a>.
 	</p>
 	<p>
 		Brand design by <a href="https://www.instagram.com/ralfbaenecke/" target="_blank" rel="noreferrer">ralf baenecke</a>.
