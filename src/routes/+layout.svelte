@@ -14,6 +14,7 @@
 		}
 	}
 </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695" crossorigin="anonymous"></script>
 
 <svelte:head>
 	<meta charset="utf-8" />
