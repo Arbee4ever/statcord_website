@@ -14,7 +14,6 @@
 		}
 	}
 </script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695" crossorigin="anonymous"></script>
 
 <svelte:head>
 	<meta charset="utf-8" />
@@ -35,6 +34,7 @@
 	/>
 	<meta name="theme-color" content="#2b8eaf" />
 	<meta name="keywords" content="Programming, Bot, Discord, Arbee, GitHub" />
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695" crossorigin="anonymous"></script>
 </svelte:head>
 
 <main>
