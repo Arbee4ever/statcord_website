@@ -17,20 +17,18 @@
 	<a
 		href={url}
 		style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}; --width: {width}"
-		class={$$props.class}
 		on:mousedown={handleClick}
 	>
-		<div class="button card">
+		<div class="button card {$$props.class}">
 			<slot />
 		</div>
 	</a>
 {:else}
 	<div
 		style="--shadowColor: {shadowColor}; --backgroundColor: {backgroundColor}; --width: {width}"
-		class={$$props.class}
 		on:mousedown={handleClick}
 	>
-		<div class="button card">
+		<div class="button card {$$props.class}">
 			<p><slot /></p>
 		</div>
 	</div>

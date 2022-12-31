@@ -15,32 +15,29 @@
 	let config: any = $page.data.config;
 	let guildId = $page.params.guildId;
 	let tab = $page.params.tab;
-	let category: any;
 	let vpw: any;
 	let saveVisibile: boolean = false;
-	let resp: any = {};
-	let id: any;
-	let value: any;
 	let showTabs: boolean;
 	let guild: any;
+	let category: any = JSON.parse(JSON.stringify(config[tab]));
 
 	function updateCategory(t) {
+		config = config;
 		window.removeEventListener('beforeunload', beforeUnload);
 		saveVisibile = false;
-		resp = {};
 		tab = t;
-		category = config[tab];
+		category = structuredClone(config[tab]);
 	}
 
-	function onChange(event) {
-		id = event.detail.id;
-		value = event.detail.value;
-		saveVisibile = true;
-
-		resp = { ...resp };
-		resp[id] = value;
-
-		window.addEventListener('beforeunload', beforeUnload);
+	function onChange() {
+		setTimeout(() => {
+			if (JSON.stringify(category) === JSON.stringify(config[tab])) {
+				saveVisibile = false;
+				return;
+			}
+			saveVisibile = true;
+			window.addEventListener('beforeunload', beforeUnload);
+		}, 1);
 	}
 
 	function beforeUnload(e) {
@@ -51,6 +48,7 @@
 	}
 
 	onMount(async () => {
+		config = structuredClone($page.data.config);
 		updateCategory(tab);
 
 		let data = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guildId}`, {
@@ -68,7 +66,7 @@
 				Authorization: `${config['auth']['token']}`
 			},
 			method: 'PATCH',
-			body: JSON.stringify(resp)
+			body: JSON.stringify(category)
 		});
 		const json = await req.json();
 		if (req.status == 200) {
@@ -98,7 +96,7 @@
 			<GuildInfo {user} />
 		</div>
 	{/if}
-	{#if category}
+	{#if config}
 		<div class="card configHolder">
 			{#if vpw < 1356}
 				<Button on:click={toggleTabs}>Go to another Category</Button>
@@ -129,16 +127,18 @@
 				</div>
 			{/if}
 			<div class="card categoryHolder">
-				{#key category}
-					{#if tab == 'values'}
-						<Conversionvalues {category} on:change={onChange} />
-					{:else if tab == 'data'}
-						<Data {category} on:change={onChange} />
-					{:else if tab == 'roles'}
-						<Roles {category} on:change={onChange} />
-					{:else if tab == 'auth'}
-						<Auth {category} on:change={onChange} />
-					{/if}
+				{#key tab}
+					{#key config}
+						{#if tab == 'values'}
+							<Conversionvalues bind:category on:change={onChange} />
+						{:else if tab == 'data'}
+							<Data bind:category on:change={onChange} />
+						{:else if tab == 'roles'}
+							<Roles bind:category on:change={onChange} />
+						{:else if tab == 'auth'}
+							<Auth bind:category on:change={onChange} />
+						{/if}
+					{/key}
 				{/key}
 			</div>
 		</div>

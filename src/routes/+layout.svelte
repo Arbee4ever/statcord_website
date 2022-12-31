@@ -89,7 +89,7 @@
 		margin-right: auto;
 		height: fit-content;
 		border-radius: 10px;
-		background: rgba(0, 0, 0, 0.25);
+		background: #00000040;
 		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
 		box-sizing: border-box;
 		-webkit-box-sizing: border-box;

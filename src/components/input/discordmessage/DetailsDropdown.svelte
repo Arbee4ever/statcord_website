@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 	import { clickOutside } from '$lib/script/clickOutside.js';
+	import Input2 from '$components/input/Input2.svelte';
 
 	export let placeholderIcon = '';
 	export let icon: any;
 	export let height = '15px';
 	export let border_radius = '4px';
+	export let filter: boolean = false;
 	let expanded = false;
 	let details: HTMLDivElement;
 	let overflow = '0px';
@@ -44,8 +46,11 @@
 	{/if}
 	<div bind:this={details}>
 		{#if expanded}
-			<div class="details card" transition:slide>
-				<slot />
+			<div class="details card" in:slide>
+				<slot name="filter" />
+				<div class="content">
+					<slot />
+				</div>
 			</div>
 		{/if}
 	</div>
@@ -58,7 +63,6 @@
 
 		.icon {
 			cursor: pointer;
-			padding: 2px;
 			height: var(--height);
 			border-radius: var(--border-radius);
 			max-width: 400px;
@@ -70,9 +74,31 @@
 			background-color: currentColor;
 			position: absolute;
 			transform: translateX(var(--overflow));
-			display: flex;
 			max-width: 30vw;
-			flex-wrap: wrap;
+			width: max-content;
+			display: grid;
+			gap: 1vh;
 		}
+
+		.content {
+			z-index: 1;
+			display: flex;
+			max-width: 15vw;
+			max-height: 10vh;
+			flex-wrap: wrap;
+			gap: 1vh;
+			overflow: scroll;
+		}
+	}
+
+	.input {
+		resize: none;
+		padding: 10px;
+		color: white;
+		border: none;
+	}
+
+	.input:focus {
+		outline: rgba(0, 0, 0, 0.25) solid;
 	}
 </style>
