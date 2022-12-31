@@ -32,7 +32,7 @@
 
 {#each category.roles as role}
 	<div class="content card">
-		<input class="input card" on:input={onChange} type="text" bind:value={role.name} />
+		<input class="input card" on:input={onChange} type="text" placeholder="Name" bind:value={role.name} />
 		<div class="wrapper">
 			<SelectorDropdown
 				on:select={onChange}
