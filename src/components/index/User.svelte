@@ -16,8 +16,10 @@
 <div id="user">
 	{#if user}
 		<DetailsDropdown icon={pfp} height="5vh">
-			<h1>{user.username}#{user.discriminator}</h1>
-			<a href="/api/signout" class="signout">Sign out </a>
+			<span class="wrapper">
+				<h1>{user.username}#{user.discriminator}</h1>
+				<a href="/api/signout" class="signout">Sign out </a>
+			</span>
 		</DetailsDropdown>
 	{:else}
 		<DetailsDropdown icon={pfp} height="5vh">

@@ -20,13 +20,6 @@
 			value: value
 		});
 	};
-
-	function onInputComponent(event) {
-		dispatch('input', {
-			value: id + '.' + event.detail.value,
-			newValue: event.detail.newValue
-		});
-	}
 </script>
 
 <div class="holder" style="--width: {width}">
@@ -38,7 +31,7 @@
 	{:else if type == 'message'}
 		<Messagebuilder on:input={onInputComponent} bind:value />
 	{:else if type == 'checkbox'}
-		<input readonly={!editable} class="card checkbox" on:input={onInput} {type} {checked} />
+		<input readonly={!editable} class="card checkbox" on:input={onInput} type="checkbox" bind:checked={checked} />
 	{:else}
 		<input
 			readonly={!editable}

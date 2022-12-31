@@ -1,21 +1,27 @@
 <script lang="ts">
-	import Input from '$components/input/Input.svelte';
+	import Input2 from '$components/input/Input2.svelte';
 	import { createEventDispatcher } from 'svelte';
 	export let category: any;
 	const dispatch = createEventDispatcher();
 
-	const onChange = (event: { detail: { id: any; value: any } }) => {
-		dispatch('change', {
-			id: event.detail.id,
-			value: event.detail.value
-		});
+	const onChange = () => {
+		dispatch('change');
 	};
 </script>
 
-<Input
-	checked={category.deleteonleave}
-	id="deleteonleave"
-	type="checkbox"
-	on:input={onChange}
-	label="Delete Userdata on Leave"
-/>
+<Input2 label="Delete Userdata on Leave">
+	<input
+		class="card checkbox"
+		on:change={onChange}
+		type="checkbox"
+		bind:checked={category.deleteonleave}
+	/>
+</Input2>
+
+<style lang="scss">
+	.card {
+		background-color: transparent;
+		box-shadow: none;
+		border: solid 4px #00000040;
+	}
+</style>
