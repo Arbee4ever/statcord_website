@@ -38,7 +38,7 @@
 	<Button on:click={handleClick}>Open Editor</Button>
 </div>
 {#if open}
-	<div class="holder card" transition:scale use:clickOutside on:mousedown_outside={handleClick}>
+	<div class="holder card" transition:scale use:clickOutside={handleClick}>
 		<div class="close">
 			<Button on:click={handleClick}>✖</Button>
 		</div>

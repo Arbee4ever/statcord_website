@@ -56,7 +56,7 @@
 </script>
 
 <div class="embed" style="--color:{color}">
-	<div class="bar" use:clickOutside on:mousedown_outside={handleClickOutside}>
+	<div class="bar" use:clickOutside={handleClickOutside}>
 		<div class="color closed" bind:this={colorSelector}>
 			<div class="colorSelector">
 				<Input label="Color:" type="color" bind:value={color} id="color" on:input={onChange} />

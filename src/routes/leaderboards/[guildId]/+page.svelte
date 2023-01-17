@@ -35,6 +35,7 @@
 
 	onMount(async () => {
 		await fetchData();
+		console.log(guild);
 	});
 
 	$: members = [...members, ...newBatch];
@@ -57,7 +58,7 @@
 	<div class="card leaderboard">
 		{#if members.length != 0}
 			{#each members as { pos, name, id, textmessages, voiceseconds, avatar }}
-				<Member {pos} {id} score={textmessages + voiceseconds} {name} {avatar} />
+				<Member {pos} {id} score={(textmessages/guild.values.msgsperpoint) + (voiceseconds/guild.values.vcsecondsperpoint)} {name} {avatar} />
 			{/each}
 			{#if hasMore}
 				<Button on:click={fetchData}>Load more</Button>

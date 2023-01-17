@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$components/input/Button.svelte';
 	import { page } from '$app/stores';
+	import XIcon from '$lib/img/xIcon.svg';
 	import { createEventDispatcher } from 'svelte';
 	import SelectorDropdown from '$components/input/SelectorDropdown.svelte';
 	export let category: any;
@@ -28,11 +29,33 @@
 	function onChange() {
 		dispatch('change');
 	}
+
+	const deleteOption = (i) => {
+		category.roles.splice(i, 1);
+		category = category;
+		onChange();
+	}
 </script>
 
-{#each category.roles as role}
+{#each category.roles as role, i}
 	<div class="content card">
-		<input class="input card" on:input={onChange} type="text" placeholder="Name" bind:value={role.name} />
+		<div class="inline">
+			<input
+				class="input card"
+				on:input={onChange}
+				type="text"
+				placeholder="Name"
+				bind:value={role.name}
+			/>
+			<span class="remove iconWrapper">
+				<img
+					src={XIcon}
+					alt="Close"
+					on:click={() => deleteOption(i)}
+					on:keydown={() => deleteOption(i)}
+				/>
+			</span>
+		</div>
 		<div class="wrapper">
 			<SelectorDropdown
 				on:select={onChange}
@@ -59,6 +82,17 @@
 		color: #36393f;
 		display: grid;
 		gap: 1vh;
+		.inline {
+			display: inline-flex;
+			.remove {
+				display: block;
+				cursor: pointer;
+				height: 22px;
+				line-height: 24px;
+				text-align: center;
+				margin: 0 0 0 4px;
+			}
+		}
 		.input {
 			resize: none;
 			padding: 15px;
