@@ -36,8 +36,7 @@
 <div
 	class="dropdown"
 	style="--height:{height}; --overflow: {overflow}; --border-radius: {border_radius}"
-	use:clickOutside
-	on:mousedown_outside={handleClickOutside}
+	use:clickOutside={handleClickOutside}
 >
 	{#if icon}
 		<img src={icon} class="icon" alt="Dropdown Icon" on:mousedown={toggleExpand} />
