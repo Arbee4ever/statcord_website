@@ -5,8 +5,6 @@
 	export let guild: any;
 	export let other_guilds: any;
 	let showItems = false;
-	let location = $page.url.pathname;
-	location = location.replace($page.params.guildId, '');
 
 	function handleClick() {
 		showItems = !showItems;
@@ -29,7 +27,12 @@
 			{#if showItems}
 				{#if other_guilds}
 					{#each other_guilds as el}
-						<a class="elements card" href="/dashboards/{el.id}/{$page.params.tab}" target="_self" transition:slide>
+						<a
+							class="elements card"
+							href={$page.url.pathname.replace($page.params.guildId, el.id)}
+							target="_self"
+							transition:slide
+						>
 							{#if el.icon}
 								<img
 									class="icon"
