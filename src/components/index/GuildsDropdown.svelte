@@ -29,7 +29,7 @@
 			{#if showItems}
 				{#if other_guilds}
 					{#each other_guilds as el}
-						<a class="elements card" href="{location}{el.id}" target="_self" transition:slide>
+						<a class="elements card" href="/dashboards/{el.id}/{$page.params.tab}" target="_self" transition:slide>
 							{#if el.icon}
 								<img
 									class="icon"
