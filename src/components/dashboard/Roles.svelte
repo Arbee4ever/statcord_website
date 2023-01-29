@@ -34,42 +34,48 @@
 		category.roles.splice(i, 1);
 		category = category;
 		onChange();
-	}
+	};
 </script>
 
-{#each category.roles as role, i}
-	<div class="content card">
-		<div class="inline">
-			<input
-				class="input card"
-				on:input={onChange}
-				type="text"
-				placeholder="Name"
-				bind:value={role.name}
-			/>
-			<span class="remove iconWrapper">
-				<img
-					src={XIcon}
-					alt="Close"
-					on:click={() => deleteOption(i)}
-					on:keydown={() => deleteOption(i)}
+{#if category.roles.length != 0}
+	{#each category.roles as role, i}
+		<div class="content card">
+			<div class="inline">
+				<input
+					class="input card"
+					on:input={onChange}
+					type="text"
+					placeholder="Name"
+					bind:value={role.name}
 				/>
-			</span>
+				<span class="remove iconWrapper">
+					<img
+						src={XIcon}
+						alt="Close"
+						on:click={() => deleteOption(i)}
+						on:keydown={() => deleteOption(i)}
+					/>
+				</span>
+			</div>
+			<div class="wrapper">
+				<SelectorDropdown
+					on:select={onChange}
+					bind:selected={role.requirements}
+					bind:options={possibleValues}
+				>
+					Requirements
+				</SelectorDropdown>
+				<SelectorDropdown on:select={onChange} bind:selected={role.roles} bind:options={roles}>
+					Roles
+				</SelectorDropdown>
+			</div>
 		</div>
-		<div class="wrapper">
-			<SelectorDropdown
-				on:select={onChange}
-				bind:selected={role.requirements}
-				bind:options={possibleValues}
-			>
-				Requirements
-			</SelectorDropdown>
-			<SelectorDropdown on:select={onChange} bind:selected={role.roles} bind:options={roles}>
-				Roles
-			</SelectorDropdown>
-		</div>
+	{/each}
+{:else}
+	<div class="card content">
+		<p>Nothing here yet!</p>
 	</div>
-{/each}
+{/if}
 <span class="holder">
 	<Button class="test" width="100%" on:click={handleClick}>Add Role</Button>
 </span>
