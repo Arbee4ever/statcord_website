@@ -21,25 +21,46 @@
 		category.errors = [];
 		category = category;
 		onChange();
-	};
+	}
 </script>
 
 <Button class="left fancyCard" on:click={clear}>Clear all</Button>
-{#each category.errors as error, i}
-	<div class="card fancyCard inline">
-		<p>{error}</p>
-		<span class="remove iconWrapper">
-			<img
-				src={XIcon}
-				alt="Close"
-				on:click={() => deleteOption(i)}
-				on:keydown={() => deleteOption(i)}
-			/>
-		</span>
+{#if category.errors.length != 0}
+	{#each category.errors as error, i}
+		<div class="card fancyCard inline">
+			<p>{error}</p>
+			<span class="remove iconWrapper">
+				<img
+					src={XIcon}
+					alt="Close"
+					on:click={() => deleteOption(i)}
+					on:keydown={() => deleteOption(i)}
+				/>
+			</span>
+		</div>
+	{/each}
+{:else}
+	<div class="card content">
+		<p>Nothing here yet!</p>
 	</div>
-{/each}
+{/if}
 
 <style lang="scss">
+	.content {
+		padding: 10px;
+		border-radius: 10px;
+		width: 100%;
+		color: #36393f;
+		display: grid;
+		gap: 1vh;
+	}
+
+	.card {
+		background-color: transparent;
+		box-shadow: none;
+		border: solid 1px #00000040;
+	}
+
 	.inline {
 		display: inline-flex;
 		.remove {
