@@ -10,6 +10,7 @@
 	import Auth from '$components/dashboard/Auth.svelte';
 	import Data from '$components/dashboard/Data.svelte';
 	import Roles from '$components/dashboard/Roles.svelte';
+	import Errors from '$components/dashboard/Errors.svelte';
 
 	let user: any = $page.data.user;
 	let config: any = $page.data.config;
@@ -120,6 +121,13 @@
 					>
 						Roles
 					</a>
+					<a
+						href="errors"
+						on:mousedown={() => updateCategory('errors')}
+						class="card categorySelector"
+					>
+						Errors
+					</a>
 					<!-- TODO: Add back when better Permissions System is done!
 					<a href="auth" on:mousedown={() => updateCategory('auth')} class="card categorySelector">
 						Auth
@@ -137,6 +145,8 @@
 							<Roles bind:category on:change={onChange} />
 						{:else if tab == 'auth'}
 							<Auth bind:category on:change={onChange} />
+						{:else if tab == 'errors'}
+							<Errors bind:category on:change={onChange} />
 						{/if}
 					{/key}
 				{/key}
