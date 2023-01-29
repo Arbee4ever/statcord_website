@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { error } from '@sveltejs/kit';
 	import XIcon from '$lib/img/xIcon.svg';
-	import Input2 from '$components/input/Input2.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import Button from '$components/input/Button.svelte';
 	export let category: any;
@@ -24,10 +22,10 @@
 	}
 </script>
 
-<Button class="left fancyCard" on:click={clear}>Clear all</Button>
+<Button class="left content" on:click={clear}>Clear all</Button>
 {#if category.errors.length != 0}
 	{#each category.errors as error, i}
-		<div class="card fancyCard inline">
+		<div class="card content inline">
 			<p>{error}</p>
 			<span class="remove iconWrapper">
 				<img
@@ -46,13 +44,14 @@
 {/if}
 
 <style lang="scss">
-	.content {
+	:global(.content) {
 		padding: 10px;
 		border-radius: 10px;
 		width: 100%;
 		color: #36393f;
 		display: grid;
 		gap: 1vh;
+		align-items: center;
 	}
 
 	.card {
@@ -63,23 +62,20 @@
 
 	.inline {
 		display: inline-flex;
+		p {
+			flex-grow: 1;
+		}
+
 		.remove {
 			display: block;
 			cursor: pointer;
 			height: 22px;
 			line-height: 24px;
-			text-align: center;
 			margin: 0 0 0 4px;
 		}
 	}
 
 	:global(.left) {
 		float: left;
-	}
-
-	:global(.fancyCard) {
-		background-color: transparent;
-		box-shadow: none;
-		border: solid 1px #00000040;
 	}
 </style>
