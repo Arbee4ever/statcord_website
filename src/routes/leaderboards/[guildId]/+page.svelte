@@ -35,7 +35,6 @@
 
 	onMount(async () => {
 		await fetchData();
-		console.log(guild);
 	});
 
 	$: members = [...members, ...newBatch];
