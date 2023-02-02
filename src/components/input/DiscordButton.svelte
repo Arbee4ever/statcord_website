@@ -17,12 +17,9 @@
 	.login {
 		margin: var(--margin, auto);
 		background-color: var(--color, #5865f2);
-		box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
 		padding: 1vh;
 		border: none;
-		border-radius: 0.5vh;
+		border-radius: 5px;
 		color: white;
 		text-align: center;
 		cursor: pointer;
