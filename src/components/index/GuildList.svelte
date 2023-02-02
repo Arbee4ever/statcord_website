@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition';
+
 	export let mutualGuilds: any;
 	export let guilds: any = undefined;
 	export let type: any;
@@ -9,19 +11,27 @@
 
 {#if !mutualGuilds || !guilds}
 	<p class="guild">Loading your Servers...</p>
+{:else if mutualGuilds.length == 0 && guilds.length == 0}
+	<p class="guild">You don't share a Server with Statcord!</p>
 {:else}
-	{#each mutualGuilds as { name, icon, id }}
-		<a href="{type}/{id}" class="guild">
-			<span class="guildIcon">
-				{#if icon != null}
-					<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
-				{/if}
-			</span>
-			<p>{name}</p>
-		</a>
+	{#each mutualGuilds as { name, icon, id, moderator }}
+		{#if moderator || type == "leaderboards"}
+			<a href="{type}/{id}" class="guild" transition:slide>
+				<span class="guildIcon">
+					{#if icon != null}
+						<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
+					{/if}
+				</span>
+				<p>{name}</p>
+			</a>
+		{/if}
 	{/each}
 	{#each guilds as { name, icon, id }}
-		<a href="https://discord.com/oauth2/authorize?client_id=959915020152627271&permissions=1515318660160&scope=bot&guild_id={id}" class="guild noStatcord">
+		<a
+			href="https://discord.com/oauth2/authorize?client_id=959915020152627271&permissions=1515318660160&scope=bot&guild_id={id}"
+			class="guild noStatcord"
+			transition:slide
+		>
 			<span class="guildIcon">
 				{#if icon != null}
 					<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />

@@ -1,56 +1,58 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import GuildInfo from '$components/index/GuildInfo.svelte';
+	import User from '$components/index/User.svelte';
 
-	import Member from '$components/Member.svelte';
+	import Member from '$components/leaderboard/Member.svelte';
 	import { onMount } from 'svelte';
-	let members: any;
+	import { env } from '$env/dynamic/public';
+	import Button from '$components/input/Button.svelte';
 	let guild: any;
-	let error: string;
+	let user: any = $page.data.user;
 	let guildId = $page.params.guildId;
+	let members: any = [];
+
+	let index: any = 0;
+	let newBatch: never[] = [];
+	let hasMore: boolean = true;
+
+	async function fetchData() {
+		if (hasMore) {
+			let data = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guildId}?page=${index}`, {
+				method: 'GET'
+			});
+			if (data.status == 200) {
+				const json = await data.json();
+				newBatch = json.members;
+				guild = json.guild;
+				index++;
+				if (newBatch.length < 100) {
+					hasMore = false;
+				}
+			}
+		}
+	}
 
 	onMount(async () => {
-		let data = await fetch('https://api.statcord.arbeeco.de/guilds/' + guildId, {
-			method: 'GET'
-		});
-		if (data.status == 200) {
-			const json = await data.json();
-			members = json.members;
-			guild = json.guild;
-		} else {
-			error = data.status + ': ' + (await (await data.json()).message);
-		}
+		await fetchData();
+		console.log(guild);
 	});
+
+	$: members = [...members, ...newBatch];
 </script>
 
-<div class="holder">
+<svelte:head>
 	{#if guild}
-		<div class="card guildInfo">
-			{#if guild.banner}
-				<img
-					class="guildBanner"
-					src="https://cdn.discordapp.com/banners/{guild.id}/{guild.banner}"
-					alt="Guild Banner"
-				/>
-			{/if}
-			<div class="card infoHeader">
-				{#if guild.icon}
-					<img
-						class="guildIcon"
-						src="https://cdn.discordapp.com/icons/{guild.id}/{guild.icon}"
-						alt="Guild Icon"
-					/>
-				{/if}
-				<p class="guildName">{guild.name}</p>
-			</div>
-			{#if guild.description}
-				<p class="card guildDescription">{guild.description}</p>
-			{/if}
-			<div class="card infoOther">
-				<p>{guild.membercount} Members</p>
-				<p>{guild.textcount} Textchannels</p>
-				<p>{guild.voicecount} Voicechannels</p>
-				<p>{guild.rolecount} Roles</p>
-			</div>
+		<meta property="og:title" content="Statcord | {guild.name}'s Leaderboard" />
+		<title>Statcord | {guild.name}'s Leaderboard</title>
+	{/if}
+</svelte:head>
+
+<User {user} />
+<div class="holder">
+	{#if guildId}
+		<div class="info">
+			<GuildInfo {user} />
 			<script
 				async
 				src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695"
@@ -71,135 +73,53 @@
 		</div>
 	{/if}
 	<div class="card leaderboard">
-		{#if members}
-			{#if members.length == 0}
-				<div class="loading">
-					<p>Statcord is not on this Server!</p>
-					<a id="addToDiscord">Not yet available</a>
-				</div>
-			{:else}
-				{#each members as { pos, id, score }}
-					<Member {pos} {id} {score} />
-				{/each}
+		{#if members.length != 0}
+			{#each members as { pos, name, id, textmessages, voiceseconds, avatar }}
+				<Member
+					{pos}
+					{id}
+					score={textmessages / guild.values.msgsperpoint +
+						voiceseconds / guild.values.vcsecondsperpoint}
+					{name}
+					{avatar}
+				/>
+			{/each}
+			{#if hasMore}
+				<Button on:click={fetchData}>Load more</Button>
 			{/if}
 		{:else}
 			<p class="loading">Please wait, data is loading...</p>
 		{/if}
-		{#if error != null}
-			<div class="loading">
-				<p>{error}</p>
-			</div>
-		{/if}
 	</div>
 </div>
 
-<style>
+<style lang="scss">
 	.holder {
-		display: flex;
-		flex-direction: row-reverse;
+		display: grid;
+		grid-template-columns: 3fr 1fr;
+		grid-template-areas: 'board info';
+		gap: 2vw;
 		margin: 2vw;
 		margin-top: 10vh;
-		gap: 1vw;
 		min-height: 90vh;
-	}
 
-	.leaderboard {
-		width: 100%;
-	}
-
-	.guildInfo {
-		width: 40%;
-		display: flex;
-		flex-direction: column;
-		gap: 1vh;
-	}
-
-	.guildInfo > * {
-		width: 100%;
-	}
-
-	.guildBanner {
-		width: 100%;
-		border-radius: 10px;
-	}
-
-	.infoHeader {
-		display: flex;
-		line-height: 5vh;
-		text-align: center;
-	}
-
-	.guildIcon {
-		height: 5vh;
-		border-radius: 100%;
-		margin-right: 1vh;
-	}
-
-	.infoOther {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: repeat(2, 1fr);
-		gap: 1vh;
+		.leaderboard {
+			display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			width: 100%;
+			grid-area: board;
+		}
+		.info {
+			width: 100%;
+			grid-area: info;
+		}
 	}
 
 	@media only screen and (max-width: 1356px) {
 		.holder {
+			display: flex;
 			flex-direction: column;
 		}
-
-		.guildInfo {
-			width: 100%;
-		}
-
-		.guildBanner {
-			display: none;
-		}
-
-		.guildDescription {
-			display: none;
-		}
-
-		.infoOther {
-			display: none;
-		}
-	}
-
-	.card {
-		position: relative;
-		margin-left: auto;
-		margin-right: auto;
-		height: fit-content;
-		background: #1a1a1a99;
-		border-radius: 10px;
-		background: rgba(0, 0, 0, 0.25);
-		box-shadow: 0 0 32px 0 rgba(0, 0, 0, 0.37);
-		box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		padding: 2vh;
-	}
-
-	.loading {
-		text-align: center;
-		vertical-align: middle;
-		margin: 1vh;
-	}
-
-	#addToDiscord {
-		margin-top: 1vh;
-		border-top-right-radius: 10px;
-		border-top-left-radius: 10px;
-		height: 4vh;
-		align-content: center;
-		background: rgba(0, 0, 0, 0.25);
-		box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-		border-radius: 10px;
-		text-align: center;
-		grid-area: 1 / 1 / 2 / 2;
-		color: gray;
-		cursor: default;
-		height: 4vh;
-		line-height: 4vh;
-		padding: 1vh;
 	}
 </style>
