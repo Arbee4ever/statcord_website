@@ -14,7 +14,7 @@
 	let token: any;
 
 	onMount(async () => {
-		const userId = user ? user.id : "";
+		const userId = user ? user.id : '';
 		const guildsReq = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + userId);
 		const guildsJson = await guildsReq.json();
 		mutualGuilds = guildsJson.mutual_guilds ? guildsJson.mutual_guilds : [];

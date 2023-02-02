@@ -53,12 +53,36 @@
 	{#if guildId}
 		<div class="info">
 			<GuildInfo {user} />
+			<script
+				async
+				src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695"
+				crossorigin="anonymous"
+			></script>
+			<!-- Under Guildinfo -->
+			<ins
+				class="adsbygoogle"
+				style="display:block"
+				data-ad-client="ca-pub-1252158636066695"
+				data-ad-slot="5674378409"
+				data-ad-format="auto"
+				data-full-width-responsive="true"
+			/>
+			<script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
 		</div>
 	{/if}
 	<div class="card leaderboard">
 		{#if members.length != 0}
 			{#each members as { pos, name, id, textmessages, voiceseconds, avatar }}
-				<Member {pos} {id} score={(textmessages/guild.values.msgsperpoint) + (voiceseconds/guild.values.vcsecondsperpoint)} {name} {avatar} />
+				<Member
+					{pos}
+					{id}
+					score={textmessages / guild.values.msgsperpoint +
+						voiceseconds / guild.values.vcsecondsperpoint}
+					{name}
+					{avatar}
+				/>
 			{/each}
 			{#if hasMore}
 				<Button on:click={fetchData}>Load more</Button>
