@@ -101,6 +101,26 @@
 	{/if}
 </div>
 
+<div class="adsbygoogle">
+	<script
+		async
+		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695"
+		crossorigin="anonymous"
+	></script>
+	<!-- Under Guildinfo -->
+	<ins
+		class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-1252158636066695"
+		data-ad-slot="5674378409"
+		data-ad-format="auto"
+		data-full-width-responsive="true"
+	/>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</div>
+
 <style lang="scss">
 	.guildInfo {
 		display: flex;
@@ -145,6 +165,10 @@
 		}
 
 		.infoOther {
+			display: none;
+		}
+
+		.adsbygoogle {
 			display: none;
 		}
 	}
