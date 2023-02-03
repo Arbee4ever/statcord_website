@@ -151,7 +151,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 1356px) {
+	@media only screen and (max-width: 500px) {
 		.guildInfo {
 			width: 100%;
 		}

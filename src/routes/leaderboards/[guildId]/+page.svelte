@@ -98,7 +98,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 1356px) {
+	@media only screen and (max-width: 500px) {
 		.holder {
 			display: flex;
 			flex-direction: column;
