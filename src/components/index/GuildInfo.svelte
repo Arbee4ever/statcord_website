@@ -59,66 +59,68 @@
 	}
 </script>
 
-<div class="card guildInfo">
-	{#if guild}
-		{#if guild.banner}
-			<img
-				class="guildBanner"
-				src="https://cdn.discordapp.com/banners/{guild.id}/{guild.banner}"
-				alt="Guild Banner"
-			/>
+<div class="guildInfo">
+	<div class="card">
+		{#if guild}
+			{#if guild.banner}
+				<img
+					class="guildBanner"
+					src="https://cdn.discordapp.com/banners/{guild.id}/{guild.banner}"
+					alt="Guild Banner"
+				/>
+			{/if}
+			<GuildsDropdown {guild} {other_guilds} />
+			{#if guild.description}
+				<p class="card guildDescription">{guild.description}</p>
+			{/if}
+			<div class="card infoOther">
+				<p>{guild.membercount} Members</p>
+				<p>{guild.rolecount} Roles</p>
+				<p>{guild.textcount} Textchannels</p>
+				<p>{guild.voicecount} Voicechannels</p>
+			</div>
+			{#if moderator}
+				<Button url="/{other[0]}/{guild.id}" width="100%">Go to {other[1]}</Button>
+			{/if}
+		{:else if error == '404'}
+			<div class="loading">
+				<p>Statcord is not on this Server!</p>
+				<br />
+				<DiscordButton
+					--margin="0"
+					url="https://discord.com/api/oauth2/authorize?client_id=959915020152627271&permissions=1515318660160&scope=bot&guild_id={guildId}"
+				>
+					Add to Discord
+				</DiscordButton>
+			</div>
+		{:else if error != null}
+			<div class="loading">
+				<p>{error}</p>
+			</div>
+		{:else}
+			<p class="loading">Please wait, data is loading...</p>
 		{/if}
-		<GuildsDropdown {guild} {other_guilds} />
-		{#if guild.description}
-			<p class="card guildDescription">{guild.description}</p>
-		{/if}
-		<div class="card infoOther">
-			<p>{guild.membercount} Members</p>
-			<p>{guild.rolecount} Roles</p>
-			<p>{guild.textcount} Textchannels</p>
-			<p>{guild.voicecount} Voicechannels</p>
-		</div>
-		{#if moderator}
-			<Button url="/{other[0]}/{guild.id}" width="100%">Go to {other[1]}</Button>
-		{/if}
-	{:else if error == '404'}
-		<div class="loading">
-			<p>Statcord is not on this Server!</p>
-			<br />
-			<DiscordButton
-				--margin="0"
-				url="https://discord.com/api/oauth2/authorize?client_id=959915020152627271&permissions=1515318660160&scope=bot&guild_id={guildId}"
-			>
-				Add to Discord
-			</DiscordButton>
-		</div>
-	{:else if error != null}
-		<div class="loading">
-			<p>{error}</p>
-		</div>
-	{:else}
-		<p class="loading">Please wait, data is loading...</p>
-	{/if}
-</div>
+	</div>
 
-<div class="adsbygoogle">
-	<script
-		async
-		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695"
-		crossorigin="anonymous"
-	></script>
-	<!-- Under Guildinfo -->
-	<ins
-		class="adsbygoogle"
-		style="display:block"
-		data-ad-client="ca-pub-1252158636066695"
-		data-ad-slot="5674378409"
-		data-ad-format="auto"
-		data-full-width-responsive="true"
-	/>
-	<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-	</script>
+	<div class="adsbygoogle">
+		<script
+			async
+			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695"
+			crossorigin="anonymous"
+		></script>
+		<!-- Under Guildinfo -->
+		<ins
+			class="adsbygoogle"
+			style="display:block"
+			data-ad-client="ca-pub-1252158636066695"
+			data-ad-slot="5674378409"
+			data-ad-format="auto"
+			data-full-width-responsive="true"
+		/>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
 </div>
 
 <style lang="scss">
@@ -149,6 +151,10 @@
 		p {
 			white-space: nowrap;
 		}
+	}
+
+	.adsbygoogle {
+		background-color: red;
 	}
 
 	@media only screen and (max-width: 500px) {
