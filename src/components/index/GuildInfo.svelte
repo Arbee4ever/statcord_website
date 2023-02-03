@@ -153,10 +153,6 @@
 		}
 	}
 
-	.adsbygoogle {
-		background-color: red;
-	}
-
 	@media only screen and (max-width: 500px) {
 		.guildInfo {
 			width: 100%;
