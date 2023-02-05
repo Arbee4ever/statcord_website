@@ -154,8 +154,7 @@
 	}
 
 	.adsbygoogle {
-		display: flex;
-		justify-content: center;
+		height: min-content;
 	}
 
 	@media only screen and (max-width: 500px) {
@@ -172,10 +171,6 @@
 		}
 
 		.infoOther {
-			display: none;
-		}
-
-		.adsbygoogle {
 			display: none;
 		}
 	}
