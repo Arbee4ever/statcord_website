@@ -55,6 +55,11 @@
 	});
 </script>
 
+<svelte:head>
+	<meta property="og:title" content="Statcord" />
+	<title>Statcord</title>
+</svelte:head>
+
 <main>
 	<User {user} />
 	<div class="cardHolder">
