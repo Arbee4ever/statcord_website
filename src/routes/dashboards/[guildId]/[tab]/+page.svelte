@@ -99,10 +99,10 @@
 	{/if}
 	{#if config}
 		<div class="card configHolder">
-			{#if vpw < 1356}
+			{#if vpw < 500}
 				<Button on:click={toggleTabs}>Go to another Category</Button>
 			{/if}
-			{#if vpw > 1356 || showTabs}
+			{#if vpw > 500 || showTabs}
 				<div class="selectorHolder" transition:slide>
 					<a
 						href="values"
