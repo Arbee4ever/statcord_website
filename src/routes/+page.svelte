@@ -59,9 +59,9 @@
 	<User {user} />
 	<div class="cardHolder">
 		<div class="info card">
-			<h1 id="title" class="name">
+			<h1 id="title">
 				<img src={StatcordLogo} alt="Statcord Logo" />
-				Statcord
+				STATCORD
 			</h1>
 			<p id="description">Just another leveling Bot with some unique Features.</p>
 			<p id="description">
@@ -87,7 +87,7 @@
 		</div>
 		<div class="utils">
 			<div class="dashboards card">
-				<h1 id="title">Dashboards</h1>
+				<h1 id="title">DASHBOARDS</h1>
 				<div class="guildList card">
 					{#if !user}
 						<DiscordButton url="/api/auth">Login with Discord</DiscordButton>
@@ -97,7 +97,7 @@
 				</div>
 			</div>
 			<div class="leaderboards card">
-				<h1 id="title">Leaderboards</h1>
+				<h1 id="title">LEADERBOARDS</h1>
 				<div class="guildList card">
 					{#if !user}
 						<DiscordButton url="/api/auth">Login with Discord</DiscordButton>
@@ -159,10 +159,6 @@
 	#title img {
 		border-radius: 100%;
 		height: 32pt;
-	}
-
-	.name {
-		text-decoration: underline;
 	}
 
 	#description {

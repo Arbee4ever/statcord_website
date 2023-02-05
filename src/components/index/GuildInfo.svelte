@@ -174,9 +174,5 @@
 		.infoOther {
 			display: none;
 		}
-
-		.adsbygoogle {
-			display: none;
-		}
 	}
 </style>
