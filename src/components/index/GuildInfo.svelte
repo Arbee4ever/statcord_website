@@ -153,6 +153,11 @@
 		}
 	}
 
+	.adsbygoogle {
+		display: flex;
+		justify-content: center;
+	}
+
 	@media only screen and (max-width: 500px) {
 		.guildInfo {
 			width: 100%;
@@ -167,6 +172,10 @@
 		}
 
 		.infoOther {
+			display: none;
+		}
+
+		.adsbygoogle {
 			display: none;
 		}
 	}
