@@ -3,6 +3,7 @@
 	import KoFiLogo from '$lib/img/ko-fi-icon.svg';
 	import DiscordLogo from '$lib/img/icon_clyde_circle_white.svg';
 	import TwitterLogo from '$lib/img/TwitterLogoWhite.svg';
+	import MastodonLogo from '$lib/img/MastodonLogoWhiteCircle.svg';
 	import GitHubLogo from '$lib/img/GitHub-Mark-Light-120px-plus.png';
 	import MailIcon from '$lib/img/MailLogoWhite.svg';
 </script>
@@ -20,6 +21,9 @@
 		<a href="https://twitter.com/0Arbee0" target="_blank" rel="noreferrer">
 			<img src={TwitterLogo} alt="Contact ARBEE over Twitter" />
 		</a>
+		<a href="https://floss.social/@arbee" target="_blank" rel="noreferrer">
+			<img src={MastodonLogo} alt="Contact ARBEE over Mastodon" />
+		</a>
 		<a href="https://github.com/Arbee4ever" target="_blank" rel="noreferrer">
 			<img src={GitHubLogo} alt="Contact ARBEE over GitHub." />
 		</a>
@@ -30,13 +34,20 @@
 		</a>
 	</div>
 	<p>
-		Check <a href="https://status.arbeeco.de/" target="_blank" rel="noreferrer">here</a> if Statcord is down.
+		Check <a href="https://status.arbeeco.de/" target="_blank" rel="noreferrer">here</a> if Statcord
+		is down.
 	</p>
 	<p>
-		Hosted on <a href="https://pages.cloudflare.com" target="_blank" rel="noreferrer">Cloudflare</a>, domain from <a href="https://dashserv.io/a/statcord" target="_blank" rel="noreferrer">dashserv</a>.
+		Hosted on <a href="https://pages.cloudflare.com" target="_blank" rel="noreferrer">Cloudflare</a
+		>, domain from
+		<a href="https://dashserv.io/a/statcord" target="_blank" rel="noreferrer">dashserv</a>.
 	</p>
 	<p>
-		Brand design by <a href="https://www.instagram.com/ralfbaenecke/" target="_blank" rel="noreferrer">ralf baenecke</a>.
+		Brand design by <a
+			href="https://www.instagram.com/ralfbaenecke/"
+			target="_blank"
+			rel="noreferrer">ralf baenecke</a
+		>.
 	</p>
 	<p>© 2022 ARBEE</p>
 </footer>
