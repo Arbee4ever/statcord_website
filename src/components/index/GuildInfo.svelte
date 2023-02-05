@@ -102,7 +102,7 @@
 		{/if}
 	</div>
 
-	<div class="adsbygoogle">
+	<div class="adsbygoogleWrapper">
 		<script
 			async
 			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695"
@@ -153,10 +153,6 @@
 		}
 	}
 
-	.adsbygoogle {
-		height: min-content;
-	}
-
 	@media only screen and (max-width: 500px) {
 		.guildInfo {
 			width: 100%;
@@ -171,6 +167,10 @@
 		}
 
 		.infoOther {
+			display: none;
+		}
+
+		.adsbygoogleWrapper {
 			display: none;
 		}
 	}
