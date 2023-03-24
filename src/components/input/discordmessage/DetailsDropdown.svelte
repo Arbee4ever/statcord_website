@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 	import { clickOutside } from '$lib/script/clickOutside.js';
-	import Input2 from '$components/input/Input2.svelte';
 
 	export let placeholderIcon = '';
 	export let icon: any;
 	export let height = '15px';
 	export let border_radius = '4px';
-	export let filter: boolean = false;
 	let expanded = false;
 	let details: HTMLDivElement;
 	let overflow = '0px';
@@ -88,16 +86,5 @@
 			gap: 1vh;
 			overflow: scroll;
 		}
-	}
-
-	.input {
-		resize: none;
-		padding: 10px;
-		color: white;
-		border: none;
-	}
-
-	.input:focus {
-		outline: rgba(0, 0, 0, 0.25) solid;
 	}
 </style>

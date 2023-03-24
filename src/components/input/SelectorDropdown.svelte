@@ -60,7 +60,7 @@
 <div class="optionSelector">
 	<p><slot /></p>
 	<div class="optionHolder card">
-		<DetailsDropdown height="26px" icon={PlusIcon} filter={true}>
+		<DetailsDropdown height="26px" icon={PlusIcon}>
 			<span slot="filter">
 				<Input2 label="Filter">
 					<div class="filter">

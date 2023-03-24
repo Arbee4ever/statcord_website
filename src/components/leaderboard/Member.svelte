@@ -8,6 +8,9 @@
 	export let name: string;
 
 	let color: string = '#00000000';
+
+	const formatter = Intl.NumberFormat('en', { notation: 'compact',  } )
+
 	switch (pos) {
 		case 1:
 			color = 'rgb(218 158 59)';
@@ -32,8 +35,7 @@
 		</div>
 	</div>
 	<div class="stats">
-		<p class="score">{score}</p>
-		<p />
+		<p class="score" title="{score}">{formatter.format(score)}</p>
 	</div>
 </div>
 
@@ -98,5 +100,6 @@
 		width: 5vh;
 		text-align: center;
 		float: right;
+		cursor: default;
 	}
 </style>
