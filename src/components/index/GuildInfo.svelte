@@ -124,6 +124,12 @@
 </div>
 
 <style lang="scss">
+	.card {
+		display: flex;
+		flex-direction: column;
+		gap: 1vh;
+	}
+
 	.guildInfo {
 		display: flex;
 		flex-direction: column;
