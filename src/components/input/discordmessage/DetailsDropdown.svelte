@@ -71,20 +71,14 @@
 			background-color: currentColor;
 			position: absolute;
 			transform: translateX(var(--overflow));
-			max-width: 30vw;
 			width: max-content;
-			display: grid;
-			gap: 1vh;
 		}
 
 		.content {
 			z-index: 1;
 			display: flex;
-			max-width: 15vw;
-			max-height: 10vh;
 			flex-wrap: wrap;
 			gap: 1vh;
-			overflow: scroll;
 		}
 	}
 </style>

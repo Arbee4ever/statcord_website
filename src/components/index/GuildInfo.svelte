@@ -158,6 +158,9 @@
         }
       }
     }
+      .adsbygoogleWrapper {
+          position: relative;
+      }
   }
 
   @media only screen and (max-width: 500px) {

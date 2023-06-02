@@ -31,7 +31,7 @@ export async function load({ cookies, params }) {
 		throw redirect(302, '/');
 	}
 
-	const configReq = await fetch(env.STATCORD_API_URL + '/guilds/' + params.guildId + '/config', {
+	const configReq = await fetch(`${env.STATCORD_API_URL}/guilds/${params.guildId}/config`, {
 		headers: { Authorization: `${env.DISCORD_AUTH}` }
 	});
 	if (configReq.status != 200) {

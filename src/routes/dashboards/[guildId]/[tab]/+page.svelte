@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang='ts'>
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
@@ -11,23 +11,27 @@
 	import Data from '$components/dashboard/Data.svelte';
 	import Roles from '$components/dashboard/Roles.svelte';
 	import Errors from '$components/dashboard/Errors.svelte';
+	import Messages from '$components/dashboard/Messages.svelte';
 
-	let user: any = $page.data.user;
-	let config: any = $page.data.config;
+	let user = $page.data.user;
+	let config = $page.data.config;
 	let guildId = $page.params.guildId;
 	let tab = $page.params.tab;
-	let vpw: any;
-	let saveVisibile: boolean = false;
+	let vpw;
+	let saveVisibile = false;
 	let showTabs: boolean;
-	let guild: any;
-	let category: any = JSON.parse(JSON.stringify(config[tab]));
+	let guild;
+	let category;
 
 	function updateCategory(t) {
 		config = config;
-		window.removeEventListener('beforeunload', beforeUnload);
 		saveVisibile = false;
 		tab = t;
-		category = structuredClone(config[tab]);
+		if (config[tab] == undefined) {
+			category = {};
+		} else {
+			category = structuredClone(config[tab]);
+		}
 	}
 
 	function onChange() {
@@ -37,15 +41,7 @@
 				return;
 			}
 			saveVisibile = true;
-			window.addEventListener('beforeunload', beforeUnload);
 		}, 1);
-	}
-
-	function beforeUnload(e) {
-		var confirmationMessage = 'You have unsaved Changes!';
-
-		(e || window.event).returnValue = confirmationMessage; //Gecko + IE
-		return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
 	}
 
 	onMount(async () => {
@@ -69,6 +65,7 @@
 			method: 'PATCH',
 			body: JSON.stringify(category)
 		});
+		console.log(JSON.stringify(category))
 		const json = await req.json();
 		if (req.status == 200) {
 			config = json;
@@ -83,7 +80,7 @@
 
 <svelte:head>
 	{#if guild}
-		<meta property="og:title" content="Statcord | {guild.name}'s Dashboard" />
+		<meta property='og:title' content="Statcord | {guild.name}'s Dashboard" />
 		<title>Statcord | {guild.name}'s Dashboard</title>
 	{/if}
 </svelte:head>
@@ -91,139 +88,149 @@
 <svelte:window bind:outerWidth={vpw} />
 
 <User {user} />
-<div class="holder">
+<div class='holder'>
 	{#if guildId}
-		<div class="info">
+		<div class='info'>
 			<GuildInfo {user} />
 		</div>
 	{/if}
 	{#if config}
-		<div class="card configHolder">
+		<div class='card configHolder'>
 			{#if vpw < 500}
 				<Button on:click={toggleTabs}>Go to another Category</Button>
 			{/if}
 			{#if vpw > 500 || showTabs}
-				<div class="selectorHolder" transition:slide>
+				<div class='selectorHolder'>
 					<a
-						href="values"
+						href='values'
 						on:mousedown={() => updateCategory('values')}
-						class="card categorySelector"
+						class='card categorySelector'
 					>
 						Values
 					</a>
-					<a href="data" on:mousedown={() => updateCategory('data')} class="card categorySelector">
+					<a
+						href='messages'
+						on:mousedown={() => updateCategory('messages')}
+						class='card categorySelector'
+					>
+						Messages
+					</a>
+					<a href='data' on:mousedown={() => updateCategory('data')} class='card categorySelector'>
 						Data
 					</a>
 					<a
-						href="roles"
+						href='roles'
 						on:mousedown={() => updateCategory('roles')}
-						class="card categorySelector"
+						class='card categorySelector'
 					>
 						Roles
 					</a>
 					<a
-						href="errors"
+						href='errors'
 						on:mousedown={() => updateCategory('errors')}
-						class="card categorySelector"
+						class='card categorySelector'
 					>
 						Errors
 					</a>
-					<!-- TODO: Add back when better Permissions System is done!
-					<a href="auth" on:mousedown={() => updateCategory('auth')} class="card categorySelector">
+					<!--TODO: Add back when better Permissions System is done!-->
+					<!--<a href="auth" on:mousedown={() => updateCategory('auth')} class="card categorySelector">
 						Auth
-					</a> -->
+					</a>-->
+				</div>
+				<div class='card categoryHolder'>
+					{#key tab}
+						{#key config}
+							{#if tab === 'values'}
+								<Conversionvalues bind:category on:change={onChange} />
+							{:else if tab === 'messages'}
+								<Messages bind:category on:change={onChange} />
+							{:else if tab === 'data'}
+								<Data bind:category on:change={onChange} />
+							{:else if tab === 'roles'}
+								<Roles bind:category on:change={onChange} />
+							{:else if tab === 'auth'}
+								<Auth bind:category on:change={onChange} />
+							{:else if tab === 'errors'}
+								<Errors bind:category on:change={onChange} />
+							{:else}
+								<p>Nothing here yet!</p>
+							{/if}
+						{/key}
+					{/key}
 				</div>
 			{/if}
-			<div class="card categoryHolder">
-				{#key tab}
-					{#key config}
-						{#if tab == 'values'}
-							<Conversionvalues bind:category on:change={onChange} />
-						{:else if tab == 'data'}
-							<Data bind:category on:change={onChange} />
-						{:else if tab == 'roles'}
-							<Roles bind:category on:change={onChange} />
-						{:else if tab == 'auth'}
-							<Auth bind:category on:change={onChange} />
-						{:else if tab == 'errors'}
-							<Errors bind:category on:change={onChange} />
-						{/if}
-					{/key}
-				{/key}
-			</div>
 		</div>
 	{/if}
 </div>
 {#if saveVisibile}
-	<div class="save card" transition:slide>
+	<div class='save card' transition:slide>
 		{#if vpw > 1356}
 			<p>Unsaved Changes!</p>
 		{/if}
-		<Button color="#ff0000" on:click={() => updateCategory(tab)}>Reset</Button>
-		<Button color="#00ff00" on:click={save}>Save Changes</Button>
+		<Button color='#ff0000' on:click={() => updateCategory(tab)}>Reset</Button>
+		<Button color='#00ff00' on:click={save}>Save Changes</Button>
 	</div>
 {/if}
 
-<style lang="scss">
-	.holder {
-		display: grid;
-		grid-template-columns: 3fr 1fr;
-		grid-template-areas: 'board info';
-		gap: 2vw;
-		margin: 2vw;
-		margin-top: 10vh;
-		min-height: 90vh;
+<style lang='scss'>
+  .holder {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas: 'board info';
+    gap: 2vw;
+    margin: 10vh 2vw 2vw;
+    min-height: 90vh;
 
-		.info {
-			width: 100%;
-			grid-area: info;
-		}
-		.configHolder {
-			width: 100%;
-			display: flex;
-			gap: 1vh;
-			width: 100%;
-			grid-area: board;
-		}
+    .info {
+      width: 100%;
+      grid-area: info;
+    }
 
-		.selectorHolder {
-			display: flex;
-			flex-direction: column;
-			gap: 1vh;
-		}
+    .configHolder {
+      width: 100%;
+      display: flex;
+      gap: 1vh;
+      grid-area: board;
+    }
 
-		.categorySelector {
-			cursor: pointer;
-			width: 100%;
-			min-width: 15vw;
-		}
+    .selectorHolder {
+      display: flex;
+      flex-direction: column;
+      gap: 1vh;
+    }
 
-		.categoryHolder {
-			width: 100%;
-			display: grid;
-			gap: 1vh;
-		}
-	}
+    .categorySelector {
+      cursor: pointer;
+      width: 100%;
+      min-width: 15vw;
+    }
 
-	.save {
-		display: flex;
-		gap: 4vh;
-		z-index: 2;
-		position: fixed;
-		max-width: 80vw;
-		left: 50%;
-		transform: translateX(-50%);
-		bottom: 2vh;
-		align-items: center;
-	}
+    .categoryHolder {
+      width: 100%;
+      display: grid;
+      gap: 1vh;
+    }
+  }
 
-	@media only screen and (max-width: 500px) {
-		.holder {
-			display: flex;
-			flex-direction: column;
-		}
-		.configHolder {
-			flex-direction: column;
-		}
-	}
+  .save {
+    display: flex;
+    gap: 4vh;
+    z-index: 2;
+    position: fixed;
+    max-width: 80vw;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 2vh;
+    align-items: center;
+  }
+
+  @media only screen and (max-width: 500px) {
+    .holder {
+      display: flex;
+      flex-direction: column;
+    }
+    .configHolder {
+      flex-direction: column;
+    }
+  }
 </style>

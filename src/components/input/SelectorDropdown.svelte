@@ -157,15 +157,15 @@
 
 <style lang="scss">
 	.optionSelector {
-		display: grid;
-		gap: 1vh;
-		align-items: center;
+		display: flex;
+		flex-direction: column;
 
 		.optionHolder {
 			display: flex;
 			flex-wrap: wrap;
 			padding: 15px;
 			width: 100%;
+			height: 100%;
 		}
 
 		.pointer {

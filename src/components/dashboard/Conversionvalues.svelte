@@ -29,7 +29,6 @@
 		resize: none;
 		padding: 15px;
 		color: white;
-		border: none;
 		width: var(--width, 100%);
 		background-color: transparent;
 		box-shadow: none;

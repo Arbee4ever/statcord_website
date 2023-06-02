@@ -13,8 +13,5 @@
 	.holder {
 		align-items: center;
 		height: fit-content;
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 1vh;
 	}
 </style>

@@ -1,28 +1,29 @@
-<script lang="ts">
-	import { createEventDispatcher } from "svelte";
+<script lang='ts'>
+	import { createEventDispatcher } from 'svelte';
 	import { autoresize } from 'svelte-textarea-autoresize';
 
+	export let value;
 
-	export let value = '';
-	export let id: string
+	function init() {
+		if (value == undefined) {
+			value = "";
+		}
+	}
+	export let id: string;
 	export let placeholder = '';
-	let textarea: HTMLTextAreaElement;
 	const dispatch = createEventDispatcher();
 
-	function onInput() {
-		dispatch('input', {
-			value: id,
-			newValue: textarea.value
-		});
+	function onInput(event) {
+		dispatch('input', event.detail);
 	}
 </script>
 
-<textarea use:autoresize bind:value bind:this={textarea} {placeholder} on:input={onInput} />
+<textarea use:autoresize bind:value {placeholder} on:click={init} on:input={onInput} />
 
 <style>
-	textarea {
-		resize: none;
-		overflow-x: scroll;
-		overflow: hidden;
-	}
+    textarea {
+        resize: none;
+        overflow-x: scroll;
+        overflow: hidden;
+    }
 </style>
