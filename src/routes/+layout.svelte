@@ -31,7 +31,11 @@
 	<meta property="og:image" content={StatcordLogo} />
 	<meta name="theme-color" content="#2b8eaf" />
 	<meta name="keywords" content="Programming, Bot, Statcord, Discord" />
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695" crossorigin="anonymous"></script>
+	<script
+		async
+		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695"
+		crossorigin="anonymous"
+	></script>
 </svelte:head>
 
 <main>
@@ -67,6 +71,10 @@
 		transition: all 1s;
 	}
 
+	:global(body) {
+      transition: rotate 1s;
+	}
+
 	:global(h1, h2, h3, a, p) {
 		color: White;
 		text-decoration: none;
@@ -86,8 +94,6 @@
 
 	:global(.card) {
 		position: relative;
-		margin-left: auto;
-		margin-right: auto;
 		height: fit-content;
 		border-radius: 10px;
 		background: #00000040;
