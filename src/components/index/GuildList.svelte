@@ -16,7 +16,7 @@
 {:else}
 	{#each mutualGuilds as { name, icon, id, moderator }}
 		{#if moderator || type == "leaderboards"}
-			<a href="{type}/{id}" class="guild" transition:slide>
+			<a href="/{type}/{id}" class="guild" transition:slide>
 				<span class="guildIcon">
 					{#if icon != null}
 						<img src="https://cdn.discordapp.com/icons/{id}/{icon}.png" alt="Guild" />
