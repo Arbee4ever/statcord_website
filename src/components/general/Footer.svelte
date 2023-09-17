@@ -39,7 +39,7 @@
 	</p>
 	<p>
 		Hosted on <a href="https://pages.cloudflare.com" target="_blank" rel="noreferrer">Cloudflare</a
-		>, domain from
+		> and <a href="https://dashserv.io/a/statcordvserver" target="_blank" rel="noreferrer">dashserv</a>, domain from
 		<a href="https://dashserv.io/a/statcord" target="_blank" rel="noreferrer">dashserv</a>.
 	</p>
 	<p>
