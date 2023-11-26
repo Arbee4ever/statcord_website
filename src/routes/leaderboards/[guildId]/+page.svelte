@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import { env } from '$env/dynamic/public';
 	import Button from '$components/input/Button.svelte';
+
 	let guild: any;
 	let user: any = $page.data.user;
 	let guildId = $page.params.guildId;
@@ -14,7 +15,7 @@
 
 	let index: any = 0;
 	let newBatch: never[] = [];
-	let hasMore: boolean = true;
+	let hasMore = true;
 
 	async function fetchData() {
 		if (hasMore) {
@@ -81,9 +82,8 @@
 		grid-template-columns: 3fr 1fr;
 		grid-template-areas: 'board info';
 		gap: 2vw;
-		margin: 2vw;
-		margin-top: 10vh;
-		min-height: 90vh;
+    margin: 10vh 2vw 2vw;
+    min-height: 90vh;
 
 		.leaderboard {
 			display: flex;
@@ -92,10 +92,11 @@
 			width: 100%;
 			grid-area: board;
 		}
-		.info {
-			width: 100%;
-			grid-area: info;
-		}
+
+    .info {
+      width: 100%;
+      grid-area: info;
+    }
 	}
 
 	@media only screen and (max-width: 500px) {

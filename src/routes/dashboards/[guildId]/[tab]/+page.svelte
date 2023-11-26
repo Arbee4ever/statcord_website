@@ -7,23 +7,25 @@
 	import GuildInfo from '$components/index/GuildInfo.svelte';
 	import { env } from '$env/dynamic/public';
 	import Conversionvalues from '$components/dashboard/Conversionvalues.svelte';
-	import Auth from '$components/dashboard/Auth.svelte';
 	import Data from '$components/dashboard/Data.svelte';
 	import Roles from '$components/dashboard/Roles.svelte';
 	import Errors from '$components/dashboard/Errors.svelte';
 	import Messages from '$components/dashboard/Messages.svelte';
 
 	let user = $page.data.user;
-	let config = $page.data.config;
+	let config;
 	let guildId = $page.params.guildId;
 	let tab = $page.params.tab;
-	let vpw;
+	let vpw: number;
 	let saveVisibile = false;
 	let showTabs: boolean;
 	let guild;
 	let category;
 
 	function updateCategory(t) {
+		if (typeof t != 'string') {
+			t = tab;
+		}
 		config = config;
 		saveVisibile = false;
 		tab = t;
@@ -33,6 +35,7 @@
 			category = structuredClone(config[tab]);
 		}
 	}
+
 
 	function onChange() {
 		setTimeout(() => {
@@ -65,7 +68,6 @@
 			method: 'PATCH',
 			body: JSON.stringify(category)
 		});
-		console.log(JSON.stringify(category))
 		const json = await req.json();
 		if (req.status == 200) {
 			config = json;
@@ -94,8 +96,8 @@
 			<GuildInfo {user} />
 		</div>
 	{/if}
-	{#if config}
-		<div class='card configHolder'>
+	<div class='card configHolder'>
+		{#if config}
 			{#if vpw < 500}
 				<Button on:click={toggleTabs}>Go to another Category</Button>
 			{/if}
@@ -148,8 +150,8 @@
 								<Data bind:category on:change={onChange} />
 							{:else if tab === 'roles'}
 								<Roles bind:category on:change={onChange} />
-							{:else if tab === 'auth'}
-								<Auth bind:category on:change={onChange} />
+								<!--{:else if tab === 'auth'}
+									<Auth bind:category on:change={onChange} />-->
 							{:else if tab === 'errors'}
 								<Errors bind:category on:change={onChange} />
 							{:else}
@@ -159,15 +161,17 @@
 					{/key}
 				</div>
 			{/if}
-		</div>
-	{/if}
+		{:else}
+			<p class='loading'>Please wait, data is loading...</p>
+		{/if}
+	</div>
 </div>
 {#if saveVisibile}
 	<div class='save card' transition:slide>
 		{#if vpw > 1356}
 			<p>Unsaved Changes!</p>
 		{/if}
-		<Button color='#ff0000' on:click={() => updateCategory(tab)}>Reset</Button>
+		<Button color='#ff0000' on:click={updateCategory}>Reset</Button>
 		<Button color='#00ff00' on:click={save}>Save Changes</Button>
 	</div>
 {/if}
@@ -181,16 +185,16 @@
     margin: 10vh 2vw 2vw;
     min-height: 90vh;
 
+    .configHolder {
+      display: flex;
+      gap: 1vh;
+      width: 100%;
+      grid-area: board;
+    }
+
     .info {
       width: 100%;
       grid-area: info;
-    }
-
-    .configHolder {
-      width: 100%;
-      display: flex;
-      gap: 1vh;
-      grid-area: board;
     }
 
     .selectorHolder {

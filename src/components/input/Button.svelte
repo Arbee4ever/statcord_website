@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import { createEventDispatcher } from 'svelte';
 
-	export let url: any;
+	export let url: any = undefined;
 	export let color = '#000000';
 	export let width = 'min-content';
 	const backgroundColor = color + '40';

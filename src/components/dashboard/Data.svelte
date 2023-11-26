@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Input2 from '$components/input/Input2.svelte';
+	import Input from '$components/input/Input.svelte';
 	import { createEventDispatcher } from 'svelte';
 	export let category: any;
 	const dispatch = createEventDispatcher();
@@ -9,17 +9,17 @@
 	};
 </script>
 
-<Input2 label="Delete Userdata on Leave">
+<Input label="Delete Userdata on Leave">
 	<input
 		class="card checkbox"
 		on:change={onChange}
 		type="checkbox"
 		bind:checked={category.deleteonleave}
 	/>
-</Input2>
-<Input2 label="Automatically clear Data">
+</Input>
+<Input label="Automatically clear Data">
 	<input class="card input" on:input={onChange} type="date" bind:value={category.cleardate} />
-</Input2>
+</Input>
 
 <style lang="scss">
 	.card {

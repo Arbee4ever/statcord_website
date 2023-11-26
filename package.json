@@ -27,6 +27,7 @@
     "prettier": "^2.6.2",
     "sass": "^1.55.0",
     "svelte": "^3.44.0",
+    "svelte-awesome-color-picker": "^2.4.8",
     "svelte-check": "^2.7.1",
     "svelte-preprocess": "^4.10.7",
     "tslib": "^2.3.1",
