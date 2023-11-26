@@ -4,7 +4,7 @@
 	import SettingsIcon from '$lib/img/settingsIcon.svg';
 	import XIcon from '$lib/img/xIcon.svg';
 	import DetailsDropdown from './discordmessage/DetailsDropdown.svelte';
-	import Input2 from './Input2.svelte';
+	import Input from './Input.svelte';
 	export let options: any;
 	let optionsCopy = JSON.parse(JSON.stringify(options));
 	export let selected: any = [];
@@ -62,7 +62,7 @@
 	<div class="optionHolder card">
 		<DetailsDropdown height="26px" icon={PlusIcon}>
 			<span slot="filter">
-				<Input2 label="Filter">
+				<Input label="Filter">
 					<div class="filter">
 						<input
 							type="text"
@@ -71,7 +71,7 @@
 							on:input={filterCheck}
 						/>
 					</div>
-				</Input2>
+				</Input>
 			</span>
 			{#each options as option}
 				<p
@@ -117,28 +117,28 @@
 					{option.name}
 					<span class="iconWrapper">
 						<DetailsDropdown height="auto" icon={SettingsIcon}>
-							<Input2 label="Static">
+							<Input label="Static">
 								<input
 									type="checkbox"
 									on:input={onChange}
 									class="card input"
 									bind:checked={option.static}
 								/>
-							</Input2>
+							</Input>
 						</DetailsDropdown>
 					</span>
 				{:else}
 					{option.id}
 					<span class="iconWrapper">
 						<DetailsDropdown height="auto" icon={SettingsIcon}>
-							<Input2 label="Value">
+							<Input label="Value">
 								<input
 									type="number"
 									on:input={onChange}
 									class="card input"
 									bind:value={option.value}
 								/>
-							</Input2>
+							</Input>
 						</DetailsDropdown>
 					</span>
 				{/if}

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Input2 from '$components/input/Input2.svelte';
+    import Input from '$components/input/Input.svelte';
 
     export let category: any;
 
@@ -12,14 +12,14 @@
     }
 </script>
 
-<Input2 label="Token">
+<Input label="Token">
     <div class="card input">
         <div class="card cover" on:click={revealToken} on:keydown={revealToken}>
             <p>Click to reveal!</p>
         </div>
         <p>{category.token}</p>
     </div>
-</Input2>
+</Input>
 <div class="warning card">
     <p>DO NOT SHARE WITH SOMEONE YOU DON'T TRUST!</p>
 </div>
@@ -32,7 +32,7 @@
     height: 100%;
     padding: 0;
     backdrop-filter: blur(10px);
-    transition: backdrop-filter 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    transition: backdrop-filter .3s ease-in-out, opacity .3s ease-in-out;
   }
 
   .cover:hover {
