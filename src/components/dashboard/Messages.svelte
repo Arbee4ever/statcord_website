@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Button from '$components/input/Button.svelte';
 	import { slide } from 'svelte/transition';
@@ -32,43 +32,43 @@
 	}
 </script>
 
-<Input label='Default Messages'>
+<Input label="Default Messages">
 	{#each category.default_messages as message, i}
-		<Message bind:message category={category} index={i} on:change={onChange} defaultMsg={true} />
+		<Message bind:message {category} index={i} on:change={onChange} defaultMsg={true} />
 	{/each}
 </Input>
-<Input label='Custom Messages'>
+<Input label="Custom Messages">
 	{#if category.messages.length !== 0}
 		{#each category.messages as message, i}
-			<Message bind:message category={category} index={i} on:change={onChange} on:delete={onDelete} />
+			<Message bind:message {category} index={i} on:change={onChange} on:delete={onDelete} />
 		{/each}
 	{:else}
-		<div class='card content' transition:slide>
-			<p>Nothing here yet!</p>
+		<div class="card content" transition:slide>
+			<p>Check back later!</p>
 		</div>
 	{/if}
 </Input>
-<span class='holder' transition:slide>
-	<Button class='noshadow' width='100%' on:click={handleClick}>Add Message</Button>
-</span>
+<!--<span class="holder" transition:slide>
+	<Button class="noshadow" width="100%" on:click={handleClick}>Add Custom Message</Button>
+</span>-->
 
-<style lang='scss'>
-  .content {
-    padding: 10px;
-    border-radius: 10px;
-    width: 100%;
-    color: #36393f;
-    display: grid;
-    gap: 1vh;
-  }
+<style lang="scss">
+	.content {
+		padding: 10px;
+		border-radius: 10px;
+		width: 100%;
+		color: #36393f;
+		display: grid;
+		gap: 1vh;
+	}
 
-  .card:not(.headerCard) {
-    background-color: transparent;
-    box-shadow: none;
-    border: solid 1px #00000040;
-  }
+	.card:not(.headerCard) {
+		background-color: transparent;
+		box-shadow: none;
+		border: solid 1px #00000040;
+	}
 
-  .holder :global(.noshadow) {
-    box-shadow: none;
-  }
+	.holder :global(.noshadow) {
+		box-shadow: none;
+	}
 </style>
