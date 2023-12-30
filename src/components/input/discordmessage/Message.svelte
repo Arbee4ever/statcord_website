@@ -33,10 +33,7 @@
 	}
 </script>
 
-<div class='content card' transition:slide
-		 class:clickable={defaultMsg}
-		 on:click={() => defaultMsg ? toggleMessageOpen(index) : null}
-		 on:keydown={() => defaultMsg ? toggleMessageOpen(index) : null}>
+<div class='content card' transition:slide>
 	<div class='inline'>
 		{#if defaultMsg}
 			<p class='input test'>{message.name}</p>
@@ -57,8 +54,9 @@
 				class:open={visible === index}
 				class='toggleOpenBtn'
 				alt='Toggle Open'
-				on:click={() => !defaultMsg ? toggleMessageOpen(index) : null}
-				on:keydown={() => !defaultMsg ? toggleMessageOpen(index) : null}
+				class:clickable={defaultMsg}
+				on:click={() => defaultMsg ? toggleMessageOpen(index) : null}
+				on:keydown={() => defaultMsg ? toggleMessageOpen(index) : null}
 			/>
 		</span>
 	</div>
@@ -75,10 +73,6 @@
     color: #36393f;
     display: grid;
     gap: 1vh;
-
-    &.clickable {
-      cursor: pointer;
-    }
 
     .inline {
       display: inline-flex;
@@ -98,6 +92,10 @@
 
         .open {
           transform: rotate(180deg);
+        }
+
+        .clickable {
+          cursor: pointer;
         }
       }
     }
