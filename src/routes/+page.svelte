@@ -13,9 +13,20 @@
 	let guilds: any;
 	let token: any;
 
-	onMount(async () => {
+	onMount(() => loadData());
+
+	async function loadData() {
 		const userId = user ? user.id : '';
-		const guildsReq = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + userId);
+		let guildsReq;
+		try {
+			 guildsReq = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + userId);
+		} catch (err) {
+			console.log("Retrying")
+			setTimeout(async () => {
+				await loadData();
+			}, 5000);
+			return;
+		}
 		const guildsJson = await guildsReq.json();
 		mutualGuilds = guildsJson.mutual_guilds ? guildsJson.mutual_guilds : [];
 		allGuildsCount = guildsJson.other_guilds.length + mutualGuilds.length;
@@ -52,7 +63,7 @@
 				);
 			});
 		}
-	});
+	}
 </script>
 
 <svelte:head>
