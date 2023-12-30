@@ -59,7 +59,6 @@
 	function renderGraph() {
 		if(!window) return
 		if(chart) return;
-		window.ApexCharts = ApexCharts
 		chart = new ApexCharts(graph, options);
 		chart.render()
 	}
