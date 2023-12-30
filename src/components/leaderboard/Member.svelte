@@ -1,7 +1,8 @@
 <script lang='ts'>
 	import PlaceholderImg from '$lib/img/icon_clyde_circle_white.svg';
-	import ApexCharts from 'apexcharts';
-	import inView from "$lib/script/inView.js";
+	import inView from '$lib/script/inView.js';
+	import ApexCharts from "apexcharts";
+	import { browser } from '$app/environment';
 
 	export let pos: number;
 	export let id: string;
@@ -56,11 +57,13 @@
 
 	let graph: HTMLDivElement;
 	let chart: ApexCharts;
+
 	function renderGraph() {
-		if(!window) return
-		if(chart) return;
-		chart = new ApexCharts(graph, options);
-		chart.render()
+		if (browser) {
+			if (chart) return;
+			chart = new ApexCharts(graph, options);
+			chart.render();
+		}
 	}
 
 	let color: string = '#00000000';
@@ -91,7 +94,7 @@
 		</div>
 	</div>
 	<div class='stats'>
-		<div class='graph' bind:this={graph}/>
+		<div class='graph' bind:this={graph} />
 		<p class='score' title={score}>{formatter.format(score)}</p>
 	</div>
 </div>
@@ -115,32 +118,34 @@
   .user {
     grid-area: 1 / 1 / 2 / 2;
     display: flex;
-  }
+    z-index: 1;
+    position: relative;
 
-  .namepos {
-    display: flex;
-    gap: 1vh;
-    height: 3vh;
-    align-self: center;
-    align-items: center;
-    margin: 0;
-    padding: 1vh;
-  }
+    .namepos {
+      display: flex;
+      gap: 1vh;
+      height: 3vh;
+      align-self: center;
+      align-items: center;
+      margin: 0;
+      padding: 1vh;
+    }
 
-  .position {
-    font-weight: bold;
-  }
+    .position {
+      font-weight: bold;
+    }
 
-  .name {
-    white-space: nowrap;
-  }
+    .name {
+      white-space: nowrap;
+    }
 
-  .avatar {
-    border-radius: 100%;
-    width: 5vh;
-    height: 5vh;
-    border: 3px solid var(--color);
-    box-shadow: 0 0 32px 0 var(--color);
+    .avatar {
+      border-radius: 100%;
+      width: 5vh;
+      height: 5vh;
+      border: 3px solid var(--color);
+      box-shadow: 0 0 32px 0 var(--color);
+    }
   }
 
   .stats {

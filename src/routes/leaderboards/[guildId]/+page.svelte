@@ -3,10 +3,8 @@
 	import GuildInfo from '$components/index/GuildInfo.svelte';
 	import User from '$components/index/User.svelte';
 
-	import Member from '$components/leaderboard/Member.svelte';
 	import { onMount } from 'svelte';
 	import { env } from '$env/dynamic/public';
-	import Button from '$components/input/Button.svelte';
 
 	let guild: any;
 	let user: any = $page.data.user;
@@ -34,7 +32,9 @@
 		}
 	}
 
+	let Member = new Promise(() => {});
 	onMount(async () => {
+		Member = import('/src/components/leaderboard/Member.svelte');
 		await fetchData();
 	});
 
@@ -58,15 +58,17 @@
 	<div class='card leaderboard'>
 		{#if members.length != 0}
 			{#each members as { pos, name, id, texthistory, voicehistory, textmessages, voiceseconds, avatar }}
-				<Member
-					{pos}
-					{id}
-					{texthistory}
-					{voicehistory}
-					score={textmessages / guild.values.msgsperpoint + voiceseconds / guild.values.vcsecondsperpoint}
-					{name}
-					{avatar}
-				/>
+				{#await Member then module}
+					<svelte:component this={module.default}
+														{pos}
+														{id}
+														{texthistory}
+														{voicehistory}
+														score={textmessages / guild.values.msgsperpoint + voiceseconds / guild.values.vcsecondsperpoint}
+														{name}
+														{avatar}
+					/>
+				{/await}
 			{/each}
 			{#if hasMore}
 				<Button on:click={fetchData}>Load more</Button>
