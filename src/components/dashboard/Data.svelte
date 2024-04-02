@@ -17,9 +17,6 @@
 		bind:checked={category.deleteonleave}
 	/>
 </Input>
-<Input label="Automatically clear Data">
-	<input class="card input" on:input={onChange} type="date" bind:value={category.cleardate} />
-</Input>
 
 <style lang="scss">
 	.card {
