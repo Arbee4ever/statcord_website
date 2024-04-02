@@ -57,7 +57,7 @@
 	}
 
 	.guild:hover {
-		transition: all 0.2s ease-in-out;
+		transition: all .3s ease-in-out;
 		position: relative;
 		height: fit-content;
 		background: #1a1a1a99;
