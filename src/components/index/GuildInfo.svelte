@@ -83,7 +83,7 @@
             {#if moderator}
                 <Button url="/{other[0]}/{guild.id}" width="100%">Go to {other[1]}</Button>
             {/if}
-        {:else if error == '404'}
+        {:else if error === '404'}
             <div class="loading">
                 <p>Statcord is not on this Server!</p>
                 <br/>
@@ -158,6 +158,9 @@
         }
       }
     }
+      .adsbygoogleWrapper {
+          position: relative;
+      }
   }
 
   @media only screen and (max-width: 500px) {

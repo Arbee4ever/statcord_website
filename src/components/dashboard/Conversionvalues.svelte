@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Input2 from '$components/input/Input2.svelte';
+	import Input from '$components/input/Input.svelte';
 	import { createEventDispatcher } from 'svelte';
 	export let category: any;
 	const dispatch = createEventDispatcher();
@@ -9,27 +9,26 @@
 	};
 </script>
 
-<Input2 label="Seconds in voicechat / Point">
+<Input label="Seconds in voicechat / Point">
 	<input
 		class="card input"
 		on:input={onChange}
 		type="number"
 		bind:value={category.vcsecondsperpoint}
 	/>
-</Input2>
-<Input2 label="Messages / Point">
+</Input>
+<Input label="Messages / Point">
 	<input class="card input" on:input={onChange} type="number" bind:value={category.msgsperpoint} />
-</Input2>
-<Input2 label="Cooldown (in ms)">
+</Input>
+<Input label="Cooldown (in ms)">
 	<input class="card input" on:input={onChange} type="number" bind:value={category.cooldown} />
-</Input2>
+</Input>
 
 <style lang="scss">
 	.input {
 		resize: none;
 		padding: 15px;
 		color: white;
-		border: none;
 		width: var(--width, 100%);
 		background-color: transparent;
 		box-shadow: none;

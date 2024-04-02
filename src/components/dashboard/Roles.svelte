@@ -1,9 +1,11 @@
-<script lang="ts">
+<script lang='ts'>
 	import Button from '$components/input/Button.svelte';
 	import { page } from '$app/stores';
 	import XIcon from '$lib/img/xIcon.svg';
 	import { createEventDispatcher } from 'svelte';
 	import SelectorDropdown from '$components/input/SelectorDropdown.svelte';
+	import { slide } from 'svelte/transition';
+
 	export let category: any;
 	const dispatch = createEventDispatcher();
 	const newRole = {
@@ -13,7 +15,7 @@
 	};
 	let possibleValues = [{ id: 'textmessages' }, { id: 'voiceseconds' }];
 	let roles = JSON.parse(JSON.stringify($page.data.roles));
-	var found = roles.filter(function (item) {
+	var found = roles.filter(function(item) {
 		return item.id === $page.params.guildId;
 	});
 	const index = roles.indexOf(found[0]);
@@ -30,34 +32,34 @@
 		dispatch('change');
 	}
 
-	const deleteOption = (i) => {
+	function deleteOption(i) {
 		category.roles.splice(i, 1);
 		category = category;
 		onChange();
-	};
+	}
 </script>
 
-{#if category.roles.length != 0}
+{#if category.roles.length !== 0}
 	{#each category.roles as role, i}
-		<div class="content card">
-			<div class="inline">
+		<div class='content card' transition:slide>
+			<div class='inline'>
 				<input
-					class="input card"
+					class='input card'
 					on:input={onChange}
-					type="text"
-					placeholder="Name"
+					type='text'
+					placeholder='Name'
 					bind:value={role.name}
 				/>
-				<span class="remove iconWrapper">
+				<span class='delete iconWrapper'>
 					<img
 						src={XIcon}
-						alt="Close"
+						alt='Delete'
 						on:click={() => deleteOption(i)}
 						on:keydown={() => deleteOption(i)}
 					/>
 				</span>
 			</div>
-			<div class="wrapper">
+			<div class='wrapper'>
 				<SelectorDropdown
 					on:select={onChange}
 					bind:selected={role.requirements}
@@ -72,58 +74,61 @@
 		</div>
 	{/each}
 {:else}
-	<div class="card content">
+	<div class='card content' transition:slide>
 		<p>Nothing here yet!</p>
 	</div>
 {/if}
-<span class="holder">
-	<Button class="test" width="100%" on:click={handleClick}>Add Role</Button>
+<span class='holder' transition:slide>
+	<Button class='noshadow' width='100%' on:click={handleClick}>Add Role</Button>
 </span>
 
-<style lang="scss">
-	.content {
-		padding: 10px;
-		border-radius: 10px;
-		width: 100%;
-		color: #36393f;
-		display: grid;
-		gap: 1vh;
-		.inline {
-			display: inline-flex;
-			.remove {
-				display: block;
-				cursor: pointer;
-				height: 22px;
-				line-height: 24px;
-				text-align: center;
-				margin: 0 0 0 4px;
-			}
-		}
-		.input {
-			resize: none;
-			padding: 15px;
-			color: white;
-			width: 100%;
-		}
+<style lang='scss'>
+  .content {
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    color: #36393f;
+    display: grid;
+    gap: 1vh;
 
-		.input:focus {
-			outline: rgba(0, 0, 0, 0) solid;
-		}
+    .inline {
+      display: inline-flex;
 
-		.wrapper {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			gap: 1vw;
-		}
-	}
+      .delete {
+        display: block;
+        cursor: pointer;
+        height: 22px;
+        line-height: 24px;
+        text-align: center;
+        margin: 0 0 0 4px;
+      }
+    }
 
-	.card {
-		background-color: transparent;
-		box-shadow: none;
-		border: solid 1px #00000040;
-	}
+    .input {
+      resize: none;
+      padding: 15px;
+      color: white;
+      width: 100%;
+    }
 
-	.holder :global(.test) {
-		box-shadow: none;
-	}
+    .input:focus {
+      outline: rgba(0, 0, 0, 0) solid;
+    }
+
+    .wrapper {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1vw;
+    }
+  }
+
+  .card {
+    background-color: transparent;
+    box-shadow: none;
+    border: solid 1px #00000040;
+  }
+
+  .holder :global(.noshadow) {
+    box-shadow: none;
+  }
 </style>
