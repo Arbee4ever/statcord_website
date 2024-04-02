@@ -18,7 +18,7 @@
 		<a href="https://discord.gg/fHu8AZBrYW" target="_blank" rel="noreferrer">
 			<img src={DiscordLogo} alt="Contact ARBEE over Discord." />
 		</a>
-		<a href="https://twitter.com/0Arbee0" target="_blank" rel="noreferrer">
+		<a href="https://twitter.com/ARBEE_codes" target="_blank" rel="noreferrer">
 			<img src={TwitterLogo} alt="Contact ARBEE over Twitter" />
 		</a>
 		<a href="https://floss.social/@arbee" target="_blank" rel="noreferrer">
