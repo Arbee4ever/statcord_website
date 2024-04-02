@@ -1,148 +1,182 @@
-<svelte:options accessors />
-
-<script lang="ts">
+<script lang='ts'>
 	import StatcordLogo from '$lib/img/statcord_logo.jpg';
 	import { createEventDispatcher } from 'svelte';
-	import Button from '../Button.svelte';
 	import Embed from './Embed.svelte';
-	import AutoGrowTextarea from '../AutoGrowTextarea.svelte';
-	import { scale } from 'svelte/transition';
-	import { clickOutside } from '$lib/script/clickOutside';
+	import AutoresizingTextArea from 'svelte-textarea-autoresize';
+	import AutoGrowTextarea from '$components/input/AutoGrowTextarea.svelte';
+	import { slide } from 'svelte/transition';
 
-	export let value: string;
-	let json: any;
-	let open = false;
+	export let value = {};
 	const dispatch = createEventDispatcher();
 
-	json = JSON.parse(value);
-
-	function handleClick() {
-		open = !open;
+	function onChange() {
+		dispatch('change');
 	}
 
-	function onChange(event) {
-		dispatch('input', {
-			value: event.detail.value,
-			newValue: event.detail.newValue
-		});
-		var a = event.detail.value.split('.'),
-			i;
+	const newEmbed = {
+		'type': 'rich'
+	};
 
-		for (i = 0; i < a.length; i++) {
-			// console.log(json['embeds']);
+	function addEmbed(e) {
+		if (value['embeds'] == undefined) {
+			value['embeds'] = [
+				newEmbed
+			];
+			value = value;
+		} else {
+			value['embeds'].splice(e.detail.index + 1, 0, structuredClone(newEmbed));
+			value = value;
 		}
+	}
+
+	function deleteEmbed(e) {
+		if (value['embeds'] == undefined) return;
+		if (e.detail.index > -1) {
+			value['embeds'].splice(e.detail.index, 1);
+		}
+		if (value['embeds'].length == 0) {
+			value['embeds'] = [
+				structuredClone(newEmbed)
+			];
+		}
+		value = value;
+		dispatch('change');
+	}
+
+	let selectedEditor = 'visual';
+
+	function selectEditor(editor: string) {
+		selectedEditor = editor;
 	}
 </script>
 
-<div>
-	<Button on:click={handleClick}>Open Editor</Button>
-</div>
-{#if open}
-	<div class="holder card" transition:scale use:clickOutside={handleClick}>
-		<div class="close">
-			<Button on:click={handleClick}>✖</Button>
-		</div>
-		<div class="botUser">
-			<img src={StatcordLogo} alt="Statcord Logo" />
-		</div>
-		<div class="content">
-			<div class="name">
-				<p>Statcord</p>
-				<span class="botTag">
-					<svg width="14" height="14" viewBox="0 0 16 16">
-						<path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" fill="currentColor" />
-					</svg>
-					BOT
-				</span>
-			</div>
-			{#if json}
-				<AutoGrowTextarea
-					placeholder="Message content"
-					on:input={onChange}
-					value={json.content}
-					id="content"
-				/>
-				{#each json.embeds as embed, i}
-					<Embed {embed} id={i} on:input={onChange} />
-				{/each}
-			{/if}
-		</div>
+<main transition:slide>
+	<div class='editorSelector {selectedEditor}'>
+		<p class={selectedEditor == "visual"} on:click={() => {selectEditor("visual")}}>Visual Builder</p>
+		<p class={selectedEditor == "json"} on:click={() => {selectEditor("json")}}>JSON</p>
 	</div>
-{/if}
+	{#if selectedEditor === "visual"}
+		<div class='holder card'>
+			<div class='botUser'>
+				<img src={StatcordLogo} alt='Statcord Logo' />
+			</div>
+			<div class='content'>
+				<div class='name'>
+					<p>Statcord</p>
+					<span class='botTag'>
+						<svg width='14' height='14' viewBox='0 0 16 16'>
+							<path d='M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z' fill='currentColor' />
+						</svg>
+						BOT
+					</span>
+				</div>
+				{#if value}
+					<AutoresizingTextArea bind:value={value.content} on:input={onChange} placeholder='Message content' />
+					{#if value.embeds && value.embeds.length != 0}
+						{#each value.embeds as embed, i (embed)}
+							<Embed bind:embed={embed} index={i} on:change={onChange} on:delete={deleteEmbed} on:add={addEmbed} />
+						{/each}
+					{/if}
+				{/if}
+			</div>
+		</div>
+	{:else if selectedEditor === "json"}
+		<div class='holder standalone card'>
+			<AutoGrowTextarea on:input={onChange} bind:value={value} autowrap={false}></AutoGrowTextarea>
+		</div>
+	{/if}
+</main>
 
-<style lang="scss">
-	.holder {
-		z-index: 2;
-		background-color: #36393f;
-		position: fixed;
-		padding: 10px;
-		border-radius: 10px;
-		display: flex;
-		gap: 10px;
-		top: 10vh;
-		left: 20vw;
-		width: 60vw;
-		height: 80vh;
-		.close {
-			position: absolute;
-			right: 10px;
-		}
 
-		@media only screen and (max-width: 1356px) {
-			height: 100vh;
-			width: 100vw;
-			top: 0;
-			left: 0;
-		}
-	}
+<style lang='scss'>
+  .editorSelector {
+    cursor: pointer;
+    display: flex;
+    width: 100%;
 
-	.botUser {
-		display: flex;
-		height: 40px;
-		width: 40px;
+    p {
+      border-radius: 10px 10px 0 0;
+      width: 100%;
+      height: 4vh;
+      text-align: center;
+      line-height: 4vh;
+      background-color: #2f3136;
 
-		img {
-			border-radius: 100%;
-		}
-	}
+      &.true {
+        background-color: #36393f;
+      }
+    }
+  }
 
-	.content {
-		width: 100%;
-		.name {
-			display: flex;
-			margin: 0;
-			color: white;
-			p {
-				font-weight: bold;
-				width: min-content;
-				margin: 0;
-			}
+  .holder {
+    background-color: #36393f;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    box-shadow: none;
+  }
 
-			.botTag {
-				display: flex;
-				-ms-flex-negative: 0;
-				background: #5966f3;
-				border-radius: 3px;
-				color: #fff !important;
-				flex-shrink: 0;
-				font-size: 10px;
-				font-weight: 500;
-				line-height: 16px;
-				margin-left: 6px;
-				padding: 1px 2px 1px 0px;
-				text-transform: uppercase;
-				vertical-align: bottom;
-				height: 14px;
-			}
-		}
+  .botUser {
+    display: flex;
+    height: 40px;
+    width: 40px;
 
-		:global(textarea) {
-			width: 100%;
-			border: none;
-			outline: none;
-			resize: none;
-			background-color: transparent;
-			color: white;
-		}
-	}
+    img {
+      border-radius: 100%;
+    }
+  }
+
+  .content {
+    width: 100%;
+
+    main {
+      position: relative;
+    }
+
+    .name {
+      display: flex;
+      margin: 0;
+      color: white;
+
+      p {
+        font-weight: bold;
+        width: min-content;
+        margin: 0;
+      }
+
+      .botTag {
+        display: flex;
+        background: #5966f3;
+        border-radius: 3px;
+        color: #fff !important;
+        flex-shrink: 0;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 16px;
+        margin-left: 6px;
+        padding: 1px 2px 1px 0;
+        text-transform: uppercase;
+        vertical-align: bottom;
+        height: 14px;
+      }
+    }
+  }
+
+  :global(textarea) {
+    border: none;
+    outline: none;
+    resize: none;
+    background-color: transparent;
+    color: white;
+  }
+
+  .standalone {
+    :global(textarea) {
+      border: #2f3136 solid 3px;
+      background-color: #2f3136;
+      border-radius: 10px;
+    }
+  }
 </style>

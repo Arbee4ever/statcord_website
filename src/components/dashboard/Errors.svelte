@@ -44,7 +44,7 @@
 {/if}
 
 <style lang="scss">
-	:global(.content) {
+	.content {
 		padding: 10px;
 		border-radius: 10px;
 		width: 100%;

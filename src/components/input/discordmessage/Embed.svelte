@@ -1,27 +1,33 @@
-<script lang="ts">
+<script lang='ts'>
 	import AutoGrowTextarea from '$components/input/AutoGrowTextarea.svelte';
 	import DetailsDropdown from './DetailsDropdown.svelte';
-	import Input from '$components/input/Input.svelte';
 	import PlaceholderImg from '$lib/img/image_placeholder.svg';
-	import IconCalendar from '$lib/img/calendar_icon.svg';
 	import IconLink from '$lib/img/link_icon.svg';
 	import { clickOutside } from '$lib/script/clickOutside.js';
 	import { createEventDispatcher } from 'svelte';
+	import { slide } from 'svelte/transition';
+	import Input from '$components/input/Input.svelte';
+	import Author from '$components/input/discordmessage/Author.svelte';
+	import EmbedFooter from '$components/input/discordmessage/EmbedFooter.svelte';
+	import ColorPicker from 'svelte-awesome-color-picker';
 
-	export let embed: any;
-	export let id: any;
+	export let embed: any = [];
+	export let index: number;
 
-	const author = embed.author ? embed.author : {};
 	const fields = embed.fields ? embed.fields : [];
-	fields.push({});
-	const footer = embed.footer ? embed.footer : {};
 
-	let imageUrl: any = embed.image;
-	let thumbnailUrl = embed.thumbnail ? embed.thumbnail.url : '';
-	let authorIconUrl = author.icon_url;
-	let footerIconUrl = footer.icon_url;
+	embed.color = embed.color ? embed.color : '#6F58AC';
+	let color = embed.color
+	embed.thumbnail = embed.thumbnail ? embed.thumbnail : {};
+	embed.image = embed.image ? embed.image : {};
 
-	let color = embed.color ? embed.color : '#6F58AC';
+	let contrastColor = '#FFFFFF';
+
+	if (embed.color && !embed.color.toString().startsWith('#')) {
+		color = embed.color;
+		embed.color = '#' + color.toString(16);
+		contrastColor = invertColor(embed.color);
+	}
 
 	let colorSelectorOpen = false;
 	let colorSelector: HTMLDivElement;
@@ -47,200 +53,250 @@
 		}
 	}
 
-	function onChange(event: { detail: { value: string; newValue: any } }) {
-		dispatch('input', {
-			value: 'embeds[' + id + '].' + event.detail.value,
-			newValue: event.detail.newValue
+	function deleteEmbed() {
+		dispatch('delete', {
+			index: index
 		});
+	}
+
+	function addEmbed() {
+		dispatch('add', {
+			index: index
+		});
+	}
+
+	const onChange = () => {
+		dispatch('change', {
+			index: index
+		});
+	};
+
+	function invertColor(hex) {
+		if (hex.startsWith('#')) {
+			hex = hex.slice(1);
+		}
+		if (hex == '0') {
+			hex = '000000';
+		}
+		// convert 3-digit hex to 6-digits.
+		if (hex.length === 3) {
+			hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+		}
+		if (hex.length <= 0 || hex.length >= 8) {
+			throw new Error('Invalid HEX color.');
+		}
+		// invert color components
+		var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+			g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+			b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+		// pad each with zeros and return
+		return '#' + padZero(r, r.length) + padZero(g, g.length) + padZero(b, b.length);
+	}
+
+	function padZero(str, len) {
+		len = len || 2;
+		var zeros = new Array(len).join('0');
+		return (zeros + str).slice(-len);
 	}
 </script>
 
-<div class="embed" style="--color:{color}">
-	<div class="bar" use:clickOutside={handleClickOutside}>
-		<div class="color closed" bind:this={colorSelector}>
-			<div class="colorSelector">
-				<Input label="Color:" type="color" bind:value={color} id="color" on:input={onChange} />
+<div class='embed' style='--color:{embed.color}' transition:slide|local>
+	<div class='bar' use:clickOutside={handleClickOutside}>
+		<div class='color closed' bind:this={colorSelector}>
+			<div class='colorSelector'>
+				<Input label='Color:' bind:color={contrastColor}>
+					<ColorPicker on:input={onChange} isAlpha={false} bind:hex={embed.color} />
+					<!--<input class='card colorPicker' on:input={onChange} type='color' bind:value={embed.color} />-->
+				</Input>
 			</div>
 		</div>
-		<div class="open" on:mousedown={toggleColorSelector} bind:this={openDiv}>
-			<p class="card" bind:this={arrowButton}>▶</p>
+		<div class='open' on:mousedown={toggleColorSelector} bind:this={openDiv}>
+			<p class='card' bind:this={arrowButton}>▶</p>
 		</div>
 	</div>
-	<div class="content">
-		<div class="thumbnail">
-			<DetailsDropdown height="10vw" placeholderIcon={PlaceholderImg} icon={thumbnailUrl}>
-				<Input
-					label="Thumbnail:"
-					type="url"
-					width="200px"
-					id="thumbnail.url"
-					on:input={onChange}
-					bind:value={thumbnailUrl}
-				/>
+	<div class='content'>
+		<div class='thumbnail'>
+			<DetailsDropdown height='10vw' placeholderIcon={PlaceholderImg} icon={embed.thumbnail.url} border_radius='5%'>
+				<Input label='Thumbnail:'>
+					<input class='card' on:input={onChange} type='url' bind:value={embed.thumbnail.url} />
+				</Input>
 			</DetailsDropdown>
 		</div>
-		<div class="author inline">
-			<DetailsDropdown placeholderIcon={PlaceholderImg} icon={authorIconUrl} border_radius="100%">
-				<Input
-					label="Author Icon Url:"
-					type="url"
-					id="author.icon_url"
-					on:input={onChange}
-					bind:value={authorIconUrl}
-				/>
-			</DetailsDropdown>
+		<Author bind:author={embed.author} on:change={onChange} />
+		<div class='title inline'>
 			<DetailsDropdown icon={IconLink}>
-				<Input label="Author Url:" type="url" id="author.url" on:input={onChange} />
+				<Input label='Url:'>
+					<input class='card' on:input={onChange} type='url' bind:value={embed.url} />
+				</Input>
 			</DetailsDropdown>
-			<AutoGrowTextarea
-				placeholder="Author Name"
-				value={author.name}
-				id="author.name"
-				on:input={onChange}
-			/>
+			<AutoGrowTextarea bind:value={embed.title} on:input={onChange} placeholder='Title'></AutoGrowTextarea>
 		</div>
-		<div class="title inline">
-			<DetailsDropdown icon={IconLink}>
-				<Input label="Url:" type="url" id="url" on:input={onChange} />
-			</DetailsDropdown>
-			<AutoGrowTextarea placeholder="Title" value={embed.title} id="title" on:input={onChange} />
+		<div class='description'>
+			<AutoGrowTextarea bind:value={embed.description} on:input={onChange}
+												placeholder='Description'></AutoGrowTextarea>
 		</div>
-		<div class="description">
-			<AutoGrowTextarea
-				placeholder="Description"
-				id="description"
-				value={embed.description}
-				on:input={onChange}
-			/>
-		</div>
-		<div class="fields">
+		<div class='fields'>
 			{#each fields as { name, value, inline }, i}
-				<div class="inline">
-					<Input type="checkbox" checked={inline} id="fields[{i}].inline" on:input={onChange} />
-					<AutoGrowTextarea
-						placeholder="Field {i + 1} name"
-						id="fields[{i}].name"
-						value={name}
-						on:input={onChange}
-					/>
+				<div class='inline'>
+					<Input>
+						<input class='card' on:input={onChange} type='checkbox' bind:value={inline} />
+					</Input>
+					<AutoGrowTextarea bind:value={name} on:input={onChange} placeholder='Field {i + 1} name'></AutoGrowTextarea>
 				</div>
-				<AutoGrowTextarea
-					placeholder="Field {i + 1} value"
-					id="fields[{i}].value"
-					{value}
-					on:input={onChange}
-				/>
+				<AutoGrowTextarea bind:value={value} on:input={onChange} placeholder='Field {i + 1} value'></AutoGrowTextarea>
 			{/each}
 		</div>
-		<DetailsDropdown height="20vw" placeholderIcon={PlaceholderImg} bind:icon={imageUrl}>
-			<Input
-				label="Imagelink:"
-				type="url"
-				id="image.url"
-				on:input={onChange}
-				bind:value={imageUrl}
-			/>
+		<DetailsDropdown height='20vw' placeholderIcon={PlaceholderImg} bind:icon={embed.image.url} border_radius='2%'>
+			<Input label='Imagelink:'>
+				<input class='card' on:input={onChange} type='url' bind:value={embed.image.url} />
+			</Input>
 		</DetailsDropdown>
-		<div class="inline footer">
-			<DetailsDropdown placeholderIcon={PlaceholderImg} icon={footerIconUrl}>
-				<Input
-					label="Footer Icon Url:"
-					type="url"
-					id="footer.icon_url"
-					on:input={onChange}
-					bind:value={footerIconUrl}
-				/>
-			</DetailsDropdown>
-			<DetailsDropdown icon={IconCalendar}>
-				<Input type="datetime-local" label="Timestamp" id="timestamp" on:input={onChange} />
-			</DetailsDropdown>
-			<AutoGrowTextarea
-				placeholder="Footer Text"
-				value={footer.text}
-				id="footer.text"
-				on:input={onChange}
-			/>
+		<EmbedFooter bind:footer={embed.footer} bind:timestamp={embed.timestamp} on:change={onChange} />
+	</div>
+	<div class='embedControl'>
+		<div class='plusEmbed card' on:click={addEmbed} on:keyup={addEmbed}>
+			<p>+</p>
+		</div>
+		<div class='minusEmbed card' on:click={deleteEmbed} on:keyup={deleteEmbed}>
+			<p>-</p>
 		</div>
 	</div>
 </div>
 
-<style lang="scss">
-	.embed {
-		color: var(--color);
-		display: flex;
-		background-color: #2f3136;
-		border-radius: 10px;
+<style lang='scss'>
+  .embedControl {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 0;
+    right: 0;
 
-		.thumbnail {
-			float: right;
-			right: 20px;
-		}
+    div {
+      cursor: pointer;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      line-height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-		.bar {
-			display: flex;
-		}
+      p {
+        font-size: 30px;
+      }
+    }
+  }
 
-		.color {
-			z-index: 1;
-			width: 200px;
-			overflow: hidden;
-			border-radius: 3px 0 0 3px;
-			background-color: currentColor;
-			transition: all 0.2s ease-in-out;
+  .embed {
+    color: var(--color);
+    display: flex;
+    background-color: #2f3136;
+    border-radius: 3px;
+    position: relative;
+    transition: height .3s ease-in-out;
+    max-height: 100vh;
+    margin-bottom: 1vw;
 
-			.colorSelector {
-				padding: 1vw;
-				display: flex;
-				flex-direction: column;
-				transition: all 0.2s ease-in-out;
-				background-color: currentColor;
-				border-radius: 0 3px 3px 0;
-				height: 100%;
-			}
-		}
+    .deleteEmbed {
+      position: absolute;
+      right: 0;
+    }
 
-		.open {
-			cursor: pointer;
-			opacity: 30%;
-			display: flex;
-			align-items: center;
-			background-color: var(--color);
-			width: fit-content;
-			padding: 0;
-			border-radius: 0 3px 3px 0;
-			transition: opacity 0.2s ease-in-out;
-			transition: all 0.2s ease-in-out;
-		}
+    .thumbnail {
+      float: right;
+      right: 20px;
+    }
 
-		.open p {
-			background-color: transparent;
-			padding: 0;
-			font-size: 15px;
-			border-radius: 0 3px 3px 0;
-			transition: transform 0.2s ease-in-out;
-		}
+    .bar {
+      position: absolute;
+      display: flex;
+      height: 100%;
 
-		.closed {
-			padding: 0vw;
-			width: 4px;
-		}
+      .color {
+        width: 200px;
+        overflow: hidden;
+        border-radius: 3px 0 0 3px;
+        background-color: currentColor;
+        transition: width .3s ease-in-out;
 
-		.content {
-			margin: 1vw;
-			margin-left: 0;
-			width: 100%;
+        .colorSelector {
+          padding: 1vw;
+          display: flex;
+          flex-direction: column;
+          transition: width .3s ease-in-out;
+          background-color: currentColor;
+          border-radius: 0 3px 3px 0;
+          height: 100%;
 
-			.description {
-				width: calc(100% - 11vw);
-			}
+          .colorPicker {
+            padding: 0;
+            background-color: var(--color);
+            border: rgba(0, 0, 0, 0.25) solid;
+            border-radius: 0;
+            height: 100%;
+            width: 100%;
+          }
+        }
 
-			.fields {
-				width: calc(100% - 11vw);
-			}
-		}
+        &.closed {
+          padding: 0;
+          width: 4px;
+        }
+      }
 
-		.inline {
-			display: flex;
-		}
-	}
+      .open {
+        cursor: pointer;
+        opacity: 30%;
+        display: flex;
+        align-items: center;
+        background-color: currentColor;
+        width: fit-content;
+        padding: 0;
+        border-radius: 0 3px 3px 0;
+        transition: width .3s ease-in-out;
+
+        p {
+          background-color: transparent;
+          padding: 0;
+          font-size: 15px;
+          border-radius: 3px;
+          transition: transform .3s ease-in-out;
+        }
+      }
+    }
+
+    .content {
+      padding: 1vw 1vw 1vw 2vw;
+      width: 100%;
+
+      .description {
+        width: calc(100% - 11vw);
+      }
+
+      .fields {
+        width: calc(100% - 11vw);
+      }
+    }
+
+    :global(.inline) {
+      display: flex;
+    }
+  }
+
+  input {
+    resize: none;
+    padding: 15px;
+    color: white;
+    border: none;
+    width: var(--width, 100%);
+  }
+
+  input:focus {
+    outline: rgba(0, 0, 0, 0.25) solid;
+  }
+
+  input[type="checkbox"] {
+    height: 15px;
+    width: 15px;
+  }
 </style>

@@ -31,13 +31,13 @@ export async function load({ cookies, params }) {
 		throw redirect(302, '/');
 	}
 
-	const configReq = await fetch(env.STATCORD_API_URL + '/guilds/' + params.guildId + '/config', {
+	const configReq = await fetch(`${env.STATCORD_API_URL}/guilds/${params.guildId}/config`, {
 		headers: { Authorization: `${env.DISCORD_AUTH}` }
 	});
 	if (configReq.status != 200) {
 		throw redirect(302, '/');
 	}
-	const configResp = configReq.json();
+	const configResp = await configReq.json();
 
 	const rolesReq = await fetch('https://discord.com/api/guilds/' + params.guildId + '/roles', {
 		headers: { Authorization: `${env.DISCORD_AUTH}` }
@@ -45,7 +45,7 @@ export async function load({ cookies, params }) {
 	if (rolesReq.status != 200) {
 		throw redirect(302, '/');
 	}
-	const rolesResp = rolesReq.json();
+	const rolesResp = await rolesReq.json();
 
 	return {
 		user: user,
