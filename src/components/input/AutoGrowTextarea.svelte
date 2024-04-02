@@ -1,28 +1,62 @@
-<script lang="ts">
-	import { createEventDispatcher } from "svelte";
+<script lang='ts'>
+	import { createEventDispatcher } from 'svelte';
 	import { autoresize } from 'svelte-textarea-autoresize';
 
-
-	export let value = '';
-	export let id: string
+	export let autowrap: boolean = true;
+	export let value;
+	let localValue = '';
 	export let placeholder = '';
-	let textarea: HTMLTextAreaElement;
 	const dispatch = createEventDispatcher();
 
+	let errorDisplay: HTMLParagraphElement;
+
+	if (typeof value == 'object') {
+		localValue = JSON.stringify(value, null, 2);
+	}
+
+	function init() {
+		if (value == undefined) {
+			value = '';
+		}
+	}
+
 	function onInput() {
-		dispatch('input', {
-			value: id,
-			newValue: textarea.value
-		});
+		if (localValue != '') {
+			try {
+				errorDisplay.textContent = '';
+				value = JSON.parse(localValue);
+			} catch (e) {
+				errorDisplay.textContent = e;
+			} finally {
+				dispatch('input');
+			}
+		}
+		dispatch('input');
 	}
 </script>
 
-<textarea use:autoresize bind:value bind:this={textarea} {placeholder} on:input={onInput} />
+<div style='--auto-wrap: {autowrap ? "initial" : "pre"}'>
+	{#if localValue === ""}
+		<textarea use:autoresize bind:value {placeholder} on:click={init} on:input={onInput} />
+	{:else}
+		<textarea use:autoresize bind:value={localValue} {placeholder} on:click={init} on:input={onInput} />
+		<p class='error' bind:this={errorDisplay}></p>
+	{/if}
+</div>
 
-<style>
-	textarea {
-		resize: none;
-		overflow-x: scroll;
-		overflow: hidden;
-	}
+<style lang='scss'>
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+      resize: none;
+      white-space: var(--auto-wrap);
+    }
+
+    p {
+      color: red;
+    }
+  }
 </style>

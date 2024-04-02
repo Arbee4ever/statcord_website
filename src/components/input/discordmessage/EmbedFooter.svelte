@@ -1,12 +1,14 @@
-<script>
+<script lang='ts'>
 	import PlaceholderImg from '$lib/img/image_placeholder_round.svg';
-	import IconLink from '$lib/img/link_icon.svg';
+	import IconCalendar from '$lib/img/calendar_icon.svg';
 	import DetailsDropdown from '$components/input/discordmessage/DetailsDropdown.svelte';
 	import Input from '$components/input/Input.svelte';
 	import AutoGrowTextarea from '$components/input/AutoGrowTextarea.svelte';
 	import { createEventDispatcher } from 'svelte';
 
-	export let author = {};
+	export let footer = {};
+
+	export let timestamp;
 
 	const dispatch = createEventDispatcher();
 	const onChange = () => {
@@ -14,25 +16,21 @@
 	};
 </script>
 
-<div class='author inline'>
-	<DetailsDropdown placeholderIcon={PlaceholderImg} icon={author?.icon_url} border_radius='100%'>
-		<Input label='Author Icon Url:'>
-			<input class='card' on:input={onChange} type='url' bind:value={author.icon_url} />
+<div class='inline footer'>
+	<DetailsDropdown placeholderIcon={PlaceholderImg} icon={footer?.icon_url} border_radius='100%'>
+		<Input label='Footer Icon Url:'>
+			<input class='card' on:input={onChange} bind:value={footer.icon_url} type='url' />
 		</Input>
 	</DetailsDropdown>
-	<DetailsDropdown icon={IconLink}>
-		<Input label='Author Url:'>
-			<input class='card' on:input={onChange} type='url' bind:value={author.url} />
+	<DetailsDropdown icon={IconCalendar}>
+		<Input label='Timestamp:'>
+			<input class='card' on:input={onChange} type='datetime-local' bind:value={timestamp} />
 		</Input>
 	</DetailsDropdown>
-	<AutoGrowTextarea bind:value={author.name} on:input={onChange} placeholder='Author name'></AutoGrowTextarea>
+	<AutoGrowTextarea on:input={onChange} bind:value={footer.text} placeholder='Footer Text'></AutoGrowTextarea>
 </div>
 
 <style lang='scss'>
-  .inline {
-    display: flex;
-  }
-
   input {
     resize: none;
     padding: 15px;

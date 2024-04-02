@@ -5,7 +5,7 @@
 	export let placeholderIcon = '';
 	export let icon: any;
 	export let height = '15px';
-	export let border_radius = '4px';
+	export let border_radius = '0';
 	let expanded = false;
 	let details: HTMLDivElement;
 	let overflow = '0px';
@@ -67,24 +67,18 @@
 		}
 
 		.details {
-			z-index: 1;
 			background-color: currentColor;
 			position: absolute;
+			z-index: 100;
 			transform: translateX(var(--overflow));
-			max-width: 30vw;
 			width: max-content;
-			display: grid;
-			gap: 1vh;
 		}
 
 		.content {
 			z-index: 1;
 			display: flex;
-			max-width: 15vw;
-			max-height: 10vh;
 			flex-wrap: wrap;
 			gap: 1vh;
-			overflow: scroll;
 		}
 	}
 </style>
