@@ -6,7 +6,7 @@
 	import User from '$components/index/User.svelte';
 	import GuildInfo from '$components/index/GuildInfo.svelte';
 	import { env } from '$env/dynamic/public';
-	import Conversionvalues from '$components/dashboard/Conversionvalues.svelte';
+	import Values from '$components/dashboard/Values.svelte';
 	import Data from '$components/dashboard/Data.svelte';
 	import Roles from '$components/dashboard/Roles.svelte';
 	import Errors from '$components/dashboard/Errors.svelte';
@@ -78,6 +78,16 @@
 	function toggleTabs() {
 		showTabs = !showTabs;
 	}
+
+	const categories = {
+		values: { readable: 'Values', component: Values },
+		messages: { readable: 'Messages', component: Messages },
+		data: { readable: 'Data', component: Data },
+		roles: { readable: 'Roles', component: Roles },
+		/*TODO: Add back when better Permissions System is done!*/
+		/*auth: { readable: 'Auth', component: Auth },*/
+		errors: { readable: 'Errors', component: Errors }
+	};
 </script>
 
 <svelte:head>
@@ -103,57 +113,26 @@
 			{/if}
 			{#if vpw > 500 || showTabs}
 				<div class='selectorHolder'>
-					<a
-						href='values'
-						on:mousedown={() => updateCategory('values')}
-						class='card categorySelector'
-					>
-						Values
-					</a>
-					<a
-						href='messages'
-						on:mousedown={() => updateCategory('messages')}
-						class='card categorySelector'
-					>
-						Messages
-					</a>
-					<a href='data' on:mousedown={() => updateCategory('data')} class='card categorySelector'>
-						Data
-					</a>
-					<a
-						href='roles'
-						on:mousedown={() => updateCategory('roles')}
-						class='card categorySelector'
-					>
-						Roles
-					</a>
-					<a
-						href='errors'
-						on:mousedown={() => updateCategory('errors')}
-						class='card categorySelector'
-					>
-						Errors
-					</a>
-					<!--TODO: Add back when better Permissions System is done!-->
-					<!--<a href="auth" on:mousedown={() => updateCategory('auth')} class="card categorySelector">
-						Auth
-					</a>-->
+					{#each Object.entries(categories) as [url, cat]}
+						<a
+							href='./{url}'
+							on:mousedown={() => updateCategory(url)}
+							class='card categorySelector'
+						>
+							{cat.readable}
+						</a>
+					{/each}
 				</div>
 				<div class='card categoryHolder'>
 					{#key tab}
 						{#key config}
-							{#if tab === 'values'}
-								<Conversionvalues bind:category on:change={onChange} />
-							{:else if tab === 'messages'}
-								<Messages bind:category on:change={onChange} />
-							{:else if tab === 'data'}
-								<Data bind:category on:change={onChange} />
-							{:else if tab === 'roles'}
-								<Roles bind:category on:change={onChange} />
-								<!--{:else if tab === 'auth'}
-									<Auth bind:category on:change={onChange} />-->
-							{:else if tab === 'errors'}
-								<Errors bind:category on:change={onChange} />
+							{#if categories[tab] != null}
+								<svelte:component
+									this={categories[tab].component}
+									bind:category
+									on:change={onChange}
+								>
+								</svelte:component>
 							{:else}
 								<p>Nothing here yet!</p>
 							{/if}

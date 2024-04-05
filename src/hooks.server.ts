@@ -9,7 +9,7 @@ export async function handle({ event, resolve }) {
 	event.locals.disco_refresh_token = refresh_token;
 
 	if (refresh_token && !access_token) {
-		const discord_request = await fetch(event.url.origin + '/api/refresh?code=' + refresh_token);
+		const discord_request = await fetch(`${event.url.origin}/api/refresh?code=${refresh_token}`);
 		if (discord_request.status !== 200) {
 			return await resolve(event);
 		}

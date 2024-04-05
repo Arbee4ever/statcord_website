@@ -3,7 +3,6 @@
 	import arrowDownIcon from '$lib/img/arrowDownIcon.svg';
 	import Messagebuilder from '$components/input/discordmessage/Messagebuilder.svelte';
 	import { createEventDispatcher } from 'svelte';
-	import { slide } from 'svelte/transition';
 
 	export let message;
 	export let category;
@@ -33,7 +32,7 @@
 	}
 </script>
 
-<div class='content card' transition:slide>
+<div class='content card'>
 	<div class='inline'>
 		{#if defaultMsg}
 			<p class='input test'>{message.name}</p>

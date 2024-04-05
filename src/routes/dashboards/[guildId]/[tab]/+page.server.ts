@@ -16,30 +16,32 @@ export async function load({ cookies, params }) {
 
 	const user = await userReq.json();
 
-	const guildReq = await fetch(
-		env.STATCORD_API_URL + '/guilds/' + params.guildId + '?user=' + user.id,
-		{
-			headers: { Authorization: `${env.DISCORD_AUTH}` },
-			method: 'GET'
-		}
-	);
+	const guildReq = await fetch(`${env.STATCORD_API_URL}/guilds/${params.guildId}`, {
+		headers: {
+			Authorization: `${env.DISCORD_AUTH}`,
+			user: JSON.stringify(user) == null ? "" : JSON.stringify(user)
+		},
+		method: 'GET'
+	});
 	if (guildReq.status != 200) {
 		throw redirect(302, '/');
 	}
 	const guildResp = await guildReq.json();
-	if (!guildResp.moderator) {
+	if (!guildResp.guild.moderator) {
 		throw redirect(302, '/');
 	}
 
 	const configReq = await fetch(`${env.STATCORD_API_URL}/guilds/${params.guildId}/config`, {
-		headers: { Authorization: `${env.DISCORD_AUTH}` }
+		headers: {
+			Authorization: `${env.DISCORD_AUTH}`
+		}
 	});
 	if (configReq.status != 200) {
 		throw redirect(302, '/');
 	}
 	const configResp = await configReq.json();
 
-	const rolesReq = await fetch('https://discord.com/api/guilds/' + params.guildId + '/roles', {
+	const rolesReq = await fetch(`https://discord.com/api/guilds/${params.guildId}/roles`, {
 		headers: { Authorization: `${env.DISCORD_AUTH}` }
 	});
 	if (rolesReq.status != 200) {
