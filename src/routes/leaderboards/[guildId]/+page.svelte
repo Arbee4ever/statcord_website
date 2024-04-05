@@ -38,8 +38,21 @@
 		await fetchData();
 	});
 
+	let innerHeight = 0;
+	let scroll = 0;
+
+	function infiniteScroll() {
+		if (scroll / innerHeight >= 1) {
+			fetchData();
+		}
+		console.log('innerHeight', innerHeight);
+		console.log('scroll', scroll);
+	}
+
 	$: members = [...members, ...newBatch];
 </script>
+
+<svelte:window on:scrollend={infiniteScroll} bind:outerHeight={innerHeight} bind:scrollY={scroll} />
 
 <svelte:head>
 	{#if guild}
@@ -70,9 +83,9 @@
 					/>
 				{/await}
 			{/each}
-			{#if hasMore}
+			<!--{#if hasMore}
 				<Button on:click={fetchData}>Load more</Button>
-			{/if}
+			{/if}-->
 		{:else}
 			<p class='loading'>Please wait, data is loading...</p>
 		{/if}

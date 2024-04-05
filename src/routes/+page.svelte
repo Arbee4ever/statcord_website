@@ -16,13 +16,16 @@
 	onMount(() => loadData());
 
 	async function loadData() {
-		const userId = user ? user.id : '';
 		let guildsReq;
 		try {
-			 guildsReq = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + userId);
+			 guildsReq = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds`, {
+				 headers: {
+					 user: JSON.stringify(user) == null ? "" : JSON.stringify(user)
+				 }
+			 });
 		} catch (err) {
-			console.log("Retrying")
 			setTimeout(async () => {
+				console.log("Retrying")
 				await loadData();
 			}, 5000);
 			return;

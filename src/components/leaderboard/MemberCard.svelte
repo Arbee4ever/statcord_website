@@ -12,7 +12,7 @@
 	};
 
 	onMount(async () => {
-		const discordData = await fetch(env.STATCORD_API_URL + '/user/' + id, {
+		const discordData = await fetch(`${env.STATCORD_API_URL}/user/${id}`, {
 			headers: { Authorization: `${env.DISCORD_AUTH}` },
 			method: 'GET'
 		});

@@ -71,7 +71,7 @@
 					</span>
 				</div>
 				{#if value}
-					<AutoresizingTextArea bind:value={value.content} on:input={onChange} placeholder='Message content' />
+					<AutoresizingTextArea bind:value={value.content} on:input={onChange} placeholder='Message content' style='width: 100%'/>
 					{#if value.embeds && value.embeds.length != 0}
 						{#each value.embeds as embed, i (embed)}
 							<Embed bind:embed={embed} index={i} on:change={onChange} on:delete={deleteEmbed} on:add={addEmbed} />

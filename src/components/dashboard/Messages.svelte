@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import Button from '$components/input/Button.svelte';
-	import { slide } from 'svelte/transition';
 	import Message from '$components/input/discordmessage/Message.svelte';
 	import Input from '$components/input/Input.svelte';
 
@@ -33,22 +31,22 @@
 </script>
 
 <Input label="Default Messages">
-	{#each category.default_messages as message, i}
+	{#each Object.values(category.default_messages) as message, i}
 		<Message bind:message {category} index={i} on:change={onChange} defaultMsg={true} />
 	{/each}
 </Input>
 <Input label="Custom Messages">
-	{#if category.messages.length !== 0}
+	{#if Object.values(category.messages).length !== 0}
 		{#each category.messages as message, i}
 			<Message bind:message {category} index={i} on:change={onChange} on:delete={onDelete} />
 		{/each}
 	{:else}
-		<div class="card content" transition:slide>
+		<div class="card content">
 			<p>Check back later!</p>
 		</div>
 	{/if}
 </Input>
-<!--<span class="holder" transition:slide>
+<!--<span class="holder">
 	<Button class="noshadow" width="100%" on:click={handleClick}>Add Custom Message</Button>
 </span>-->
 

@@ -4,7 +4,6 @@
 	import XIcon from '$lib/img/xIcon.svg';
 	import { createEventDispatcher } from 'svelte';
 	import SelectorDropdown from '$components/input/SelectorDropdown.svelte';
-	import { slide } from 'svelte/transition';
 
 	export let category: any;
 	const dispatch = createEventDispatcher();
@@ -41,7 +40,7 @@
 
 {#if category.roles.length !== 0}
 	{#each category.roles as role, i}
-		<div class='content card' transition:slide>
+		<div class='content card'>
 			<div class='inline'>
 				<input
 					class='input card'
@@ -74,11 +73,11 @@
 		</div>
 	{/each}
 {:else}
-	<div class='card content' transition:slide>
+	<div class='card content'>
 		<p>Nothing here yet!</p>
 	</div>
 {/if}
-<span class='holder' transition:slide>
+<span class='holder'>
 	<Button class='noshadow' width='100%' on:click={handleClick}>Add Role</Button>
 </span>
 
