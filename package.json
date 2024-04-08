@@ -40,7 +40,7 @@
 		"canvas-constructor": "^7.0.1",
 		"cookie": "^0.6.0",
 		"discord-markdown": "^2.5.1",
-		"svelte-awesome-color-picker": "^2.4.8",
+		"svelte-awesome-color-picker": "^3.0.6",
 		"svelte-countup": "^0.2.6",
 		"svelte-textarea-autoresize": "^1.0.0"
 	}
