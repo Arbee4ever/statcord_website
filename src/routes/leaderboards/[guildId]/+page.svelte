@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import GuildInfo from '$components/index/GuildInfo.svelte';
 	import User from '$components/index/User.svelte';
+	import Button from '$components/input/Button.svelte'
 
 	import { onMount } from 'svelte';
 	import { env } from '$env/dynamic/public';

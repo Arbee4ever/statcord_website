@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang='ts'>
 	import PlaceholderImg from '$lib/img/icon_clyde_circle_white.svg';
 	import DetailsDropdown from '$components/input/discordmessage/DetailsDropdown.svelte';
 
@@ -13,36 +13,40 @@
 	}
 </script>
 
-<div id="user">
+<div id='user'>
 	{#if user}
-		<DetailsDropdown icon={pfp} height="5vh">
-			<span class="wrapper">
-				<h1>{user.username}#{user.discriminator}</h1>
-				<a href="/api/signout" class="signout">Sign out </a>
+		<DetailsDropdown icon={pfp} height='5vh'>
+			<span class='wrapper'>
+				<h1>{user.global_name}
+					{#if user.discriminator !== "0"}
+						#{user.discriminator}
+						{/if}
+				</h1>
+				<a href='/api/signout' class='signout'>Sign out </a>
 			</span>
 		</DetailsDropdown>
 	{:else}
-		<DetailsDropdown icon={pfp} height="5vh">
-			<a href="/api/auth" class="signout">Log in </a>
+		<DetailsDropdown icon={pfp} height='5vh'>
+			<a href='/api/auth' class='signout'>Log in </a>
 		</DetailsDropdown>
 	{/if}
 </div>
 
 <style>
-	#user {
-		position: fixed;
-		z-index: 2;
-		left: 3vh;
-		top: 3vh;
-		color: rgba(0, 0, 0, 0.25);
-	}
+    #user {
+        position: fixed;
+        z-index: 2;
+        left: 3vh;
+        top: 3vh;
+        color: rgba(0, 0, 0, 0.25);
+    }
 
-	#user h1 {
-		font-size: 2vh;
-		white-space: nowrap;
-	}
+    #user h1 {
+        font-size: 2vh;
+        white-space: nowrap;
+    }
 
-	#user a {
-		white-space: nowrap;
-	}
+    #user a {
+        white-space: nowrap;
+    }
 </style>
