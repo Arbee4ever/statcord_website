@@ -8,81 +8,81 @@
 	import MailIcon from '$lib/img/MailLogoWhite.svg';
 </script>
 
-<footer id="footer">
+<footer id='footer'>
 	<img src={ArbeeWordImageMark} alt="ARBEE's Word-Imagemark." />
 	<br />
-	<div id="footercontact">
-		<a href="https://ko-fi.com/arbee" target="_blank" rel="noreferrer">
-			<img src={KoFiLogo} alt="Support me on Ko-fi!" />
+	<div id='footercontact'>
+		<a href='https://ko-fi.com/arbee' target='_blank' rel='noreferrer'>
+			<img src={KoFiLogo} alt='Support me on Ko-fi!' />
 		</a>
-		<a href="https://discord.gg/fHu8AZBrYW" target="_blank" rel="noreferrer">
-			<img src={DiscordLogo} alt="Contact ARBEE over Discord." />
+		<a href='https://discord.gg/fHu8AZBrYW' target='_blank' rel='noreferrer'>
+			<img src={DiscordLogo} alt='Contact ARBEE over Discord.' />
 		</a>
-		<a href="https://twitter.com/ARBEE_codes" target="_blank" rel="noreferrer">
-			<img src={TwitterLogo} alt="Contact ARBEE over Twitter" />
+		<a href='https://twitter.com/ARBEE_codes' target='_blank' rel='noreferrer'>
+			<img src={TwitterLogo} alt='Contact ARBEE over Twitter' />
 		</a>
-		<a href="https://floss.social/@arbee" target="_blank" rel="noreferrer">
-			<img src={MastodonLogo} alt="Contact ARBEE over Mastodon" />
+		<a href='https://floss.social/@arbee' target='_blank' rel='noreferrer'>
+			<img src={MastodonLogo} alt='Contact ARBEE over Mastodon' />
 		</a>
-		<a href="https://github.com/Arbee4ever" target="_blank" rel="noreferrer">
-			<img src={GitHubLogo} alt="Contact ARBEE over GitHub." />
+		<a href='https://github.com/Arbee4ever' target='_blank' rel='noreferrer'>
+			<img src={GitHubLogo} alt='Contact ARBEE over GitHub.' />
 		</a>
 		<a
-			href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;%61%72%62%65%65%40%61%72%62%65%65%63%6F%2E%64%65?subject=Contact-Website&body=Hello%20ARBEE%2C"
+			href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;%61%72%62%65%65%40%61%72%62%65%65%63%6F%2E%64%65?subject=Contact-Website&body=Hello%20ARBEE%2C'
 		>
-			<img src={MailIcon} alt="Contact ARBEE over eMail." />
+			<img src={MailIcon} alt='Contact ARBEE over eMail.' />
 		</a>
 	</div>
 	<p>
-		Check <a href="https://status.arbeeco.de/" target="_blank" rel="noreferrer">here</a> if Statcord
+		Check <a href='https://status.arbeeco.de/' target='_blank' rel='noreferrer'>here</a> if Statcord
 		is down.
 	</p>
 	<p>
-		Hosted on <a href="https://pages.cloudflare.com" target="_blank" rel="noreferrer">Cloudflare</a
-		> and <a href="https://dashserv.io/a/statcordvserver" target="_blank" rel="noreferrer">dashserv</a>, domain from
-		<a href="https://dashserv.io/a/statcord" target="_blank" rel="noreferrer">dashserv</a>.
+		Hosted on <a href='https://pages.cloudflare.com' target='_blank' rel='noreferrer'>Cloudflare</a
+	> and <a href='https://dashserv.io/a/statcordvserver' target='_blank' rel='noreferrer'>dashserv</a>, domain from
+		<a href='https://dashserv.io/a/statcord' target='_blank' rel='noreferrer'>dashserv</a>.
 	</p>
 	<p>
 		Brand design by <a
-			href="https://www.instagram.com/ralfbaenecke/"
-			target="_blank"
-			rel="noreferrer">ralf baenecke</a
-		>.
+		href='https://www.instagram.com/ralfbaenecke/'
+		target='_blank'
+		rel='noreferrer'>ralf baenecke</a
+	>.
 	</p>
 	<p>© 2022 ARBEE</p>
 </footer>
 
 <style>
-	#footer {
-		margin-top: 1vh;
-		text-align: center;
-		background-color: #000000c2;
-		padding: 5vh;
-	}
+    #footer {
+        margin-top: 1vh;
+        text-align: center;
+        background-color: #000000c2;
+        padding: 5vh;
+    }
 
-	#footer p {
-		margin-bottom: 10px;
-	}
+    #footer p {
+        margin-bottom: 10px;
+    }
 
-	#footer a {
-		color: #00bfff;
-	}
+    #footer a {
+        color: #00bfff;
+    }
 
-	#footer img {
-		margin-bottom: 50px;
-		vertical-align: middle;
-		height: 4vh;
-	}
+    #footer img {
+        margin-bottom: 50px;
+        vertical-align: middle;
+        height: 4vh;
+    }
 
-	#footercontact img {
-		opacity: 0.75;
-		margin-right: 5px;
-		margin-left: 5px;
-	}
+    #footercontact img {
+        opacity: 0.75;
+        margin-right: 5px;
+        margin-left: 5px;
+    }
 
-	a,
-	p {
-		color: White;
-		text-decoration: none;
-	}
+    a,
+    p {
+        color: White;
+        text-decoration: none;
+    }
 </style>
