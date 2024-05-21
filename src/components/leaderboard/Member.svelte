@@ -17,7 +17,6 @@
 	for (let i = 0; i < texthistory.length; i++) {
 		let val = history[i];
 		history.push(val + (isNaN(voicehistory[i]) ? 0 : voicehistory[i]) + (isNaN(texthistory[i]) ? 0 : texthistory[i]));
-		console.log(history)
 	}
 
 	let options = {
