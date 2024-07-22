@@ -30,12 +30,12 @@
 	}
 </script>
 
-<Input label="Default Messages">
+<Input label="">
 	{#each Object.values(category.default_messages) as message, i}
 		<Message bind:message {category} index={i} on:change={onChange} defaultMsg={true} />
 	{/each}
 </Input>
-<Input label="Custom Messages">
+<!--<Input label="Custom Messages">
 	{#if Object.values(category.messages).length !== 0}
 		{#each category.messages as message, i}
 			<Message bind:message {category} index={i} on:change={onChange} on:delete={onDelete} />
@@ -45,7 +45,7 @@
 			<p>Check back later!</p>
 		</div>
 	{/if}
-</Input>
+</Input>-->
 <!--<span class="holder">
 	<Button class="noshadow" width="100%" on:click={handleClick}>Add Custom Message</Button>
 </span>-->
