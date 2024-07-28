@@ -63,7 +63,7 @@
 	async function save() {
 		let req = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guildId}/${tab}`, {
 			headers: {
-				Authorization: `${config['auth']['token']}`
+				Authorization: `${config.auth.token}`
 			},
 			method: 'PATCH',
 			body: JSON.stringify(category)
@@ -111,13 +111,13 @@
 						Values
 					</a>
 					<!--TODO: Add back when Message Customization System is done!-->
-					<!--<a
+					<a
 						href='messages'
 						on:mousedown={() => updateCategory('messages')}
 						class='card categorySelector'
 					>
 						Messages
-					</a>-->
+					</a>
 					<a href='data' on:mousedown={() => updateCategory('data')} class='card categorySelector'>
 						Data
 					</a>
@@ -145,8 +145,8 @@
 						{#key config}
 							{#if tab === 'values'}
 								<Conversionvalues bind:category on:change={onChange} />
-							<!--{:else if tab === 'messages'}
-								<Messages bind:category on:change={onChange} />-->
+							{:else if tab === 'messages'}
+								<Messages bind:category on:change={onChange} />
 							{:else if tab === 'data'}
 								<Data bind:category on:change={onChange} />
 							{:else if tab === 'roles'}

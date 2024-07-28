@@ -16,13 +16,16 @@
 	onMount(() => loadData());
 
 	async function loadData() {
-		const userId = user ? user.id : '';
 		let guildsReq;
 		try {
-			 guildsReq = await fetch(env.PUBLIC_STATCORD_API_URL + '/guilds?user=' + userId);
+			guildsReq = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds?user=${user.id}`, {
+				headers: {
+					user: JSON.stringify(user) == null ? "" : JSON.stringify(user)
+				}
+			});
 		} catch (err) {
-			console.log("Retrying")
 			setTimeout(async () => {
+				console.log("Retrying")
 				await loadData();
 			}, 5000);
 			return;
@@ -195,6 +198,6 @@
         align-items: center;
         min-width: 30vw;
         height: 30vh;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 </style>

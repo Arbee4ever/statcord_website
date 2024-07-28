@@ -1,18 +1,19 @@
-<script lang="ts">
-    import {page} from '$app/stores';
-    import {onMount} from 'svelte';
+<script lang='ts'>
+    import { page } from '$app/stores';
+    import { onMount } from 'svelte';
     import DiscordButton from '$components/input/DiscordButton.svelte';
     import Button from '$components/input/Button.svelte';
     import GuildsDropdown from '$components/index/GuildsDropdown.svelte';
-    import {env} from '$env/dynamic/public';
+    import { env } from '$env/dynamic/public';
 
     export let user: any;
+    export let sticky: boolean = true;
     let guild: any;
     let data;
     let moderator: boolean;
     let error: string;
     let other_guilds: any;
-    let guildId = $page.params.guildId;
+    let guildId = $page.params.guildId || $page.url.searchParams.get("guildId");
 
     onMount(async () => {
         data = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guildId}`, {
@@ -28,6 +29,9 @@
         }
         if (user != null) {
             data = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds?user=${user.id}`, {
+                headers: {
+                    user: JSON.stringify(user) == null ? "" : JSON.stringify(user)
+                },
                 method: 'GET'
             });
             if (data.status == 200) {
@@ -45,10 +49,14 @@
             other_guilds = [];
         }
 
-        const req = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guild.id}?user=${user.id}`);
+        const req = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds/${guild.id}?user=${user.id}`, {
+            headers: {
+                user: JSON.stringify(user) == null ? "" : JSON.stringify(user)
+            }
+        });
         if (req.status == 200) {
             const reqJson = await req.json();
-            moderator = reqJson.moderator;
+            moderator = reqJson.guild.moderator ?? reqJson.moderator;
         }
     });
 
@@ -60,63 +68,63 @@
     }
 </script>
 
-<div class="guildInfo">
-    <div class="card">
+<div class='botInfo' class:sticky={sticky}>
+    <div class='card'>
         {#if guild}
             {#if guild.banner}
                 <img
-                        class="guildBanner"
-                        src="https://cdn.discordapp.com/banners/{guild.id}/{guild.banner}"
-                        alt="Guild Banner"
+                  class='guildBanner'
+                  src='https://cdn.discordapp.com/banners/{guild.id}/{guild.banner}?size=4096'
+                  alt='Guild Banner'
                 />
             {/if}
-            <GuildsDropdown {guild} {other_guilds}/>
+            <GuildsDropdown {guild} {other_guilds} />
             {#if guild.description}
-                <p class="card guildDescription">{guild.description}</p>
+                <p class='card guildDescription'>{guild.description}</p>
             {/if}
-            <div class="card infoOther">
+            <div class='card infoOther'>
                 <p>{guild.membercount} Members</p>
                 <p>{guild.rolecount} Roles</p>
                 <p>{guild.textcount} Textchannels</p>
                 <p>{guild.voicecount} Voicechannels</p>
             </div>
             {#if moderator}
-                <Button url="/{other[0]}/{guild.id}" width="100%">Go to {other[1]}</Button>
+                <Button url='/{other[0]}/{guild.id}' width='100%'>Go to {other[1]}</Button>
             {/if}
         {:else if error === '404'}
-            <div class="loading">
+            <div class='loading'>
                 <p>Statcord is not on this Server!</p>
-                <br/>
+                <br />
                 <DiscordButton
-                        --margin="0"
-                        url="https://discord.com/api/oauth2/authorize?client_id=959915020152627271&permissions=1515318660160&scope=bot&guild_id={guildId}"
+                  --margin='0'
+                  url='https://discord.com/api/oauth2/authorize?client_id=959915020152627271&permissions=1515318660160&scope=bot&guild_id={guildId}'
                 >
                     Add to Discord
                 </DiscordButton>
             </div>
         {:else if error != null}
-            <div class="loading">
+            <div class='loading'>
                 <p>{error}</p>
             </div>
         {:else}
-            <p class="loading">Please wait, data is loading...</p>
+            <p class='loading'>Please wait, data is loading...</p>
         {/if}
     </div>
 
-    <div class="adsbygoogleWrapper">
+    <div class='adsbygoogleWrapper'>
         <script
-                async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695"
-                crossorigin="anonymous"
+          async
+          src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1252158636066695'
+          crossorigin='anonymous'
         ></script>
         <!-- Under Guildinfo -->
         <ins
-                class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-1252158636066695"
-                data-ad-slot="5674378409"
-                data-ad-format="auto"
-                data-full-width-responsive="true"
+          class='adsbygoogle'
+          style='display:block'
+          data-ad-client='ca-pub-1252158636066695'
+          data-ad-slot='5674378409'
+          data-ad-format='auto'
+          data-full-width-responsive='true'
         />
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
@@ -124,64 +132,68 @@
     </div>
 </div>
 
-<style lang="scss">
-  .guildInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 1vh;
-    position: sticky;
-    align-self: start;
-    top: 2vh;
+<style lang='scss'>
+    .sticky {
+        position: sticky;
+    }
 
-    .card {
-      display: flex;
-      flex-direction: column;
-      gap: 1vh;
-
-      & > * {
-        width: 100%;
-      }
-
-      .guildBanner {
-        width: 100%;
-        border-radius: 10px;
-      }
-
-      .infoOther {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
+    .botInfo {
+        display: flex;
+        flex-direction: column;
         gap: 1vh;
+        align-self: start;
+        top: 2vh;
 
-        p {
-          white-space: nowrap;
+        .card {
+            display: flex;
+            flex-direction: column;
+            gap: 1vh;
+
+            & > * {
+                width: 100%;
+            }
+
+            .guildBanner {
+                width: 100%;
+                border-radius: 10px;
+            }
+
+            .infoOther {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 1vh;
+
+                p {
+                    white-space: nowrap;
+                }
+            }
         }
-      }
-    }
-      .adsbygoogleWrapper {
-          position: relative;
-      }
-  }
 
-  @media only screen and (max-width: 500px) {
-    .guildInfo {
-      width: 100%;
+        .adsbygoogleWrapper {
+            position: relative;
+        }
     }
 
-    .guildBanner {
-      display: none;
-    }
+    @media only screen and (max-width: 500px) {
+        .botInfo {
+            width: 100%;
+        }
 
-    .guildDescription {
-      display: none;
-    }
+        .guildBanner {
+            display: none;
+        }
 
-    .infoOther {
-      display: none;
-    }
+        .guildDescription {
+            display: none;
+        }
 
-    .adsbygoogleWrapper {
-      display: none;
+        .infoOther {
+            display: none;
+        }
+
+        .adsbygoogleWrapper {
+            display: none;
+        }
     }
-  }
 </style>

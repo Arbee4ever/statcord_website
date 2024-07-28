@@ -29,7 +29,7 @@
 					{#each other_guilds as el}
 						<a
 							class="elements card"
-							href={$page.url.pathname.replace($page.params.guildId, el.id)}
+							href={$page.url.toString().replace($page.params.guildId, el.id)}
 							target="_self"
 							transition:slide
 						>
