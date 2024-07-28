@@ -214,12 +214,13 @@
 			}
 
 			.iconWrapper {
-				:global(img) {
-					height: 15px;
-				}
 				height: 100%;
 				margin: 0 0 0 4px;
 				color: #292b2f;
+
+        :global(img) {
+          height: 15px;
+        }
 			}
 		}
 	}

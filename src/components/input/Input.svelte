@@ -14,7 +14,6 @@
 
 <style lang='scss'>
   .holder {
-    z-index: 200;
     align-items: center;
     height: fit-content;
     color: var(--color);

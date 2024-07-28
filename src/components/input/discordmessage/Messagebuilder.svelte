@@ -25,6 +25,7 @@
 			value = value;
 		} else {
 			value['embeds'].splice(e.detail.index + 1, 0, structuredClone(newEmbed));
+			console.log('value', value['embeds']);
 			value = value;
 		}
 	}
