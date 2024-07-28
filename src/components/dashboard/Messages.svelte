@@ -8,6 +8,7 @@
 	export let category: any;
 	const dispatch = createEventDispatcher();
 
+	console.log('category.messages', Object.values(category.default_messages));
 	function onChange() {
 		dispatch('change');
 	}
@@ -33,13 +34,13 @@
 </script>
 
 <Input label="Default Messages">
-	{#each category.default_messages as message, i}
+	{#each Object.values(category.default_messages) as message, i}
 		<Message bind:message {category} index={i} on:change={onChange} defaultMsg={true} />
 	{/each}
 </Input>
-<Input label="Custom Messages">
-	{#if category.messages.length !== 0}
-		{#each category.messages as message, i}
+<!--<Input label="Custom Messages">
+	{#if category.messages.length != 0}
+		{#each Object.values(category.messages) as message, i}
 			<Message bind:message {category} index={i} on:change={onChange} on:delete={onDelete} />
 		{/each}
 	{:else}
@@ -47,7 +48,7 @@
 			<p>Check back later!</p>
 		</div>
 	{/if}
-</Input>
+</Input>-->
 <!--<span class="holder" transition:slide>
 	<Button class="noshadow" width="100%" on:click={handleClick}>Add Custom Message</Button>
 </span>-->

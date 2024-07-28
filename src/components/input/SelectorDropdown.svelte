@@ -86,7 +86,7 @@
 					{#if option.icon}
 						<img
 							class="optionIcon"
-							src="https://cdn.discordapp.com/role-icons/{option.id}/{option.icon}.png"
+							src="https://cdn.discordapp.com/role-icons/{option.id}/{option.icon}"
 							alt="Role Icon"
 						/>
 					{/if}
@@ -109,7 +109,7 @@
 				{#if option.icon}
 					<img
 						class="optionIcon"
-						src="https://cdn.discordapp.com/role-icons/{option.id}/{option.icon}.png"
+						src="https://cdn.discordapp.com/role-icons/{option.id}/{option.icon}"
 						alt="Role Icon"
 					/>
 				{/if}

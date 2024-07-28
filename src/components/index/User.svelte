@@ -1,13 +1,14 @@
 <script lang='ts'>
 	import PlaceholderImg from '$lib/img/icon_clyde_circle_white.svg';
 	import DetailsDropdown from '$components/input/discordmessage/DetailsDropdown.svelte';
+	import { env } from '$env/dynamic/public';
 
 	export let user: any;
 
 	let pfp: any;
 
 	if (user != null) {
-		pfp = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+		pfp = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`;
 	} else {
 		pfp = PlaceholderImg;
 	}
@@ -22,7 +23,13 @@
 						#{user.discriminator}
 						{/if}
 				</h1>
-				<a href='/api/signout' class='signout'>Sign out </a>
+				{#if user.id === env.PUBLIC_ADMIN_ID}
+					<br>
+					<a href='/admin' class='signout'>Admin</a>
+					<br>
+					<br>
+				{/if}
+				<a href='/api/signout' class='signout'>Sign out</a>
 			</span>
 		</DetailsDropdown>
 	{:else}
