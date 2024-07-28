@@ -16,17 +16,18 @@
 
 	const fields = embed.fields ? embed.fields : [];
 
-	embed.color = embed.color ? embed.color : '#6F58AC';
-	let color = embed.color
+	embed.color = embed.color == "0" ? '#000000' : embed.color;
 	embed.thumbnail = embed.thumbnail ? embed.thumbnail : {};
 	embed.image = embed.image ? embed.image : {};
 
 	let contrastColor = '#FFFFFF';
 
 	if (embed.color && !embed.color.toString().startsWith('#')) {
-		color = embed.color;
-		embed.color = '#' + color.toString(16);
+		embed.color = '#' + embed.color.toString(16);
+		console.log('color', embed.color);
 		contrastColor = invertColor(embed.color);
+	} else if (!embed.color) {
+		embed.color = "#6F58AC"
 	}
 
 	let colorSelectorOpen = false;
@@ -66,6 +67,7 @@
 	}
 
 	const onChange = () => {
+		contrastColor = invertColor(embed.color);
 		dispatch('change', {
 			index: index
 		});
@@ -105,7 +107,7 @@
 		<div class='color closed' bind:this={colorSelector}>
 			<div class='colorSelector'>
 				<Input label='Color:' bind:color={contrastColor}>
-					<ColorPicker on:input={onChange} isAlpha={false} bind:hex={embed.color} />
+					<ColorPicker on:input={onChange} isAlpha bind:hex={embed.color}/>
 					<!--<input class='card colorPicker' on:input={onChange} type='color' bind:value={embed.color} />-->
 				</Input>
 			</div>
