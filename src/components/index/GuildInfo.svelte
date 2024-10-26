@@ -56,7 +56,7 @@
         });
         if (req.status == 200) {
             const reqJson = await req.json();
-            moderator = reqJson.guild.moderator ?? reqJson.moderator;
+            moderator = reqJson.moderator ?? reqJson.guild.moderator;
         }
     });
 

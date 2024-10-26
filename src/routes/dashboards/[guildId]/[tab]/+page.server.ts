@@ -27,7 +27,7 @@ export async function load({ cookies, params }) {
 		throw redirect(302, '/');
 	}
 	const guildResp = await guildReq.json();
-	if (!(guildResp.guild.moderator || guildResp.moderator)) {
+	if (!(guildResp.moderator || guildResp.guild.moderator)) {
 		throw redirect(302, '/');
 	}
 
