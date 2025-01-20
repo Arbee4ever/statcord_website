@@ -42,7 +42,6 @@
 	"dependencies": {
 		"apexcharts": "^3.45.1",
 		"canvas-constructor": "^7.0.1",
-		"cookie": "^0.6.0",
 		"discord-markdown": "^2.5.1",
 		"svelte-countup": "^0.2.6",
 		"svelte-textarea-autoresize": "^1.0.0"

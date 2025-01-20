@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 
 	let data: { other_guilds: object[] };
-	let bot;
+	let bot: any;
 	let online: boolean;
 	onMount(async () => {
 		const req = await fetch(`${env.PUBLIC_STATCORD_API_URL}/guilds`);
@@ -21,7 +21,7 @@
 				<img
 					class='botBanner'
 					src='https://cdn.discordapp.com/banners/{bot.id}/{bot.banner}'
-					alt='Guild Banner'
+					alt='Bot Banner'
 				/>
 			{/if}
 			<div class='card'>
